@@ -7,7 +7,6 @@ use tokio::net::TcpListener;
 use base64::prelude::*;
 use protobuf_core::{Field, FieldNumber, FieldValue, IteratorExtProtobuf, AsRefExtProtobuf};
 mod pathfinder4;
-use pathfinder4::jikken;
 
 #[derive(Debug, Deserialize)]
 struct TtsRequest {
@@ -33,7 +32,6 @@ struct LogTextRequest {
 
 #[tokio::main]
 async fn main() {
-    jikken();
     let app = Router::new()
         .route("/", get(hello_world))
         .route("/tts", post(handle_tts_request))

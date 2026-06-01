@@ -2,13 +2,13 @@ use base64::prelude::*;
 use protobuf_core::{Field, FieldValue, IteratorExtProtobuf, AsRefExtProtobuf};
 use std::str;
 
-pub fn parse_fields(bytes: &[u8]) -> Result<Vec<Field<&[u8]>>, String> {
+fn parse_fields(bytes: &[u8]) -> Result<Vec<Field<&[u8]>>, String> {
     AsRefExtProtobuf::read_protobuf_fields(bytes)
         .collect::<Result<Vec<Field<&[u8]>>, _>>()
         .map_err(|e| format!("Failed to parse protobuf fields: {}", e))
 }
 
-pub fn dump_proto(bytes: &[u8], indent: usize) -> Result<String, String> {
+fn dump_proto(bytes: &[u8], indent: usize) -> Result<String, String> {
     let mut out = String::new();
     out.push_str(&format!("{}(\n", " ".repeat(indent)));
     let fields = parse_fields(bytes)?;
@@ -61,6 +61,8 @@ pub struct PF4Command {
 pub enum PF4Value {
     // field 2: string
     StringValue(String),
+    // field 3: i64
+    IntValue(i64),
     // field 4: Symbol
     SymbolValue(String),
     // field 6: f64
@@ -204,6 +206,16 @@ impl Parser {
                     self.warnings.push("Duplicate field 2 in PF4KeyValue".to_string());
                 } else {
                     value = Some(PF4Value::StringValue(result?));
+                }
+            } else if field.field_number.as_u32() == 3 {
+                if let FieldValue::Varint(v) = field.value {
+                    if value.is_some() {
+                        self.warnings.push("Duplicate field 3 in PF4KeyValue".to_string());
+                    } else {
+                        value = Some(PF4Value::IntValue(v.to_sint64()));
+                    }
+                } else {
+                    self.warnings.push(format!("Unexpected field type for field 3 in PF4KeyValue: {:?}", field.value));
                 }
             } else if let Some(result) = self.nested_string(field, 4) {
                 if value.is_some() {
@@ -350,30 +362,6 @@ impl Parser {
     }
 }
 
-fn jikkenf(s64: &str) {
-    println!("jikken: {}", s64);
-    let s = BASE64_STANDARD.decode(s64).expect("failed to decode base64");
-    let dump = dump_proto(&s, 0).expect("failed to dump proto");
-    println!("{}", dump);
-    let mut parser = Parser::new();
-    println!("{:?}", parser.parse(&s));
-    println!("warnings: {:?}", parser.warnings);
-}
-
-pub fn jikken() {
-    jikkenf("EpQCEuYBChMKCGRpc3RhbmNlMQAAAAAAQH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpUBCghtYW5ldXZlcoIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl");
-    jikkenf("EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U=");
-    jikkenf("EqYCEvgBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCqcBCghtYW5ldXZlcoIBmQEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCm8KBGFyZ3OCAWYKZAoJZXhpdF9uYW1lggFWClQKBWV4aXRzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHhmMmQ1ZDAxYjg0YTJjMzUyEiTkuqzokYnluILlt53jgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl");
-    jikkenf("EqYDEvICCqkBCgpmaXJzdF9zdGVwggGZAQomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKbwoEYXJnc4IBZgpkCglleGl0X25hbWWCAVYKVAoFZXhpdHOCAUoKSHpGCh4vRkVBVFVSRV9JRC8weGYyZDVkMDFiODRhMmMzNTISJOS6rOiRieW4guW3neOCpOODs+OCv+ODvOODgeOCp+ODs+OCuArDAQoLc2Vjb25kX3N0ZXCCAbIBCiUKA2tleXIeGhwKC3BhdGhmaW5kZXI0Eg1wZl9vbnJhbXBzdGVwCogBCgRhcmdzggF/ChgKDnR1cm5fc2hhcnBuZXNzIgZTTElHSFQKEQoJdHVybl9zaWRlIgRMRUZUClAKEnNpZ25faW5kaXJlY3RfbmFtZYIBOQo3CgZyb3V0ZXOCASwKKnooCh4vRkVBVFVSRV9JRC8weGZmMjBlOTlhZjkxYWM1MzkSBuW4guW3nSovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM=");
-    jikkenf("EugCErQCCsIBCgpmaXJzdF9zdGVwggGyAQolCgNrZXlyHhocCgtwYXRoZmluZGVyNBINcGZfb25yYW1wc3RlcAqIAQoEYXJnc4IBfwoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChEKCXR1cm5fc2lkZSIETEVGVApQChJzaWduX2luZGlyZWN0X25hbWWCATkKNwoGcm91dGVzggEsCip6KAoeL0ZFQVRVUkVfSUQvMHhmZjIwZTk5YWY5MWFjNTM5EgbluILlt50KbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz");
-    jikkenf("EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA=");
-    jikkenf("EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl");
-    jikkenf("EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U=");
-    jikkenf("Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA=");
-    jikkenf("EsoBEpwBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCkwKCG1hbmV1dmVyggE/CjIKA2tleXIrGikKC3BhdGhmaW5kZXI0EhpwZl9kZXN0aW5hdGlvbnN0ZXBfcHJlcGFyZQoJCgRhcmdzggEAKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ==");
-    jikkenf("EisSAConGiUKC3BhdGhmaW5kZXI0EhZwZl9kZXN0aW5hdGlvbnN0ZXBfYWN0");
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -403,7 +391,7 @@ mod tests {
     }
 
     #[test]
-    fn test_jikken_warnings() {
+    fn test_parser() {
         for s in TEST_CASES {
             parse_and_warn(s);
         }
