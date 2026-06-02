@@ -367,6 +367,7 @@ mod tests {
     use super::*;
 
     const TEST_CASES: &[&str] = &[
+        // およそ 500 メートル先、、右側 2 車線を使用して右折する
         concat!(
             "EpQCEuYBChMKCGRpc3RhbmNlMQAAAAAA",
             "QH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoX",
@@ -380,6 +381,7 @@ mod tests {
             "ChIKCXR1cm5fc2lkZSIFUklHSFQqKRon",
             "CgtwYXRoZmluZGVyNBIYcHJlcGFyZV9k",
             "aXN0YW5jZV9tZXNzYWdl"),
+        // およそ 400 メートル先、、右折する
         concat!(
             "EukBErsBChMKCGRpc3RhbmNlMQAAAAAA",
             "AHlACjcKDWRpc3RhbmNlX3VuaXRaJgoX",
@@ -391,6 +393,7 @@ mod tests {
             "T1JNQUwKEgoJdHVybl9zaWRlIgVSSUdI",
             "VCopGicKC3BhdGhmaW5kZXI0EhhwcmVw",
             "YXJlX2Rpc3RhbmNlX21lc3NhZ2U="),
+        // およそ 400 メートル先、、京葉市川インターチェンジ 出口を 国道14号 方面に向かって進みます
         concat!(
             "EqYCEvgBChMKCGRpc3RhbmNlMQAAAAAA",
             "AHlACjcKDWRpc3RhbmNlX3VuaXRaJgoX",
@@ -405,6 +408,7 @@ mod tests {
             "g7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRo",
             "ZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5j",
             "ZV9tZXNzYWdl"),
+        // 京葉市川インターチェンジ を出ます、続いて 斜め左方向に曲がり 市川 方面のランプにはいります
         concat!(
             "EqYDEvICCqkBCgpmaXJzdF9zdGVwggGZ",
             "AQomCgNrZXlyHxodCgtwYXRoZmluZGVy",
@@ -424,6 +428,7 @@ mod tests {
             "ZjkxYWM1MzkSBuW4guW3nSovGi0KC3Bh",
             "dGhmaW5kZXI0Eh5jb21iaW5lX21lcmdl",
             "ZF9ndWlkYW5jZV9ldmVudHM="),
+        // 斜め左方向に曲がり 市川 方面のランプにはいります、続いて 左折する
         concat!(
             "EugCErQCCsIBCgpmaXJzdF9zdGVwggGy",
             "AQolCgNrZXlyHhocCgtwYXRoZmluZGVy",
@@ -441,12 +446,14 @@ mod tests {
             "RlQqLxotCgtwYXRoZmluZGVyNBIeY29t",
             "YmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZl",
             "bnRz"),
+        // 信号を左方向です
         concat!(
             "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEK",
             "GAoOdHVybl9zaGFycG5lc3MiBk5PUk1B",
             "TAoRCgl0dXJuX3NpZGUiBExFRlQqHBoa",
             "CgtwYXRoZmluZGVyNBILcGZfdHVybnN0",
             "ZXA="),
+        // そのまま 1 キロ進みます
         concat!(
             "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADw",
             "Pwo7Cg1kaXN0YW5jZV91bml0WioKF25s",
@@ -454,6 +461,7 @@ mod tests {
             "TklUX0tJTE9NRVRFUlMqJhokCgtwYXRo",
             "ZmluZGVyNBIVY29udGludWVfZm9yX2Rp",
             "c3RhbmNl"),
+        // およそ 300 メートル先、、右方向です
         concat!(
             "EukBErsBChMKCGRpc3RhbmNlMQAAAAAA",
             "wHJACjcKDWRpc3RhbmNlX3VuaXRaJgoX",
@@ -465,11 +473,13 @@ mod tests {
             "T1JNQUwKEgoJdHVybl9zaWRlIgVSSUdI",
             "VCopGicKC3BhdGhmaW5kZXI0EhhwcmVw",
             "YXJlX2Rpc3RhbmNlX21lc3NhZ2U="),
+        // 右方向です
         concat!(
             "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIG",
             "Tk9STUFMChIKCXR1cm5fc2lkZSIFUklH",
             "SFQqHBoaCgtwYXRoZmluZGVyNBILcGZf",
             "dHVybnN0ZXA="),
+        // およそ 200 メートル先、、目的地です。
         concat!(
             "EsoBEpwBChMKCGRpc3RhbmNlMQAAAAAA",
             "AGlACjcKDWRpc3RhbmNlX3VuaXRaJgoX",
@@ -480,6 +490,7 @@ mod tests {
             "cHJlcGFyZQoJCgRhcmdzggEAKikaJwoL",
             "cGF0aGZpbmRlcjQSGHByZXBhcmVfZGlz",
             "dGFuY2VfbWVzc2FnZQ=="),
+        // 目的地に到着しました。
         concat!(
             "EisSAConGiUKC3BhdGhmaW5kZXI0EhZw",
             "Zl9kZXN0aW5hdGlvbnN0ZXBfYWN0"),
