@@ -56,6 +56,10 @@ async fn hello_world() -> impl IntoResponse {
 
 async fn handle_log_text(Json(payload): Json<LogTextRequest>) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     tracing::info!(?payload, "received log_text request");
+    let s = BASE64_STANDARD.decode(&payload.body).expect("failed to decode base64");
+    let mut parser = pathfinder4::Parser::new();
+    let message = parser.parse(&s).unwrap();
+    println!("Parsed message: {:?}", message);
     Ok(Json(serde_json::json!({"status": "success"})))
 }
 
