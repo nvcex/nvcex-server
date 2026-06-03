@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
 use base64::prelude::*;
-use protobuf_core::{Field, FieldNumber, FieldValue, IteratorExtProtobuf, AsRefExtProtobuf};
 mod pathfinder4;
 
 #[derive(Debug, Deserialize)]
