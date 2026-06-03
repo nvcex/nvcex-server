@@ -56,6 +56,7 @@ async fn hello_world() -> impl IntoResponse {
 async fn handle_log_text(Json(payload): Json<LogTextRequest>) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     tracing::info!(?payload, "received log_text request");
     let s = BASE64_STANDARD.decode(&payload.body).expect("failed to decode base64");
+    print!("{}", pathfinder4::dump_proto(&s, 0).unwrap());
     let mut parser = pathfinder4::Parser::new();
     let message = parser.parse(&s).unwrap();
     println!("Parsed message: {:?}", message);
@@ -166,13 +167,6 @@ fn map_voice_type(voice_type: &str) -> Option<String> {
 
 fn json_error(message: &str) -> serde_json::Value {
     serde_json::json!({ "error": message })
-}
-
-fn bytes_to_utf8_string(bytes: &[u8]) -> Result<String, String> {
-    match std::str::from_utf8(bytes) {
-        Ok(s) => Ok(s.to_string()),
-        Err(e) => Err(format!("invalid utf-8 sequence: {}", e)),
-    }
 }
 
 #[derive(Debug, Deserialize)]

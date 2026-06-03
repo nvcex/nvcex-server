@@ -1,5 +1,378 @@
 use protobuf_core::{Field, FieldValue,  AsRefExtProtobuf};
-use std::{default, str};
+use std::str;
+
+#[derive(Debug)]
+pub struct StructuredMessage {
+    // field 2: Message
+    pub body: Message,
+}
+
+#[derive(Debug)]
+pub struct Message {
+    // field 2: array of Value
+    pub fields: Vec<Value>,
+    // field 5: Command
+    pub command: Command,
+}
+
+#[derive(Debug)]
+pub struct Command {
+    // field 3: (String, String)
+    pub key: String,
+    pub value: String,
+}
+
+#[derive(Debug)]
+pub enum DistanceUnit {
+    Meter,
+    Kilometer,
+    Mile,
+}
+
+#[derive(Debug)]
+pub enum TurnSharpness {
+    Slight,
+    Normal,
+    Sharp,
+}
+
+#[derive(Debug)]
+pub enum TurnSide {
+    Left,
+    Right,
+}
+
+#[derive(Debug)]
+pub enum Value {
+    Unknown(String, String),
+    Distance(f64),
+    DistanceUnit(DistanceUnit),
+    TurnSharpness(TurnSharpness),
+    TurnSide(TurnSide),
+    Maneuver(Vec<Value>),
+    Key(Command),
+    Args(Vec<Value>),
+}
+
+#[derive(Debug)]
+enum PF4RawValue {
+    // field 2: string
+    StringValue(String),
+    // field 3: i64
+    IntValue(i64),
+    // field 4: Symbol
+    SymbolValue(String),
+    // field 6: f64
+    FloatValue(f64),
+    // field 11: PF4Enum
+    EnumValue(PF4Enum),
+    // field 14: PF4Command
+    CommandValue(Command),
+    // field 15: PF4NLGData
+    NLGData(PF4NLGData),
+    // field 16: PF4KeyValue
+    KeyValueArray(Vec<Value>),
+    PF4Unknown,
+}
+
+#[derive(Debug)]
+struct PF4Enum {
+    // field 1: string
+    pub type_name: String,
+    // field 2: string
+    pub value: String,
+}
+
+#[derive(Debug)]
+struct PF4NLGData {
+    // field 1: string
+    pub id: String,
+    // field 2: string
+    pub text: String,
+}
+
+pub struct Parser {
+    pub warnings: Vec<String>,
+}
+
+impl Parser {
+    pub fn new() -> Self {
+        Parser { warnings: Vec::new() }
+    }
+
+    fn warn(&mut self, message: String) {
+        self.warnings.push(message);
+    }
+
+    pub fn parse(&mut self, bytes: &[u8]) -> Result<Message, String> {
+        let mut body = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+            match (field_number.as_u32(), value) {
+                (2, &FieldValue::Len(nested_bytes)) if body.is_none()=> {
+                    body = Some(self.parse_message(nested_bytes)?);
+                }
+                (n, _) => {
+                    self.warn(format!("Unexpected field number {} in envelope", n));
+                }
+            }
+        }
+        if let Some(body) = body {
+            Ok(body)
+        } else {
+            Err("Missing required field 2 in StructuredMessage".to_string())
+        }
+    }
+
+    fn parse_string(&mut self, bytes: &[u8]) -> Result<String, String> {
+        match str::from_utf8(bytes) {
+            Ok(s) => Ok(s.to_string()),
+            Err(e) => Err(format!("invalid utf-8 sequence: {}", e)),
+        }
+    }
+
+    fn parse_message(&mut self, bytes: &[u8]) -> Result<Message, String> {
+        let mut message_fields = None;
+        let mut command = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+             match (field_number.as_u32(), value) {
+                (2, &FieldValue::Len(nested_bytes)) if message_fields.is_none() => {
+                    message_fields = Some(self.parse_values(nested_bytes)?);
+                }
+                (5, &FieldValue::Len(nested_bytes)) if command.is_none() => {
+                    command = Some(self.parse_command(nested_bytes)?);
+                }
+                (n, _) => {
+                    self.warn(format!("Unexpected field number {} in PF4Message", n));
+                }
+            }
+        }
+        if let (Some(fields), Some(command)) = (message_fields, command) {
+            Ok(Message { fields, command })
+        } else {
+            Err("Missing required fields in PF4Message".to_string())
+        }
+    }
+
+    fn parse_values(&mut self, bytes: &[u8]) -> Result<Vec<Value>, String> {
+        let mut message_fields = Vec::new();
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+            match (field_number.as_u32(), value) {
+                (1, &FieldValue::Len(nested_bytes)) => {
+                    message_fields.push(self.parse_value(nested_bytes)?);
+                }
+                (n, _) => {
+                    self.warn(format!("Unexpected field number {} in PF4MessageFields", n));
+                }
+            }
+        }
+        Ok(message_fields)
+    }
+
+    fn map_value(&mut self, key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
+        if let Some(key) = key {
+            match (key.as_str(), value) {
+                ("distance", PF4RawValue::FloatValue(f)) => Ok(Value::Distance(f)),
+                ("distance_unit", PF4RawValue::EnumValue(enum_value)) if enum_value.type_name == "nlp_generation.UnitType" => {
+                    match enum_value.value.as_str() {
+                        "UNIT_METERS" => Ok(Value::DistanceUnit(DistanceUnit::Meter)),
+                        "UNIT_KILOMETERS" => Ok(Value::DistanceUnit(DistanceUnit::Kilometer)),
+                        "UNIT_MILES" => Ok(Value::DistanceUnit(DistanceUnit::Mile)),
+                        _ => {
+                            self.warnings.push(format!("Unexpected value for field 'distance_unit': {}", enum_value.value));
+                            Ok(Value::Unknown(key, enum_value.value.clone()))
+                        }
+                    }
+                }
+                ("turn_sharpness", PF4RawValue::SymbolValue(symbol)) => {
+                    match symbol.as_str() {
+                        "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
+                        "NORMAL" => Ok(Value::TurnSharpness(TurnSharpness::Normal)),
+                        "SHARP" => Ok(Value::TurnSharpness(TurnSharpness::Sharp)),
+                        _ => {
+                            self.warnings.push(format!("Unexpected value for field 'turn_sharpness': {}", symbol));
+                            Ok(Value::Unknown(key, symbol))
+                        }
+                    }
+                }
+                ("turn_side", PF4RawValue::SymbolValue(symbol)) => {
+                    match symbol.as_str() {
+                        "LEFT" => Ok(Value::TurnSide(TurnSide::Left)),
+                        "RIGHT" => Ok(Value::TurnSide(TurnSide::Right)),
+                        _ => {
+                            self.warnings.push(format!("Unexpected value for field 'turn_side': {}", symbol));
+                            Ok(Value::Unknown(key, symbol.clone()))
+                        }
+                    }
+                }
+                ("maneuver", PF4RawValue::KeyValueArray(values)) => {
+                    Ok(Value::Maneuver(values))
+                }
+                ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
+                ("args", PF4RawValue::KeyValueArray(values)) => Ok(Value::Args(values)),
+                (_, value) => Ok(Value::Unknown(key, format!("{:?}", value))),
+            }
+        } else if let PF4RawValue::NLGData(_) = value {
+            Ok(Value::Unknown("TODO".to_string(), format!("{:?}", value)))
+        } else {
+            Err("Missing key in PF4KeyValue".to_string())
+        }
+    }
+
+    fn parse_value(&mut self, bytes: &[u8]) -> Result<Value, String> {
+        let mut key = None;
+        let mut raw_value = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value} in &fields {
+            if field_number.as_u32() == 1 {
+                if let FieldValue::Len(nested_bytes) = value {
+                    if key.is_some() {
+                        self.warnings.push("Duplicate field 1 in PF4KeyValue".to_string());
+                    } else {
+                        key = Some(self.parse_string(nested_bytes)?);
+                    }
+                } else {
+                    self.warnings.push(format!("Unexpected field type for field 1 in PF4KeyValue: {:?}", value));
+                }
+            } else {
+                let new_raw_value = match (field_number.as_u32(), value) {
+                    (2, &FieldValue::Len(nested_bytes)) => {
+                        Some(PF4RawValue::StringValue(self.parse_string(nested_bytes)?))
+                    }
+                    (3, &FieldValue::Varint(v)) => {
+                        Some(PF4RawValue::IntValue(v.to_sint64()))
+                    }
+                    (4, &FieldValue::Len(nested_bytes)) => {
+                        Some(PF4RawValue::SymbolValue(self.parse_string(nested_bytes)?))
+                    }
+                    (6, &FieldValue::I64(nested_bytes)) => {
+                        Some(PF4RawValue::FloatValue(f64::from_le_bytes(nested_bytes)))
+                    }
+                    (11, &FieldValue::Len(nested_bytes)) => {
+                        Some(PF4RawValue::EnumValue(self.parse_enum(nested_bytes)?))
+                    }
+                    (14, &FieldValue::Len(nested_bytes)) => {
+                        Some(PF4RawValue::CommandValue(self.parse_command(nested_bytes)?))
+                    }
+                    (15, &FieldValue::Len(nested_bytes)) => {
+                        Some(PF4RawValue::NLGData(self.parse_nlg_data(nested_bytes)?))
+                    }
+                    (16, &FieldValue::Len(nested_bytes)) => {
+                        Some(PF4RawValue::KeyValueArray(self.parse_values(nested_bytes)?))
+                    }
+                    (n, _) => {
+                        self.warn(format!("Unexpected field number {} in PF4KeyValue", n));
+                        None
+                    }
+                };
+                if raw_value.is_some() {
+                    self.warnings.push(format!("Duplicate value field in PF4KeyValue: {:?}", raw_value));
+                } else {
+                    raw_value = new_raw_value;
+                }
+            }
+        }
+        if let Some(value) = raw_value {
+            self.map_value(key, value)
+        } else {
+            Err("Missing value in PF4KeyValue".to_string())
+        }
+    }
+
+    fn parse_enum(&mut self, bytes: &[u8]) -> Result<PF4Enum, String> {
+        let mut type_name = None;
+        let mut enum_value = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+             match (field_number.as_u32(), value) {
+                (1, &FieldValue::Len(nested_bytes)) if type_name.is_none() => {
+                    type_name = Some(self.parse_string(nested_bytes)?);
+                }
+                (2, &FieldValue::Len(nested_bytes)) if enum_value.is_none() => {
+                    enum_value = Some(self.parse_string(nested_bytes)?);
+                }
+                (n, _) => {
+                    self.warn(format!("Unexpected field number {} in PF4Enum", n));
+                }
+            }
+        }
+        if let (Some(type_name), Some(enum_value)) = (type_name, enum_value) {
+            Ok(PF4Enum { type_name, value: enum_value })
+        } else {
+            Err("Missing required fields in PF4Enum".to_string())
+        }
+    }
+
+    fn parse_nlg_data(&mut self, bytes: &[u8]) -> Result<PF4NLGData, String> {
+        let mut id = None;
+        let mut text = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+            match (field_number.as_u32(), value) {
+                (1, &FieldValue::Len(nested_bytes)) if id.is_none() => {
+                    id = Some(self.parse_string(nested_bytes)?);
+                }
+                (2, &FieldValue::Len(nested_bytes)) if text.is_none() => {
+                    text = Some(self.parse_string(nested_bytes)?);
+                }
+                (n, _) => {
+                    self.warn(format!("Unexpected field number {} in PF4NLGData", n));
+                }
+            }
+        }
+        if let (Some(id), Some(text)) = (id, text) {
+            Ok(PF4NLGData { id, text })
+        } else {
+            Err("Missing required fields in PF4NLGData".to_string())
+        }
+    }
+
+    fn parse_command(&mut self, bytes: &[u8]) -> Result<Command, String> {
+        let mut command_value = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+             match (field_number.as_u32(), value) {
+                (3, &FieldValue::Len(nested_bytes)) if command_value.is_none() => {
+                    command_value = Some(self.parse_key_value(nested_bytes)?);
+                }
+                (n, _) => {
+                    self.warn(format!("Unexpected field number {} in PF4Command", n));
+                }
+            }
+        }
+        if let Some((key, value)) = command_value {
+            Ok(Command { key, value })
+        } else {
+            Err("Missing required field 3 in PF4Command".to_string())
+        }
+    }
+
+    fn parse_key_value(&mut self, bytes: &[u8]) -> Result<(String, String), String> {
+        let mut key = None;
+        let mut val = None;
+        let fields = parse_fields(bytes)?;
+        for &Field { ref field_number, ref value } in &fields {
+            match (field_number.as_u32(), value) {
+                (1, &FieldValue::Len(nested_bytes)) if key.is_none() => {
+                    key = Some(self.parse_string(nested_bytes)?);
+                }
+                (2, &FieldValue::Len(nested_bytes)) if val.is_none() => {
+                    val = Some(self.parse_string(nested_bytes)?);
+                }
+                 (n, _) => {
+                    self.warn(format!("Unexpected field number {} in PF4KeyValue", n));
+                }
+            }
+        }
+        if let (Some(key), Some(val)) = (key, val) {
+            Ok((key, val))
+        } else {
+            Err("Missing required fields in PF4KeyValue".to_string())
+        }
+    }
+}
 
 fn parse_fields(bytes: &[u8]) -> Result<Vec<Field<&[u8]>>, String> {
     AsRefExtProtobuf::read_protobuf_fields(bytes)
@@ -7,7 +380,7 @@ fn parse_fields(bytes: &[u8]) -> Result<Vec<Field<&[u8]>>, String> {
         .map_err(|e| format!("Failed to parse protobuf fields: {}", e))
 }
 
-fn dump_proto(bytes: &[u8], indent: usize) -> Result<String, String> {
+pub fn dump_proto(bytes: &[u8], indent: usize) -> Result<String, String> {
     let mut out = String::new();
     out.push_str(&format!("{}(\n", " ".repeat(indent)));
     let fields = parse_fields(bytes)?;
@@ -34,404 +407,6 @@ fn dump_proto(bytes: &[u8], indent: usize) -> Result<String, String> {
     Ok(out)
 }
 
-#[derive(Debug)]
-pub struct StructuredMessage {
-    // field 2: PF4Message
-    pub body: PF4Message,
-}
-
-#[derive(Debug)]
-pub struct PF4Message {
-    // field 2: PF4MessageFields
-    pub fields: PF4MessageFields,
-    // field 5: PF4Command
-    pub command: PF4Command,
-}
-
-pub type PF4MessageFields = Vec<PF4Value>;
-
-#[derive(Debug, Clone)]
-pub struct PF4Command {
-    // field 3: PF4KeyValue
-    pub value: Box<PF4Value>,
-}
-
-#[derive(Debug, Clone)]
-pub enum PF4RawValue {
-    // field 2: string
-    StringValue(String),
-    // field 3: i64
-    IntValue(i64),
-    // field 4: Symbol
-    SymbolValue(String),
-    // field 6: f64
-    FloatValue(f64),
-    // field 11: PF4Enum
-    EnumValue(PF4Enum),
-    // field 14: PF4Command
-    CommandValue(PF4Command),
-    // field 15: PF4NLGData
-    NLGData(PF4NLGData),
-    // field 16: PF4KeyValue
-    KeyValueArray(Vec<PF4Value>),
-    PF4Unknown,
-}
-
-#[derive(Debug, Clone)]
-pub enum DistanceUnit {
-    Meter,
-    Kilometer,
-    Mile,
-}
-
-#[derive(Debug, Clone)]
-pub enum TurnSharpness {
-    Slight,
-    Normal,
-    Sharp,
-}
-
-#[derive(Debug, Clone)]
-pub enum TurnSide {
-    Left,
-    Right,
-}
-
-#[derive(Debug, Clone)]
-pub enum PF4Value {
-    Unknown(String, PF4RawValue),
-    Distance(f64),
-    DistanceUnit(DistanceUnit),
-    TurnSharpness(TurnSharpness),
-    TurnSide(TurnSide),
-}
-
-#[derive(Debug, Clone)]
-pub struct PF4Enum {
-    // field 1: string
-    pub type_name: String,
-    // field 2: string
-    pub value: String,
-}
-
-#[derive(Debug, Clone)]
-pub struct PF4NLGData {
-    // field 1: string
-    pub id: String,
-    // field 2: string
-    pub text: String,
-}
-
-#[derive(Debug, Clone)]
-pub struct PF4KeyValue {
-    // field 1: string
-    pub key: String,
-    pub value: PF4Value,
-}
-
-pub struct Parser {
-    pub warnings: Vec<String>,
-}
-
-impl Parser {
-    pub fn new() -> Self {
-        Parser { warnings: Vec::new() }
-    }
-
-    pub fn parse(&mut self, bytes: &[u8]) -> Result<StructuredMessage, String> {
-        let mut body = None;
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_object(field, 2, Self::parse_pf4_message) {
-                if body.is_some() {
-                    self.warnings.push("Duplicate field 2 in StructuredMessage".to_string());
-                } else {
-                    body = Some(result?);
-                }
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in StructuredMessage", field));
-            }
-        }
-        if let Some(body) = body {
-            Ok(StructuredMessage { body })
-        } else {
-            Err("Missing required field 2 in StructuredMessage".to_string())
-        }
-    }
-
-    fn nested_object<T>(&mut self, field: &Field<&[u8]>, number: u32, body: fn(&mut Self, &[u8]) -> Result<T, String>) -> Option<Result<T, String>> {
-        if field.field_number.as_u32() == number {
-            if let FieldValue::Len(nested_bytes) = field.value {
-                return Some(body(self, nested_bytes));
-            }
-        }
-        None
-    }
-
-    fn nested_string(&mut self, field: &Field<&[u8]>, number: u32) -> Option<Result<String, String>> {
-        if field.field_number.as_u32() == number {
-            if let FieldValue::Len(nested_bytes) = field.value {
-                return Some(crate::bytes_to_utf8_string(nested_bytes));
-            }
-        }
-        None
-    }
-
-    fn parse_pf4_message(&mut self, bytes: &[u8]) -> Result<PF4Message, String> {
-        let mut message_fields = None;
-        let mut command = None;
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_object(field, 2, Self::parse_fields) {
-                if message_fields.is_some() {
-                    self.warnings.push("Duplicate field 1 in PF4Message".to_string());
-                } else {
-                    message_fields = Some(result?);
-                }
-            } else if let Some(result) = self.nested_object(field, 5, Self::parse_command) {
-                if command.is_some() {
-                    self.warnings.push("Duplicate field 2 in PF4Message".to_string());
-                } else {
-                    command = Some(result?);
-                }
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in PF4Message", field));
-            }
-        }
-        if let (Some(fields), Some(command)) = (message_fields, command) {
-            Ok(PF4Message { fields, command })
-        } else {
-            Err("Missing required fields in PF4Message".to_string())
-        }
-    }
-
-    fn parse_fields(&mut self, bytes: &[u8]) -> Result<PF4MessageFields, String> {
-        let mut message_fields = Vec::new();
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_object(field, 1, Self::parse_key_value) {
-                message_fields.push(result?);
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in PF4MessageFields", field));
-            }
-        }
-        Ok(message_fields)
-    }
-
-    fn map_key_value(&mut self, key: Option<String>, value: PF4RawValue) -> Result<PF4Value, String> {
-        if let Some(key) = key {
-            match (key.as_str(), &value) {
-                ("distance", &PF4RawValue::FloatValue(f)) => Ok(PF4Value::Distance(f)),
-                ("distance_unit", &PF4RawValue::EnumValue(ref enum_value)) if enum_value.type_name == "nlp_generation.UnitType" => {
-                    match enum_value.value.as_str() {
-                        "UNIT_METERS" => Ok(PF4Value::DistanceUnit(DistanceUnit::Meter)),
-                        "UNIT_KILOMETERS" => Ok(PF4Value::DistanceUnit(DistanceUnit::Kilometer)),
-                        "UNIT_MILES" => Ok(PF4Value::DistanceUnit(DistanceUnit::Mile)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'distance_unit': {}", enum_value.value));
-                            Ok(PF4Value::Unknown(key, value))
-                        }
-                    }
-                }
-                ("turn_sharpness", &PF4RawValue::SymbolValue(ref symbol)) => {
-                    match symbol.as_str() {
-                        "SLIGHT" => Ok(PF4Value::TurnSharpness(TurnSharpness::Slight)),
-                        "NORMAL" => Ok(PF4Value::TurnSharpness(TurnSharpness::Normal)),
-                        "SHARP" => Ok(PF4Value::TurnSharpness(TurnSharpness::Sharp)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'turn_sharpness': {}", symbol));
-                            Ok(PF4Value::Unknown(key, value))
-                        }
-                    }
-                }
-                ("turn_side", &PF4RawValue::SymbolValue(ref symbol)) => {
-                    match symbol.as_str() {
-                        "LEFT" => Ok(PF4Value::TurnSide(TurnSide::Left)),
-                        "RIGHT" => Ok(PF4Value::TurnSide(TurnSide::Right)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'turn_side': {}", symbol));
-                            Ok(PF4Value::Unknown(key, value))
-                        }
-                    }
-                }
-                _ => Ok(PF4Value::Unknown(key, value)),
-            }
-        } else if let PF4RawValue::NLGData(_) = value {
-            Ok(PF4Value::Unknown("TODO".to_string(), value))
-        } else {
-            Err("Missing key in PF4KeyValue".to_string())
-        }
-    }
-
-    fn parse_key_value(&mut self, bytes: &[u8]) -> Result<PF4Value, String> {
-        let mut key = None;
-        let mut value = None;
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_string(field, 1) {
-                if key.is_some() {
-                    self.warnings.push("Duplicate field 1 in PF4KeyValue".to_string());
-                } else {
-                    key = Some(result?);
-                }
-            } else if let Some(result) = self.nested_string(field, 2) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 2 in PF4KeyValue".to_string());
-                } else {
-                    value = Some(PF4RawValue::StringValue(result?));
-                }
-            } else if field.field_number.as_u32() == 3 {
-                if let FieldValue::Varint(v) = field.value {
-                    if value.is_some() {
-                        self.warnings.push("Duplicate field 3 in PF4KeyValue".to_string());
-                    } else {
-                        value = Some(PF4RawValue::IntValue(v.to_sint64()));
-                    }
-                } else {
-                    self.warnings.push(format!("Unexpected field type for field 3 in PF4KeyValue: {:?}", field.value));
-                }
-            } else if let Some(result) = self.nested_string(field, 4) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 4 in PF4KeyValue".to_string());
-                } else {
-                    value = Some(PF4RawValue::SymbolValue(result?));
-                }
-            } else if field.field_number.as_u32() == 6 {
-                if let FieldValue::I64(nested_bytes) = field.value {
-                    if value.is_some() {
-                        self.warnings.push("Duplicate field 6 in PF4KeyValue".to_string());
-                    } else {
-                        let f = f64::from_le_bytes(nested_bytes);
-                        value = Some(PF4RawValue::FloatValue(f));
-                    }
-                } else {
-                    self.warnings.push(format!("Unexpected field type for field 6 in PF4KeyValue: {:?}", field.value));
-                }
-            } else if let Some(result) = self.nested_object(field, 11, Self::parse_enum) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 11 in PF4KeyValue".to_string());
-                } else {
-                    value = Some(PF4RawValue::EnumValue(result?));
-                }
-            } else if let Some(result) = self.nested_object(field, 14, Self::parse_command) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 14 in PF4KeyValue".to_string());
-                } else {
-                    value = Some(PF4RawValue::CommandValue(result?));
-                }
-            } else if let Some(result) = self.nested_object(field, 15, Self::parse_nlg_data) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 15 in PF4KeyValue".to_string());
-                } else {
-                    value = Some(PF4RawValue::NLGData(result?));
-                }
-            } else if let Some(result) = self.nested_object(field, 16, Self::parse_key_value_array) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 16 in PF4KeyValue".to_string());
-                } else {
-                    value = Some(PF4RawValue::KeyValueArray(result?));
-                }
-             } else {
-                 self.warnings.push(format!("Unexpected field {:?} in PF4KeyValue", field));
-             }
-        }
-        if let Some(value) = value {
-            self.map_key_value(key, value)
-        } else {
-            Err("Missing value in PF4KeyValue".to_string())
-        }
-    }
-
-    fn parse_enum(&mut self, bytes: &[u8]) -> Result<PF4Enum, String> {
-        let mut type_name = None;
-        let mut value = None;
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_string(field, 1) {
-                if type_name.is_some() {
-                    self.warnings.push("Duplicate field 1 in PF4Enum".to_string());
-                } else {
-                    type_name = Some(result?);
-                }
-            } else if let Some(result) = self.nested_string(field, 2) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 2 in PF4Enum".to_string());
-                } else {
-                    value = Some(result?);
-                }
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in PF4Enum", field));
-            }
-        }
-        if let (Some(type_name), Some(value)) = (type_name, value) {
-            Ok(PF4Enum { type_name, value })
-        } else {
-            Err("Missing required fields in PF4Enum".to_string())
-        }
-    }
-
-    fn parse_nlg_data(&mut self, bytes: &[u8]) -> Result<PF4NLGData, String> {
-        let mut id = None;
-        let mut text = None;
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_string(field, 1) {
-                if id.is_some() {
-                    self.warnings.push("Duplicate field 1 in PF4NLGData".to_string());
-                } else {
-                    id = Some(result?);
-                }
-            } else if let Some(result) = self.nested_string(field, 2) {
-                if text.is_some() {
-                    self.warnings.push("Duplicate field 2 in PF4NLGData".to_string());
-                } else {
-                    text = Some(result?);
-                }
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in PF4NLGData", field));
-            }
-        }
-        if let (Some(id), Some(text)) = (id, text) {
-            Ok(PF4NLGData { id, text })
-        } else {
-            Err("Missing required fields in PF4NLGData".to_string())
-        }
-    }
-
-    fn parse_key_value_array(&mut self, bytes: &[u8]) -> Result<Vec<PF4Value>, String> {
-        let mut key_values = Vec::new();
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_object(field, 1, Self::parse_key_value) {
-                key_values.push(result?);
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in PF4KeyValue array", field));
-            }
-        }
-        Ok(key_values)
-    }
-
-    fn parse_command(&mut self, bytes: &[u8]) -> Result<PF4Command, String> {
-        let mut value = None;
-        let fields = parse_fields(bytes)?;
-        for field in &fields {
-            if let Some(result) = self.nested_object(field, 3, Self::parse_key_value) {
-                if value.is_some() {
-                    self.warnings.push("Duplicate field 3 in PF4Command".to_string());
-                } else {
-                    value = Some(result?);
-                }
-            } else {
-                self.warnings.push(format!("Unexpected field {:?} in PF4Command", field));
-            }
-        }
-        if let Some(value) = value {
-            Ok(PF4Command { value: Box::new(value) })
-        } else {
-            Err("Missing required field 3 in PF4Command".to_string())
-        }
-    }
-}
 
 #[cfg(test)]
 mod tests {
