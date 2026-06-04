@@ -310,8 +310,7 @@ impl Parser {
                     Ok(Value::Exits(values))
                 }
                 ("maneuver", PF4RawValue::KeyValueArray(values)) => {
-                    //self.warnings.push(format!("Unknown maneuver: {:?}", values));
-                    Ok(Value::Maneuver(values))
+                    self.map_maneuver(values)
                 }
                 ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
                 ("args", PF4RawValue::KeyValueArray(values)) => Ok(Value::Args(values)),
@@ -339,6 +338,36 @@ impl Parser {
             self.warnings.push(format!("Unknown exit_name: {:?}", values));
         }
         Ok(Value::ExitName(values))
+    }
+
+    fn map_maneuver(&mut self, values: Vec<Value>) -> Result<Value, String> {
+        match values.as_slice() {
+            [Value::Key(key), Value::Args(args)] => {
+                match (key, args.as_slice()) {
+                    (Command::StraightStep, [Value::LaneGuidance(_)]) => {}
+                    (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
+                    (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
+                    (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
+                    (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
+                    (Command::UTurnStep, []) => {}
+                    (Command::UTurnStep, [Value::IntersectionName(_)]) => {}
+                    (Command::OnRampStep, [Value::LaneGuidance(_)]) => {}
+                    (Command::OffRampStep, [Value::LaneGuidance(_), Value::ExitName(_)]) => {}
+                    (Command::OffRampStep, [Value::LaneGuidance(_)]) => {}
+                    (Command::OffRampStep, [Value::ExitName(_)]) => {}
+                    (Command::OffRampStep, [Value::SignIndirectName(_)]) => {}
+                    (Command::KeepOrForkStep, [Value::LaneGuidance(_), Value::KeepSide(_)]) => {}
+                    (Command::KeepOrForkStep, [Value::KeepSide(_), Value::LaneGuidance(_)]) => {}
+                    (Command::KeepOrForkStep, [Value::KeepSide(_)]) => {}
+                    (Command::MergeStep, []) => {}
+                    (Command::MergeStep, [Value::LaneGuidance(_)]) => {}
+                    (Command::DestinationStepPrepare, []) => {}
+                    _ => self.warnings.push(format!("Unknown maneuver combination: {:?}", values))
+                }
+            }
+            _ => self.warnings.push(format!("Unknown maneuver: {:?}", values))
+        }
+        Ok(Value::Maneuver(values))
     }
 
     fn parse_value(&mut self, bytes: &[u8]) -> Result<Value, String> {
