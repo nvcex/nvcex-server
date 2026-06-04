@@ -2,7 +2,9 @@ use axum::{http::StatusCode, response::IntoResponse, routing::{get, post}, Json,
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fs;
 use std::net::SocketAddr;
+use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::net::TcpListener;
 use base64::prelude::*;
 mod pathfinder4;
@@ -22,12 +24,11 @@ struct TtsResponse {
     source_url: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 struct LogTextRequest {
     text: String,
-    body: String  // base64-encoded
+    body: String, // base64-encoded
 }
-
 
 #[tokio::main]
 async fn main() {
@@ -55,12 +56,35 @@ async fn hello_world() -> impl IntoResponse {
 
 async fn handle_log_text(Json(payload): Json<LogTextRequest>) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     tracing::info!(?payload, "received log_text request");
-    let s = BASE64_STANDARD.decode(&payload.body).expect("failed to decode base64");
-    print!("{}", pathfinder4::dump_proto(&s, 0).unwrap());
+    let body_bytes = match BASE64_STANDARD.decode(&payload.body) {
+        Ok(bytes) => bytes,
+        Err(err) => {
+            tracing::error!(?err, "failed to decode base64 body");
+            return Err((StatusCode::BAD_REQUEST, Json(json_error("failed to decode base64 body"))));
+        }
+    };
+
+    let save_path = "log_text.txt";
+    let save_line = format!("{},{}\n", payload.text, payload.body);
+
+    if let Err(err) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&save_path)
+        .and_then(|mut file| std::io::Write::write_all(&mut file, save_line.as_bytes()))
+    {
+        tracing::error!(?err, %save_path, "failed to append log_text line to file");
+    }
+
+    print!("{}", pathfinder4::dump_proto(&body_bytes, 0).unwrap());
     let mut parser = pathfinder4::Parser::new();
-    let message = parser.parse(&s).unwrap();
+    let message = parser.parse(&body_bytes).unwrap();
     println!("Parsed message: {:?}", message);
-    Ok(Json(serde_json::json!({"status": "success"})))
+
+    Ok(Json(serde_json::json!({
+        "status": "success",
+        "log_text_file": save_path,
+    })))
 }
 
 async fn handle_tts_request(Json(payload): Json<TtsRequest>) -> Result<Json<TtsResponse>, (StatusCode, Json<serde_json::Value>)> {

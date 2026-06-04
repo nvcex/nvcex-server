@@ -86,7 +86,7 @@ struct PF4Enum {
 #[derive(Debug)]
 struct PF4NLGData {
     // field 1: string
-    pub id: String,
+    pub id: Option<String>,
     // field 2: string
     pub text: String,
 }
@@ -322,7 +322,7 @@ impl Parser {
                 }
             }
         }
-        if let (Some(id), Some(text)) = (id, text) {
+        if let Some(text) = text {
             Ok(PF4NLGData { id, text })
         } else {
             Err("Missing required fields in PF4NLGData".to_string())
@@ -557,6 +557,29 @@ mod tests {
     fn test_parser() {
         for s in TEST_CASES {
             parse_and_warn(s);
+        }
+    }
+
+    #[test]
+    fn test_testdata_files() {
+        use std::path::Path;
+        let dir = Path::new("testdata");
+        if !dir.exists() {
+            eprintln!("testdata directory not found, skipping");
+            return;
+        }
+        for entry in std::fs::read_dir(dir).expect("failed to read testdata dir") {
+            let entry = entry.expect("failed to read dir entry");
+            let path = entry.path();
+            if path.is_file() {
+                let content = std::fs::read_to_string(&path).expect("failed to read test file");
+                for line in content.lines() {
+                    let line = line.trim();
+                    if line.is_empty() { continue; }
+                    let b64 = if let Some(i) = line.rfind(',') { &line[i+1..] } else { line };
+                    parse_and_warn(b64);
+                }
+            }
         }
     }
 }
