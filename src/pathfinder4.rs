@@ -2,21 +2,7 @@ use protobuf_core::{Field, FieldValue,  AsRefExtProtobuf};
 use std::str;
 
 #[derive(Debug)]
-pub struct StructuredMessage {
-    // field 2: Message
-    pub body: Message,
-}
-
-#[derive(Debug)]
-pub struct Message {
-    // field 2: array of Value
-    pub fields: Vec<Value>,
-    // field 5: Command
-    pub command: Command,
-}
-
-#[derive(Debug)]
-pub enum Command {
+pub enum Guidance {
     StraightStep,
     TurnStep,
     UTurnStep,
@@ -29,7 +15,7 @@ pub enum Command {
     DestinationStepAct,
     ContinueForDistance,
     PrepareDistanceMessage,
-    CombineMergedGuidanceEvents,
+    CombineMergedGuidanceEvents,    
 }
 
 #[derive(Debug)]
@@ -90,8 +76,8 @@ pub enum Value {
     StopSign(i64),
     ExitName(Vec<Value>),
     Exits(Vec<Value>),
-    Maneuver(Vec<Value>),
-    Key(Command),
+    Maneuver(Guidance),
+    Key(PF4Enum),
     Args(Vec<Value>),
     FirstStep(Vec<Value>),
     SecondStep(Vec<Value>),
@@ -115,7 +101,7 @@ enum PF4RawValue {
     // field 11: PF4Enum
     EnumValue(PF4Enum),
     // field 14: PF4Command
-    CommandValue(Command),
+    CommandValue(PF4Enum),
     // field 15: PF4NLGData
     NLGData(PF4NLGData),
     // field 16: PF4KeyValue
@@ -139,13 +125,6 @@ struct PF4NLGData {
     pub text: String,
 }
 
-#[derive(Debug)]
-struct PF4RawCommand {
-    // field 3: (String, String)
-    pub key: String,
-    pub value: String,
-}
-
 pub struct Parser {
     pub warnings: Vec<String>,
 }
@@ -159,13 +138,13 @@ impl Parser {
         self.warnings.push(message);
     }
 
-    pub fn parse(&mut self, bytes: &[u8]) -> Result<Message, String> {
+    pub fn parse(&mut self, bytes: &[u8]) -> Result<Guidance, String> {
         let mut body = None;
         let fields = parse_fields(bytes)?;
         for &Field { ref field_number, ref value } in &fields {
             match (field_number.as_u32(), value) {
                 (2, &FieldValue::Len(nested_bytes)) if body.is_none()=> {
-                    body = Some(self.parse_message(nested_bytes)?);
+                    body = Some(self.parse_guidance(nested_bytes)?);
                 }
                 (n, _) => {
                     self.warn(format!("Unexpected field number {} in envelope", n));
@@ -186,14 +165,14 @@ impl Parser {
         }
     }
 
-    fn parse_message(&mut self, bytes: &[u8]) -> Result<Message, String> {
-        let mut message_fields = None;
+    fn parse_guidance(&mut self, bytes: &[u8]) -> Result<Guidance, String> {
+        let mut args = None;
         let mut command = None;
         let fields = parse_fields(bytes)?;
         for &Field { ref field_number, ref value } in &fields {
              match (field_number.as_u32(), value) {
-                (2, &FieldValue::Len(nested_bytes)) if message_fields.is_none() => {
-                    message_fields = Some(self.parse_values(nested_bytes)?);
+                (2, &FieldValue::Len(nested_bytes)) if args.is_none() => {
+                    args = Some(self.parse_values(nested_bytes)?);
                 }
                 (5, &FieldValue::Len(nested_bytes)) if command.is_none() => {
                     command = Some(self.parse_command(nested_bytes)?);
@@ -203,28 +182,107 @@ impl Parser {
                 }
             }
         }
-        if let (Some(fields), Some(command)) = (message_fields, command) {
-            self.map_message(&command, &fields);
-            Ok(Message { fields, command })
+        if let (Some(args), Some(command)) = (args, command) {
+            self.map_guidance(command, args)
         } else {
             Err("Missing required fields in PF4Message".to_string())
         }
     }
 
+    fn map_guidance(&mut self, command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> {
+        if command.type_name == "pathfinder4" {
+            match command.value.as_str() {
+                "pf_straightstep" => match args.as_slice() {
+                    [] => Ok(Guidance::StraightStep),
+                    [Value::LaneGuidance(_)] => Ok(Guidance::StraightStep),
+                    values => Err(format!("unknown args for pf_straightstep {:?}", values))
+                }
+                "pf_turnstep" => match args.as_slice() {
+                    [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_)] => Ok(Guidance::TurnStep),
+                    [Value::TurnSharpness(_), Value::TurnSide(_)] => Ok(Guidance::TurnStep),
+                    [Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)] => Ok(Guidance::TurnStep),
+                    [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)] => Ok(Guidance::TurnStep),
+                    [Value::TrafficLight(_), Value::TurnSharpness(_), Value::TurnSide(_)] => Ok(Guidance::TurnStep),
+                    values => Err(format!("unknown args for pf_turnstep {:?}", values))
+                }
+                "pf_uturnstep" => match args.as_slice() {
+                    [] => Ok(Guidance::UTurnStep),
+                    [Value::IntersectionName(_)] => Ok(Guidance::UTurnStep),
+                    values => Err(format!("unknown args for pf_uturnstep {:?}", values))
+                }
+                "pf_onrampstep" => match args.as_slice() {
+                    [] => Ok(Guidance::OnRampStep),
+                    [Value::LaneGuidance(_)] => Ok(Guidance::OnRampStep),
+                    [Value::TurnSharpness(_), Value::TurnSide(_), Value::SignIndirectName(_)] => Ok(Guidance::OnRampStep),
+                    values => Err(format!("unknown args for pf_onrampstep {:?}", values))
+                }
+                "pf_offrampstep" => match args.as_slice() {
+                    [] => Ok(Guidance::OffRampStep),
+                    [Value::LaneGuidance(_), Value::ExitName(_)] => Ok(Guidance::OffRampStep),
+                    [Value::LaneGuidance(_)] => Ok(Guidance::OffRampStep),
+                    [Value::ExitName(_)] => Ok(Guidance::OffRampStep),
+                    [Value::SignIndirectName(_)] => Ok(Guidance::OffRampStep),
+                    values => Err(format!("unknown args for pf_offrampstep {:?}", values))
+                }
+                "pf_keeporforkstep" => match args.as_slice() {
+                    [Value::LaneGuidance(_), Value::KeepSide(_)] => Ok(Guidance::KeepOrForkStep),
+                    [Value::KeepSide(_), Value::LaneGuidance(_)] => Ok(Guidance::KeepOrForkStep),
+                    [Value::KeepSide(_)] => Ok(Guidance::KeepOrForkStep),                    
+                    values => Err(format!("unknown args for pf_keeporforkstep {:?}", values))
+                }
+                "pf_mergestep" => match args.as_slice() {
+                    [] => Ok(Guidance::MergeStep),
+                    [Value::LaneGuidance(_)] => Ok(Guidance::MergeStep),
+                    values => Err(format!("unknown args for pf_mergestep {:?}", values))
+                }
+                "pf_interchangestep" => match args.as_slice() {
+                    [Value::InterchangeName(_)] => Ok(Guidance::InterchangeStep),
+                    [Value::InterchangeName(_), Value::SignIndirectName(_)] => Ok(Guidance::InterchangeStep),
+                    [Value::InterchangeName(_), Value::SignDirectName(_), Value::SignIndirectName(_)] => Ok(Guidance::InterchangeStep),                    
+                    values => Err(format!("unknown args for pf_interchangestep {:?}", values))
+                }
+                "pf_destinationstep_prepare" => match args.as_slice() {
+                    [] => Ok(Guidance::DestinationStepPrepare),
+                    values => Err(format!("unknown args for pf_destinationstep_prepare {:?}", values))
+                }
+                "pf_destinationstep_act" => match args.as_slice() {
+                    [] => Ok(Guidance::DestinationStepAct),
+                    values => Err(format!("unknown args for pf_destinationstep_act {:?}", values))
+                }
+                "continue_for_distance" => match args.as_slice() {
+                    [Value::Distance(_), Value::DistanceUnit(_)] => Ok(Guidance::ContinueForDistance),
+                    [Value::Distance(_), Value::DistanceUnit(_), Value::DistanceOverride(_)] => Ok(Guidance::ContinueForDistance),
+                    values => Err(format!("unknown args for continue_for_distance {:?}", values))
+                }
+                "prepare_distance_message" => match args.as_slice() {
+                    [Value::Distance(_), Value::DistanceUnit(_), Value::Maneuver(_)] => Ok(Guidance::PrepareDistanceMessage),
+                    values => Err(format!("unknown args for prepare_distance_message {:?}", values))
+                }
+                "combine_merged_guidance_events" => match args.as_slice() {
+                    [Value::FirstStep(_), Value::SecondStep(_)] => Ok(Guidance::CombineMergedGuidanceEvents),
+                    values => Err(format!("unknown args for combine_merged_guidance_events {:?}", values))
+                }
+                v => Err(format!("Unknown command value {}", v))
+            }
+        } else {
+            Err(format!("Unknown command type {}", command.type_name))
+        }
+    }
+
     fn parse_values(&mut self, bytes: &[u8]) -> Result<Vec<Value>, String> {
-        let mut message_fields = Vec::new();
+        let mut values = Vec::new();
         let fields = parse_fields(bytes)?;
         for &Field { ref field_number, ref value } in &fields {
             match (field_number.as_u32(), value) {
                 (1, &FieldValue::Len(nested_bytes)) => {
-                    message_fields.push(self.parse_value(nested_bytes)?);
+                    values.push(self.parse_value(nested_bytes)?);
                 }
                 (n, _) => {
                     self.warn(format!("Unexpected field number {} in PF4MessageFields", n));
                 }
             }
         }
-        Ok(message_fields)
+        Ok(values)
     }
 
     fn map_value(&mut self, key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
@@ -341,52 +399,13 @@ impl Parser {
         Ok(Value::ExitName(values))
     }
 
-    fn map_message(&mut self, command: &Command, args: &Vec<Value>) {
-        match (command, args.as_slice()) {
-            (Command::StraightStep, [Value::LaneGuidance(_)]) => {}
-            (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
-            (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
-            (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
-            (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
-            (Command::TurnStep, [Value::TrafficLight(_), Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
-            (Command::UTurnStep, []) => {}
-            (Command::UTurnStep, [Value::IntersectionName(_)]) => {}
-            (Command::OnRampStep, [Value::LaneGuidance(_)]) => {}
-            (Command::OnRampStep, [Value::TurnSharpness(_), Value::TurnSide(_), Value::SignIndirectName(_)]) => {}
-            (Command::OffRampStep, [Value::LaneGuidance(_), Value::ExitName(_)]) => {}
-            (Command::OffRampStep, [Value::LaneGuidance(_)]) => {}
-            (Command::OffRampStep, [Value::ExitName(_)]) => {}
-            (Command::OffRampStep, [Value::SignIndirectName(_)]) => {}
-            (Command::KeepOrForkStep, [Value::LaneGuidance(_), Value::KeepSide(_)]) => {}
-            (Command::KeepOrForkStep, [Value::KeepSide(_), Value::LaneGuidance(_)]) => {}
-            (Command::KeepOrForkStep, [Value::KeepSide(_)]) => {}
-            (Command::MergeStep, []) => {}
-            (Command::MergeStep, [Value::LaneGuidance(_)]) => {}
-            (Command::DestinationStepPrepare, []) => {}
-            (Command::OnRampStep, []) => {}
-            (Command::OffRampStep, []) => {}
-            (Command::StraightStep, []) => {}
-            (Command::DestinationStepAct, []) => {}
-            (Command::InterchangeStep, [Value::InterchangeName(_)]) => {}
-            (Command::InterchangeStep, [Value::InterchangeName(_), Value::SignIndirectName(_)]) => {}
-            (Command::InterchangeStep, [Value::InterchangeName(_), Value::SignDirectName(_), Value::SignIndirectName(_)]) => {}
-            (Command::ContinueForDistance, [Value::Distance(_), Value::DistanceUnit(_)]) => {}
-            (Command::ContinueForDistance, [Value::Distance(_), Value::DistanceUnit(_), Value::DistanceOverride(_)]) => {}
-            (Command::PrepareDistanceMessage, [Value::Distance(_), Value::DistanceUnit(_), Value::Maneuver(_)]) => {}
-            (Command::CombineMergedGuidanceEvents, [Value::FirstStep(_), Value::SecondStep(_)]) => {}
-            _ => self.warn(format!("Unknown message {:?} {:?}", command, args))
-        }
-    }
-
-
     fn map_maneuver(&mut self, values: Vec<Value>) -> Result<Value, String> {
-        match values.as_slice() {
-            [Value::Key(key), Value::Args(args)] => {
-                self.map_message(key, args)
-            }
-            _ => self.warnings.push(format!("Unknown maneuver: {:?}", values))
+        let [key, args] = values.try_into().map_err(|values| format!("Unknown maneuver: {:?}", values))?;
+        match (key, args) {
+            (Value::Key(key), Value::Args(args)) =>
+                Ok(Value::Maneuver(self.map_guidance(key, args)?)),
+            (key, args) => Err(format!("Unknown maneuver: {:?} {:?}", key, args))
         }
-        Ok(Value::Maneuver(values))
     }
 
     fn parse_value(&mut self, bytes: &[u8]) -> Result<Value, String> {
@@ -497,70 +516,46 @@ impl Parser {
         }
     }
 
-    fn map_command(&mut self, command: PF4RawCommand) -> Result<Command, String> {
-        if command.key == "pathfinder4" {
-            match command.value.as_str() {
-                "pf_straightstep" => Ok(Command::StraightStep),
-                "pf_turnstep" => Ok(Command::TurnStep),
-                "pf_uturnstep" => Ok(Command::UTurnStep),
-                "pf_onrampstep" => Ok(Command::OnRampStep),
-                "pf_offrampstep" => Ok(Command::OffRampStep),
-                "pf_keeporforkstep" => Ok(Command::KeepOrForkStep),
-                "pf_mergestep" => Ok(Command::MergeStep),
-                "pf_interchangestep" => Ok(Command::InterchangeStep),
-                "pf_destinationstep_prepare" => Ok(Command::DestinationStepPrepare),
-                "pf_destinationstep_act" => Ok(Command::DestinationStepAct),
-                "continue_for_distance" => Ok(Command::ContinueForDistance),
-                "prepare_distance_message" => Ok(Command::PrepareDistanceMessage),
-                "combine_merged_guidance_events" => Ok(Command::CombineMergedGuidanceEvents),
-                v => Err(format!("Unknown command value {}", v))
-            }
-        } else {
-            Err(format!("Unknown command key {}", command.key))
-        }
-    }
+    // fn map_command(&mut self, command: PF4Enum) -> Result<Command, String> {
+    //     if command.type_name == "pathfinder4" {
+    //         match command.value.as_str() {
+    //             "pf_straightstep" => Ok(Command::StraightStep),
+    //             "pf_turnstep" => Ok(Command::TurnStep),
+    //             "pf_uturnstep" => Ok(Command::UTurnStep),
+    //             "pf_onrampstep" => Ok(Command::OnRampStep),
+    //             "pf_offrampstep" => Ok(Command::OffRampStep),
+    //             "pf_keeporforkstep" => Ok(Command::KeepOrForkStep),
+    //             "pf_mergestep" => Ok(Command::MergeStep),
+    //             "pf_interchangestep" => Ok(Command::InterchangeStep),
+    //             "pf_destinationstep_prepare" => Ok(Command::DestinationStepPrepare),
+    //             "pf_destinationstep_act" => Ok(Command::DestinationStepAct),
+    //             "continue_for_distance" => Ok(Command::ContinueForDistance),
+    //             "prepare_distance_message" => Ok(Command::PrepareDistanceMessage),
+    //             "combine_merged_guidance_events" => Ok(Command::CombineMergedGuidanceEvents),
+    //             v => Err(format!("Unknown command value {}", v))
+    //         }
+    //     } else {
+    //         Err(format!("Unknown command key {}", command.type_name))
+    //     }
+    // }
 
-    fn parse_command(&mut self, bytes: &[u8]) -> Result<Command, String> {
+    fn parse_command(&mut self, bytes: &[u8]) -> Result<PF4Enum, String> {
         let mut command_value = None;
         let fields = parse_fields(bytes)?;
         for &Field { ref field_number, ref value } in &fields {
              match (field_number.as_u32(), value) {
                 (3, &FieldValue::Len(nested_bytes)) if command_value.is_none() => {
-                    command_value = Some(self.parse_key_value(nested_bytes)?);
+                    command_value = Some(self.parse_enum(nested_bytes)?);
                 }
                 (n, _) => {
                     self.warn(format!("Unexpected field number {} in PF4Command", n));
                 }
             }
         }
-        if let Some((key, value)) = command_value {
-            Ok(self.map_command(PF4RawCommand { key, value })?)
+        if let Some(value) = command_value {
+            Ok(value)
         } else {
             Err("Missing required field 3 in PF4Command".to_string())
-        }
-    }
-
-    fn parse_key_value(&mut self, bytes: &[u8]) -> Result<(String, String), String> {
-        let mut key = None;
-        let mut val = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
-            match (field_number.as_u32(), value) {
-                (1, &FieldValue::Len(nested_bytes)) if key.is_none() => {
-                    key = Some(self.parse_string(nested_bytes)?);
-                }
-                (2, &FieldValue::Len(nested_bytes)) if val.is_none() => {
-                    val = Some(self.parse_string(nested_bytes)?);
-                }
-                 (n, _) => {
-                    self.warn(format!("Unexpected field number {} in PF4KeyValue", n));
-                }
-            }
-        }
-        if let (Some(key), Some(val)) = (key, val) {
-            Ok((key, val))
-        } else {
-            Err("Missing required fields in PF4KeyValue".to_string())
         }
     }
 }
