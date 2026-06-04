@@ -43,15 +43,53 @@ pub enum TurnSide {
 }
 
 #[derive(Debug)]
+pub enum KeepSide {
+    Left,
+    Right,
+}
+
+#[derive(Debug)]
+pub enum DestinationSide {
+    Left,
+    Right,
+}
+
+#[derive(Debug)]
+pub enum LaneGuidance {
+    LeftLane,
+    Left2Lanes,
+    MiddleLane,
+    RightLane,
+    Right2Lanes,
+    SecondFromRight,
+    AnyLane
+}
+
+#[derive(Debug)]
 pub enum Value {
     Unknown(String, String),
     Distance(f64),
     DistanceUnit(DistanceUnit),
+    DistanceOverride(String),
     TurnSharpness(TurnSharpness),
     TurnSide(TurnSide),
+    KeepSide(KeepSide),
+    DestinationSide(DestinationSide),
+    LaneGuidance(LaneGuidance),
+    TrafficLight(i64),
+    StopSign(i64),
+    ExitName(Vec<Value>),
+    Exits(Vec<Value>),
     Maneuver(Vec<Value>),
     Key(Command),
     Args(Vec<Value>),
+    FirstStep(Vec<Value>),
+    SecondStep(Vec<Value>),
+    SignDirectName(Vec<Value>),
+    SignIndirectName(Vec<Value>),
+    Routes(Vec<Value>),
+    IntersectionName(Vec<Value>),
+    InterchangeName(Vec<Value>),
 }
 
 #[derive(Debug)]
@@ -186,6 +224,7 @@ impl Parser {
                         }
                     }
                 }
+                ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(symbol)),
                 ("turn_sharpness", PF4RawValue::SymbolValue(symbol)) => {
                     match symbol.as_str() {
                         "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
@@ -207,12 +246,65 @@ impl Parser {
                         }
                     }
                 }
+                ("keep_side", PF4RawValue::SymbolValue(symbol)) => {
+                    match symbol.as_str() {
+                        "LEFT" => Ok(Value::KeepSide(KeepSide::Left)),
+                        "RIGHT" => Ok(Value::KeepSide(KeepSide::Right)),
+                        _ => {
+                            self.warnings.push(format!("Unexpected value for field 'keep_side': {}", symbol));
+                            Ok(Value::Unknown(key, symbol.clone()))
+                        }
+                    }
+                }
+                ("destination_side", PF4RawValue::SymbolValue(symbol)) => {
+                    match symbol.as_str() {
+                        "LEFT" => Ok(Value::DestinationSide(DestinationSide::Left)),
+                        "RIGHT" => Ok(Value::DestinationSide(DestinationSide::Right)),
+                        _ => {
+                            self.warnings.push(format!("Unexpected value for field 'destination_side': {}", symbol));
+                            Ok(Value::Unknown(key, symbol.clone()))
+                        }
+                    }
+                }
+                ("lane_guidance_type", PF4RawValue::SymbolValue(symbol)) => {
+                    match symbol.as_str() {
+                        "USE_LEFT_LANE" => Ok(Value::LaneGuidance(LaneGuidance::LeftLane)),
+                        "USE_LEFT_2_LANES" => Ok(Value::LaneGuidance(LaneGuidance::Left2Lanes)),
+                        "USE_RIGHT_LANE" => Ok(Value::LaneGuidance(LaneGuidance::RightLane)),
+                        "USE_RIGHT_2_LANES" => Ok(Value::LaneGuidance(LaneGuidance::Right2Lanes)),
+                        "USE_SECOND_FROM_RIGHT" => Ok(Value::LaneGuidance(LaneGuidance::SecondFromRight)),
+                        "USE_MIDDLE_LANE" => Ok(Value::LaneGuidance(LaneGuidance::MiddleLane)),
+                        "USE_ANY_LANE" => Ok(Value::LaneGuidance(LaneGuidance::AnyLane)),
+                        _ => {
+                            self.warnings.push(format!("Unexpected value for field 'lane_guidance': {}", symbol));
+                            Ok(Value::Unknown(key, symbol.clone()))
+                        }
+                    }
+                }
+                ("traffic_light", PF4RawValue::IntValue(v)) => Ok(Value::TrafficLight(v)),
+                ("stop_sign", PF4RawValue::IntValue(v)) => Ok(Value::StopSign(v)),
+                ("exit_name", PF4RawValue::KeyValueArray(values)) => {
+                    Ok(Value::ExitName(values))
+                }
+                ("exits", PF4RawValue::KeyValueArray(values)) => {
+                    Ok(Value::Exits(values))
+                }
                 ("maneuver", PF4RawValue::KeyValueArray(values)) => {
                     Ok(Value::Maneuver(values))
                 }
                 ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
                 ("args", PF4RawValue::KeyValueArray(values)) => Ok(Value::Args(values)),
-                (_, value) => Ok(Value::Unknown(key, format!("{:?}", value))),
+                ("first_step", PF4RawValue::KeyValueArray(values)) => Ok(Value::FirstStep(values)),
+                ("second_step", PF4RawValue::KeyValueArray(values)) => Ok(Value::SecondStep(values)),
+                ("sign_direct_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::SignDirectName(values)),
+                ("sign_indirect_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::SignIndirectName(values)),
+                ("routes", PF4RawValue::KeyValueArray(values)) => Ok(Value::Routes(values)),
+                ("intersection_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::IntersectionName(values)),
+                ("interchange_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::InterchangeName(values)),
+                (_, value) => {
+                    self.warnings.push(format!("Unknown key-value pair: {} = {:?}", key, value));
+                    Ok(Value::Unknown(key, format!("{:?}", value)))
+                }
             }
         } else if let PF4RawValue::NLGData(_) = value {
             Ok(Value::Unknown("TODO".to_string(), format!("{:?}", value)))
