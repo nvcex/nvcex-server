@@ -516,29 +516,6 @@ impl Parser {
         }
     }
 
-    // fn map_command(&mut self, command: PF4Enum) -> Result<Command, String> {
-    //     if command.type_name == "pathfinder4" {
-    //         match command.value.as_str() {
-    //             "pf_straightstep" => Ok(Command::StraightStep),
-    //             "pf_turnstep" => Ok(Command::TurnStep),
-    //             "pf_uturnstep" => Ok(Command::UTurnStep),
-    //             "pf_onrampstep" => Ok(Command::OnRampStep),
-    //             "pf_offrampstep" => Ok(Command::OffRampStep),
-    //             "pf_keeporforkstep" => Ok(Command::KeepOrForkStep),
-    //             "pf_mergestep" => Ok(Command::MergeStep),
-    //             "pf_interchangestep" => Ok(Command::InterchangeStep),
-    //             "pf_destinationstep_prepare" => Ok(Command::DestinationStepPrepare),
-    //             "pf_destinationstep_act" => Ok(Command::DestinationStepAct),
-    //             "continue_for_distance" => Ok(Command::ContinueForDistance),
-    //             "prepare_distance_message" => Ok(Command::PrepareDistanceMessage),
-    //             "combine_merged_guidance_events" => Ok(Command::CombineMergedGuidanceEvents),
-    //             v => Err(format!("Unknown command value {}", v))
-    //         }
-    //     } else {
-    //         Err(format!("Unknown command key {}", command.type_name))
-    //     }
-    // }
-
     fn parse_command(&mut self, bytes: &[u8]) -> Result<PF4Enum, String> {
         let mut command_value = None;
         let fields = parse_fields(bytes)?;
