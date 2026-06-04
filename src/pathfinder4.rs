@@ -16,10 +16,20 @@ pub struct Message {
 }
 
 #[derive(Debug)]
-pub struct Command {
-    // field 3: (String, String)
-    pub key: String,
-    pub value: String,
+pub enum Command {
+    StraightStep,
+    TurnStep,
+    UTurnStep,
+    OnRampStep,
+    OffRampStep,
+    KeepOrForkStep,
+    MergeStep,
+    InterchangeStep,
+    DestinationStepPrepare,
+    DestinationStepAct,
+    ContinueForDistance,
+    PrepareDistanceMessage,
+    CombineMergedGuidanceEvents,
 }
 
 #[derive(Debug)]
@@ -127,6 +137,13 @@ struct PF4NLGData {
     pub id: Option<String>,
     // field 2: string
     pub text: String,
+}
+
+#[derive(Debug)]
+struct PF4RawCommand {
+    // field 3: (String, String)
+    pub key: String,
+    pub value: String,
 }
 
 pub struct Parser {
@@ -284,12 +301,16 @@ impl Parser {
                 ("traffic_light", PF4RawValue::IntValue(v)) => Ok(Value::TrafficLight(v)),
                 ("stop_sign", PF4RawValue::IntValue(v)) => Ok(Value::StopSign(v)),
                 ("exit_name", PF4RawValue::KeyValueArray(values)) => {
-                    Ok(Value::ExitName(values))
+                    self.map_exit_name(values)
                 }
                 ("exits", PF4RawValue::KeyValueArray(values)) => {
+                    if values.len() != 1 {
+                        self.warnings.push(format!("Unknown exits: {:?}", values));
+                    }
                     Ok(Value::Exits(values))
                 }
                 ("maneuver", PF4RawValue::KeyValueArray(values)) => {
+                    //self.warnings.push(format!("Unknown maneuver: {:?}", values));
                     Ok(Value::Maneuver(values))
                 }
                 ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
@@ -311,6 +332,13 @@ impl Parser {
         } else {
             Err("Missing key in PF4KeyValue".to_string())
         }
+    }
+
+    fn map_exit_name(&mut self, values: Vec<Value>) -> Result<Value, String> {
+        if values.len() != 1 {
+            self.warnings.push(format!("Unknown exit_name: {:?}", values));
+        }
+        Ok(Value::ExitName(values))
     }
 
     fn parse_value(&mut self, bytes: &[u8]) -> Result<Value, String> {
@@ -421,6 +449,29 @@ impl Parser {
         }
     }
 
+    fn map_command(&mut self, command: PF4RawCommand) -> Result<Command, String> {
+        if command.key == "pathfinder4" {
+            match command.value.as_str() {
+                "pf_straightstep" => Ok(Command::StraightStep),
+                "pf_turnstep" => Ok(Command::TurnStep),
+                "pf_uturnstep" => Ok(Command::UTurnStep),
+                "pf_onrampstep" => Ok(Command::OnRampStep),
+                "pf_offrampstep" => Ok(Command::OffRampStep),
+                "pf_keeporforkstep" => Ok(Command::KeepOrForkStep),
+                "pf_mergestep" => Ok(Command::MergeStep),
+                "pf_interchangestep" => Ok(Command::InterchangeStep),
+                "pf_destinationstep_prepare" => Ok(Command::DestinationStepPrepare),
+                "pf_destinationstep_act" => Ok(Command::DestinationStepAct),
+                "continue_for_distance" => Ok(Command::ContinueForDistance),
+                "prepare_distance_message" => Ok(Command::PrepareDistanceMessage),
+                "combine_merged_guidance_events" => Ok(Command::CombineMergedGuidanceEvents),
+                v => Err(format!("Unknown command value {}", v))
+            }
+        } else {
+            Err(format!("Unknown command key {}", command.key))
+        }
+    }
+
     fn parse_command(&mut self, bytes: &[u8]) -> Result<Command, String> {
         let mut command_value = None;
         let fields = parse_fields(bytes)?;
@@ -435,7 +486,7 @@ impl Parser {
             }
         }
         if let Some((key, value)) = command_value {
-            Ok(Command { key, value })
+            Ok(self.map_command(PF4RawCommand { key, value })?)
         } else {
             Err("Missing required field 3 in PF4Command".to_string())
         }
