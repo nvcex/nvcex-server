@@ -204,6 +204,7 @@ impl Parser {
             }
         }
         if let (Some(fields), Some(command)) = (message_fields, command) {
+            self.map_message(&command, &fields);
             Ok(Message { fields, command })
         } else {
             Err("Missing required fields in PF4Message".to_string())
@@ -340,30 +341,48 @@ impl Parser {
         Ok(Value::ExitName(values))
     }
 
+    fn map_message(&mut self, command: &Command, args: &Vec<Value>) {
+        match (command, args.as_slice()) {
+            (Command::StraightStep, [Value::LaneGuidance(_)]) => {}
+            (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
+            (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
+            (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
+            (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
+            (Command::TurnStep, [Value::TrafficLight(_), Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
+            (Command::UTurnStep, []) => {}
+            (Command::UTurnStep, [Value::IntersectionName(_)]) => {}
+            (Command::OnRampStep, [Value::LaneGuidance(_)]) => {}
+            (Command::OnRampStep, [Value::TurnSharpness(_), Value::TurnSide(_), Value::SignIndirectName(_)]) => {}
+            (Command::OffRampStep, [Value::LaneGuidance(_), Value::ExitName(_)]) => {}
+            (Command::OffRampStep, [Value::LaneGuidance(_)]) => {}
+            (Command::OffRampStep, [Value::ExitName(_)]) => {}
+            (Command::OffRampStep, [Value::SignIndirectName(_)]) => {}
+            (Command::KeepOrForkStep, [Value::LaneGuidance(_), Value::KeepSide(_)]) => {}
+            (Command::KeepOrForkStep, [Value::KeepSide(_), Value::LaneGuidance(_)]) => {}
+            (Command::KeepOrForkStep, [Value::KeepSide(_)]) => {}
+            (Command::MergeStep, []) => {}
+            (Command::MergeStep, [Value::LaneGuidance(_)]) => {}
+            (Command::DestinationStepPrepare, []) => {}
+            (Command::OnRampStep, []) => {}
+            (Command::OffRampStep, []) => {}
+            (Command::StraightStep, []) => {}
+            (Command::DestinationStepAct, []) => {}
+            (Command::InterchangeStep, [Value::InterchangeName(_)]) => {}
+            (Command::InterchangeStep, [Value::InterchangeName(_), Value::SignIndirectName(_)]) => {}
+            (Command::InterchangeStep, [Value::InterchangeName(_), Value::SignDirectName(_), Value::SignIndirectName(_)]) => {}
+            (Command::ContinueForDistance, [Value::Distance(_), Value::DistanceUnit(_)]) => {}
+            (Command::ContinueForDistance, [Value::Distance(_), Value::DistanceUnit(_), Value::DistanceOverride(_)]) => {}
+            (Command::PrepareDistanceMessage, [Value::Distance(_), Value::DistanceUnit(_), Value::Maneuver(_)]) => {}
+            (Command::CombineMergedGuidanceEvents, [Value::FirstStep(_), Value::SecondStep(_)]) => {}
+            _ => self.warn(format!("Unknown message {:?} {:?}", command, args))
+        }
+    }
+
+
     fn map_maneuver(&mut self, values: Vec<Value>) -> Result<Value, String> {
         match values.as_slice() {
             [Value::Key(key), Value::Args(args)] => {
-                match (key, args.as_slice()) {
-                    (Command::StraightStep, [Value::LaneGuidance(_)]) => {}
-                    (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
-                    (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_)]) => {}
-                    (Command::TurnStep, [Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
-                    (Command::TurnStep, [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)]) => {}
-                    (Command::UTurnStep, []) => {}
-                    (Command::UTurnStep, [Value::IntersectionName(_)]) => {}
-                    (Command::OnRampStep, [Value::LaneGuidance(_)]) => {}
-                    (Command::OffRampStep, [Value::LaneGuidance(_), Value::ExitName(_)]) => {}
-                    (Command::OffRampStep, [Value::LaneGuidance(_)]) => {}
-                    (Command::OffRampStep, [Value::ExitName(_)]) => {}
-                    (Command::OffRampStep, [Value::SignIndirectName(_)]) => {}
-                    (Command::KeepOrForkStep, [Value::LaneGuidance(_), Value::KeepSide(_)]) => {}
-                    (Command::KeepOrForkStep, [Value::KeepSide(_), Value::LaneGuidance(_)]) => {}
-                    (Command::KeepOrForkStep, [Value::KeepSide(_)]) => {}
-                    (Command::MergeStep, []) => {}
-                    (Command::MergeStep, [Value::LaneGuidance(_)]) => {}
-                    (Command::DestinationStepPrepare, []) => {}
-                    _ => self.warnings.push(format!("Unknown maneuver combination: {:?}", values))
-                }
+                self.map_message(key, args)
             }
             _ => self.warnings.push(format!("Unknown maneuver: {:?}", values))
         }
