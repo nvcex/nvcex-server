@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample JSON Player</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 2rem; }
+    .item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .item button { padding: 0.5rem 1rem; }
+    .item pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
+    .parse-result { display: none; margin: 0 0 1rem 1rem; padding: 0.75rem; background: #f7f7f7; border-radius: 6px; font-size: 0.95rem; max-width: calc(100% - 1rem); }
+  </style>
+</head>
+<body>
+  <h1>/sample.json の内容</h1>
+  <div id="items">Loading...</div>
+  <audio id="player" controls style="display:none; width:100%; margin-top:1rem;"></audio>
+
+  <script>
+    async function loadSample() {
+      const container = document.getElementById('items');
+      container.textContent = 'Loading...';
+
+      try {
+        const res = await fetch('/sample.json');
+        if (!res.ok) throw new Error('sample.json の取得に失敗しました');
+
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('sample.json は配列ではありません');
+
+        container.textContent = '';
+
+        data.forEach((item, index) => {
+          const row = document.createElement('div');
+          row.className = 'item';
+
+          const label = document.createElement('div');
+          label.innerHTML = `<strong>${index + 1}.</strong> ${item.text}`;
+          label.style.flex = '1';
+
+          const dataLine = document.createElement('div');
+          dataLine.textContent = item.data;
+          dataLine.style.fontSize = '0.9rem';
+          dataLine.style.color = '#555';
+          dataLine.style.whiteSpace = 'pre-wrap';
+          dataLine.style.wordBreak = 'break-word';
+          dataLine.style.marginTop = '0.25rem';
+          label.appendChild(dataLine);
+
+          const playButton = document.createElement('button');
+          playButton.textContent = '再生';
+          playButton.addEventListener('click', () => playText(item, playButton));
+
+          const parseResult = document.createElement('pre');
+          parseResult.className = 'parse-result';
+          parseResult.style.display = 'none';
+
+          const parseButton = document.createElement('button');
+          parseButton.textContent = 'パーズ';
+          parseButton.addEventListener('click', () => parseItem(item, parseResult, parseButton));
+
+          row.append(label, playButton, parseButton);
+          container.appendChild(row);
+          container.appendChild(parseResult);
+        });
+      } catch (err) {
+        container.textContent = err.message || '読み込みに失敗しました';
+      }
+    }
+
+    async function playText(item, button) {
+      const player = document.getElementById('player');
+      button.disabled = true;
+      const original = button.textContent;
+      button.textContent = '読み込み中...';
+
+      try {
+        const res = await fetch('/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: item.text, data: item.data, voice_type: 'standard', format: 'wav' }),
+        });
+
+        if (!res.ok) {
+          const payload = await res.json().catch(() => ({}));
+          throw new Error(payload.error || 'tts API の呼び出しに失敗しました');
+        }
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        player.src = url;
+        player.style.display = 'block';
+        await player.play();
+
+        player.onended = () => {
+          URL.revokeObjectURL(url);
+        };
+      } catch (err) {
+        alert(err.message || '再生に失敗しました');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    async function parseItem(item, resultNode, button) {
+      button.disabled = true;
+      const original = button.textContent;
+      button.textContent = 'パーズ中...';
+      resultNode.style.display = 'none';
+      resultNode.textContent = '';
+
+      try {
+        const res = await fetch('/parse', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: item.text, data: item.data, voice_type: 'standard', format: 'wav' }),
+        });
+
+        if (!res.ok) {
+          const payload = await res.json().catch(() => ({}));
+          throw new Error(payload.error || 'parse API の呼び出しに失敗しました');
+        }
+
+        const json = await res.json();
+        resultNode.textContent = json.parsed || JSON.stringify(json, null, 2);
+        resultNode.style.display = 'block';
+      } catch (err) {
+        alert(err.message || 'パーズに失敗しました');
+      } finally {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+
+    loadSample();
+  </script>
+</body>
+</html>
