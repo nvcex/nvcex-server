@@ -4,14 +4,14 @@ use std::str;
 #[derive(Debug)]
 pub enum Guidance {
     StraightStep(Option<LaneGuidance>),
-    TurnStep(TurnSharpness, TurnSide, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>),
+    TurnStep(TurnSharpness, TurnSide, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<StopSign>),
     UTurnStep(Option<IntersectionName>),
-    OnRampStep(Option<TurnSharpness>, Option<TurnSide>, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<SignIndirectName>),
+    OnRampStep(Option<TurnSharpness>, Option<TurnSide>, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<SignDirectName>, Option<SignIndirectName>),
     OffRampStep(Option<LaneGuidance>, Option<ExitName>, Option<SignIndirectName>),
     KeepOrForkStep(KeepSide, Option<LaneGuidance>),
     MergeStep(Option<LaneGuidance>),
-    InterchangeStep,
-    DestinationStepPrepare,
+    InterchangeStep(Option<LaneGuidance>, InterchangeName, Option<SignDirectName>, Option<SignIndirectName>),
+    DestinationStepPrepare(Option<DestinationSide>),
     DestinationStepAct,
     ContinueForDistance(f64, DistanceUnit, Option<DistanceOverride>),
     PrepareDistanceMessage(f64, DistanceUnit, Box<Guidance>),
@@ -72,6 +72,11 @@ pub struct TrafficLight {
 }
 
 #[derive(Debug)]
+pub struct StopSign {
+    index: i64
+}
+
+#[derive(Debug)]
 pub struct IntersectionName {
     routes: Routes
 }
@@ -123,7 +128,7 @@ enum Value {
     DestinationSide(DestinationSide),
     LaneGuidance(LaneGuidance),
     TrafficLight(TrafficLight),
-    StopSign(i64),
+    StopSign(StopSign),
     ExitName(ExitName),
     Exits(Exits),
     Maneuver(Guidance),
@@ -259,6 +264,7 @@ impl Parser {
                     let mut side = None;
                     let mut intersectionName = None;
                     let mut trafficLight = None;
+                    let mut stop_sign = None;
                     for arg in args {
                         match arg {
                             Value::LaneGuidance(v) => lane = Some(v),
@@ -266,11 +272,12 @@ impl Parser {
                             Value::TurnSide(v) => side = Some(v),
                             Value::IntersectionName(v) => intersectionName = Some(v),
                             Value::TrafficLight(v) => trafficLight = Some(v),
+                            Value::StopSign(v) => stop_sign = Some(v),
                             arg => return Err(format!("unknown args for pf_turnstep {:?}", arg))
                         }
                     }
                     if let (Some(sharpness), Some(side)) = (sharpness, side) {
-                        Ok(Guidance::TurnStep(sharpness, side, lane, intersectionName, trafficLight))
+                        Ok(Guidance::TurnStep(sharpness, side, lane, intersectionName, trafficLight, stop_sign))
                     } else {
                         Err("missing sharpness or side field in pf_turnstep".to_string())
                     }
@@ -291,7 +298,8 @@ impl Parser {
                     let mut side = None;
                     let mut intersectionName = None;
                     let mut trafficLight = None;
-                    let mut signName = None;
+                    let mut sign_direct_name = None;
+                    let mut sign_indirect_name = None;
                     for arg in args {
                         match arg {
                             Value::LaneGuidance(v) => lane = Some(v),
@@ -299,11 +307,12 @@ impl Parser {
                             Value::TurnSide(v) => side = Some(v),
                             Value::IntersectionName(v) => intersectionName = Some(v),
                             Value::TrafficLight(v) => trafficLight = Some(v),
-                            Value::SignIndirectName(v) => signName = Some(v),
+                            Value::SignDirectName(v) => sign_direct_name = Some(v),
+                            Value::SignIndirectName(v) => sign_indirect_name = Some(v),
                             arg => return Err(format!("unknown args for pf_onrampstep {:?}", arg))
                         }
                     }
-                    Ok(Guidance::OnRampStep(sharpness, side, lane, intersectionName, trafficLight, signName))
+                    Ok(Guidance::OnRampStep(sharpness, side, lane, intersectionName, trafficLight, sign_direct_name, sign_indirect_name))
                 }
                 "pf_offrampstep" => {
                     let mut lane = None;
@@ -346,26 +355,34 @@ impl Parser {
                     Ok(Guidance::MergeStep(lane))
                 }
                 "pf_interchangestep" => {
+                    let mut lane = None;
                     let mut name = None;
-                    let mut signDirectName = None;
-                    let mut signIndirectName = None;
+                    let mut sign_direct_name = None;
+                    let mut sign_indirect_name = None;
                     for arg in args {
                         match arg {
+                            Value::LaneGuidance(v) => lane = Some(v),
                             Value::InterchangeName(v) => name = Some(v),
-                            Value::SignDirectName(v) => signDirectName = Some(v),
-                            Value::SignIndirectName(v) => signIndirectName = Some(v),
-                            arg => return Err(format!("unknown args for pf_offrampstep {:?}", arg))
+                            Value::SignDirectName(v) => sign_direct_name = Some(v),
+                            Value::SignIndirectName(v) => sign_indirect_name = Some(v),
+                            arg => return Err(format!("unknown args for pf_interchangestep {:?}", arg))
                         }
                     }
                     if let Some(name) = name {
-                        Ok(Guidance::InterchangeStep)
+                        Ok(Guidance::InterchangeStep(lane, name, sign_direct_name, sign_indirect_name))
                     } else {
                         Err("Missing field in pf_interchangestep".to_string())
                     }
                 }
-                "pf_destinationstep_prepare" => match args.as_slice() {
-                    [] => Ok(Guidance::DestinationStepPrepare),
-                    values => Err(format!("unknown args for pf_destinationstep_prepare {:?}", values))
+                "pf_destinationstep_prepare" => {
+                    let mut side = None;
+                    for arg in args {
+                        match arg {
+                            Value::DestinationSide(v) => side = Some(v),
+                            arg => return Err(format!("unknown args for pf_destinationstep_prepare {:?}", arg))
+                        }
+                    }
+                    Ok(Guidance::DestinationStepPrepare(side))
                 }
                 "pf_destinationstep_act" => match args.as_slice() {
                     [] => Ok(Guidance::DestinationStepAct),
@@ -373,36 +390,36 @@ impl Parser {
                 }
                 "continue_for_distance" => {
                     let mut distance = None;
-                    let mut distanceUnit = None;
-                    let mut distanceOverride = None;
+                    let mut distance_unit = None;
+                    let mut distance_override = None;
                     for arg in args {
                         match arg {
                             Value::Distance(v) => distance = Some(v),
-                            Value::DistanceUnit(v) => distanceUnit = Some(v),
-                            Value::DistanceOverride(v) => distanceOverride = Some(v),
+                            Value::DistanceUnit(v) => distance_unit = Some(v),
+                            Value::DistanceOverride(v) => distance_override = Some(v),
                             arg => return Err(format!("unknown args for continue_for_distance {:?}", arg))
                         }
                     }
-                    if let (Some(distance), Some(distanceUnit)) = (distance, distanceUnit) {
-                        Ok(Guidance::ContinueForDistance(distance, distanceUnit, distanceOverride))
+                    if let (Some(distance), Some(distance_unit)) = (distance, distance_unit) {
+                        Ok(Guidance::ContinueForDistance(distance, distance_unit, distance_override))
                     } else {
                         Err("Missing field in continue_for_distance".to_string())
                     }
                 }
                 "prepare_distance_message" => {
                     let mut distance = None;
-                    let mut distanceUnit = None;
+                    let mut distance_unit = None;
                     let mut maneuver = None;
                     for arg in args {
                         match arg {
                             Value::Distance(v) => distance = Some(v),
-                            Value::DistanceUnit(v) => distanceUnit = Some(v),
+                            Value::DistanceUnit(v) => distance_unit = Some(v),
                             Value::Maneuver(v) => maneuver = Some(v),
                             arg => return Err(format!("unknown args for prepare_distance_message {:?}", arg))
                         }
                     }
-                    if let (Some(distance), Some(distanceUnit), Some(maneuver)) = (distance, distanceUnit, maneuver) {
-                        Ok(Guidance::PrepareDistanceMessage(distance, distanceUnit, Box::new(maneuver)))
+                    if let (Some(distance), Some(distance_unit), Some(maneuver)) = (distance, distance_unit, maneuver) {
+                        Ok(Guidance::PrepareDistanceMessage(distance, distance_unit, Box::new(maneuver)))
                     } else {
                         Err("Missing field in prepare_distance_message".to_string())
                     }
@@ -519,7 +536,7 @@ impl Parser {
                     }
                 }
                 ("traffic_light", PF4RawValue::IntValue(index)) => Ok(Value::TrafficLight(TrafficLight { index })),
-                ("stop_sign", PF4RawValue::IntValue(v)) => Ok(Value::StopSign(v)),
+                ("stop_sign", PF4RawValue::IntValue(index)) => Ok(Value::StopSign(StopSign { index })),
                 ("exit_name", PF4RawValue::KeyValueArray(values)) => {
                     let mut exits = None;
                     for value in values {
