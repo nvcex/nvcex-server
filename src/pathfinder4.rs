@@ -1,13 +1,13 @@
-use protobuf_core::{Field, FieldValue,  AsRefExtProtobuf};
+use protobuf_core::{AsRefExtProtobuf, Field, FieldValue, WireType::Varint};
 use std::str;
 
 #[derive(Debug)]
 pub enum Guidance {
-    StraightStep,
-    TurnStep,
-    UTurnStep,
-    OnRampStep,
-    OffRampStep,
+    StraightStep(Option<LaneGuidance>),
+    TurnStep(TurnSharpness, TurnSide, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>),
+    UTurnStep(Option<IntersectionName>),
+    OnRampStep(Option<TurnSharpness>, Option<TurnSide>, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<SignIndirectName>),
+    OffRampStep(Option<LaneGuidance>, Option<ExitName>, Option<SignIndirectName>),
     KeepOrForkStep,
     MergeStep,
     InterchangeStep,
@@ -18,39 +18,39 @@ pub enum Guidance {
     CombineMergedGuidanceEvents,    
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum DistanceUnit {
     Meter,
     Kilometer,
     Mile,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum TurnSharpness {
     Slight,
     Normal,
     Sharp,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum TurnSide {
     Left,
     Right,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum KeepSide {
     Left,
     Right,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum DestinationSide {
     Left,
     Right,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum LaneGuidance {
     LeftLane,
     Left2Lanes,
@@ -62,7 +62,42 @@ pub enum LaneGuidance {
 }
 
 #[derive(Debug)]
-pub enum Value {
+pub struct TrafficLight {
+    index: i64
+}
+
+#[derive(Debug)]
+pub struct IntersectionName {
+    routes: Routes
+}
+
+#[derive(Debug)]
+pub struct ExitName {
+    exits: Exits
+}
+
+#[derive(Debug)]
+pub struct Exits {
+    names: Vec<NLGData>
+}
+
+#[derive(Debug)]
+pub struct SignIndirectName {
+    routes: Routes
+}
+
+#[derive(Debug)]
+pub struct Routes {
+    names: Vec<NLGData>
+}
+
+#[derive(Debug)]
+pub struct NLGData {
+    text: String
+}
+
+#[derive(Debug)]
+enum Value {
     Unknown(String, String),
     Distance(f64),
     DistanceUnit(DistanceUnit),
@@ -72,20 +107,21 @@ pub enum Value {
     KeepSide(KeepSide),
     DestinationSide(DestinationSide),
     LaneGuidance(LaneGuidance),
-    TrafficLight(i64),
+    TrafficLight(TrafficLight),
     StopSign(i64),
-    ExitName(Vec<Value>),
-    Exits(Vec<Value>),
+    ExitName(ExitName),
+    Exits(Exits),
     Maneuver(Guidance),
     Key(PF4Enum),
     Args(Vec<Value>),
     FirstStep(Vec<Value>),
     SecondStep(Vec<Value>),
     SignDirectName(Vec<Value>),
-    SignIndirectName(Vec<Value>),
-    Routes(Vec<Value>),
-    IntersectionName(Vec<Value>),
+    SignIndirectName(SignIndirectName),
+    Routes(Routes),
+    IntersectionName(IntersectionName),
     InterchangeName(Vec<Value>),
+    NLGData(NLGData),
 }
 
 #[derive(Debug)]
@@ -192,37 +228,81 @@ impl Parser {
     fn map_guidance(&mut self, command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> {
         if command.type_name == "pathfinder4" {
             match command.value.as_str() {
-                "pf_straightstep" => match args.as_slice() {
-                    [] => Ok(Guidance::StraightStep),
-                    [Value::LaneGuidance(_)] => Ok(Guidance::StraightStep),
-                    values => Err(format!("unknown args for pf_straightstep {:?}", values))
+                "pf_straightstep" => {
+                    let mut lane = None;
+                    for arg in args {
+                        match arg {
+                            Value::LaneGuidance(v) => lane = Some(v),
+                            arg => return Err(format!("unknown args for pf_straightstep {:?}", arg))
+                        }
+                    }
+                    Ok(Guidance::StraightStep(lane))
                 }
-                "pf_turnstep" => match args.as_slice() {
-                    [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_)] => Ok(Guidance::TurnStep),
-                    [Value::TurnSharpness(_), Value::TurnSide(_)] => Ok(Guidance::TurnStep),
-                    [Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)] => Ok(Guidance::TurnStep),
-                    [Value::LaneGuidance(_), Value::TurnSharpness(_), Value::TurnSide(_), Value::IntersectionName(_)] => Ok(Guidance::TurnStep),
-                    [Value::TrafficLight(_), Value::TurnSharpness(_), Value::TurnSide(_)] => Ok(Guidance::TurnStep),
-                    values => Err(format!("unknown args for pf_turnstep {:?}", values))
+                "pf_turnstep" => {
+                    let mut lane = None;
+                    let mut sharpness = None;
+                    let mut side = None;
+                    let mut intersectionName = None;
+                    let mut trafficLight = None;
+                    for arg in args {
+                        match arg {
+                            Value::LaneGuidance(v) => lane = Some(v),
+                            Value::TurnSharpness(v) => sharpness = Some(v),
+                            Value::TurnSide(v) => side = Some(v),
+                            Value::IntersectionName(v) => intersectionName = Some(v),
+                            Value::TrafficLight(v) => trafficLight = Some(v),
+                            arg => return Err(format!("unknown args for pf_turnstep {:?}", arg))
+                        }
+                    }
+                    if let (Some(sharpness), Some(side)) = (sharpness, side) {
+                        Ok(Guidance::TurnStep(sharpness, side, lane, intersectionName, trafficLight))
+                    } else {
+                        Err("missing sharpness or side field in pf_turnstep".to_string())
+                    }
                 }
-                "pf_uturnstep" => match args.as_slice() {
-                    [] => Ok(Guidance::UTurnStep),
-                    [Value::IntersectionName(_)] => Ok(Guidance::UTurnStep),
-                    values => Err(format!("unknown args for pf_uturnstep {:?}", values))
+                "pf_uturnstep" => {
+                    let mut intersectionName = None;
+                    for arg in args {
+                        match arg {
+                            Value::IntersectionName(v) => intersectionName = Some(v),
+                            arg => return Err(format!("unknown args for pf_uturnstep {:?}", arg))
+                        }
+                    }
+                    Ok(Guidance::UTurnStep(intersectionName))
                 }
-                "pf_onrampstep" => match args.as_slice() {
-                    [] => Ok(Guidance::OnRampStep),
-                    [Value::LaneGuidance(_)] => Ok(Guidance::OnRampStep),
-                    [Value::TurnSharpness(_), Value::TurnSide(_), Value::SignIndirectName(_)] => Ok(Guidance::OnRampStep),
-                    values => Err(format!("unknown args for pf_onrampstep {:?}", values))
+                "pf_onrampstep" => {
+                    let mut lane = None;
+                    let mut sharpness = None;
+                    let mut side = None;
+                    let mut intersectionName = None;
+                    let mut trafficLight = None;
+                    let mut signName = None;
+                    for arg in args {
+                        match arg {
+                            Value::LaneGuidance(v) => lane = Some(v),
+                            Value::TurnSharpness(v) => sharpness = Some(v),
+                            Value::TurnSide(v) => side = Some(v),
+                            Value::IntersectionName(v) => intersectionName = Some(v),
+                            Value::TrafficLight(v) => trafficLight = Some(v),
+                            Value::SignIndirectName(v) => signName = Some(v),
+                            arg => return Err(format!("unknown args for pf_onrampstep {:?}", arg))
+                        }
+                    }
+                    Ok(Guidance::OnRampStep(sharpness, side, lane, intersectionName, trafficLight, signName))
                 }
-                "pf_offrampstep" => match args.as_slice() {
-                    [] => Ok(Guidance::OffRampStep),
-                    [Value::LaneGuidance(_), Value::ExitName(_)] => Ok(Guidance::OffRampStep),
-                    [Value::LaneGuidance(_)] => Ok(Guidance::OffRampStep),
-                    [Value::ExitName(_)] => Ok(Guidance::OffRampStep),
-                    [Value::SignIndirectName(_)] => Ok(Guidance::OffRampStep),
-                    values => Err(format!("unknown args for pf_offrampstep {:?}", values))
+                "pf_offrampstep" => {
+                    let mut lane = None;
+                    let mut exit = None;
+                    let mut signName = None;
+                    for arg in args {
+                        match arg {
+                            Value::LaneGuidance(v) => lane = Some(v),
+                            Value::ExitName(v) => exit = Some(v),
+                            Value::SignIndirectName(v) => signName = Some(v),
+                            arg => return Err(format!("unknown args for pf_offrampstep {:?}", arg))
+                        }
+                    }
+                    Ok(Guidance::OffRampStep(lane, exit, signName))
                 }
                 "pf_keeporforkstep" => match args.as_slice() {
                     [Value::LaneGuidance(_), Value::KeepSide(_)] => Ok(Guidance::KeepOrForkStep),
@@ -357,16 +437,37 @@ impl Parser {
                         }
                     }
                 }
-                ("traffic_light", PF4RawValue::IntValue(v)) => Ok(Value::TrafficLight(v)),
+                ("traffic_light", PF4RawValue::IntValue(index)) => Ok(Value::TrafficLight(TrafficLight { index })),
                 ("stop_sign", PF4RawValue::IntValue(v)) => Ok(Value::StopSign(v)),
                 ("exit_name", PF4RawValue::KeyValueArray(values)) => {
-                    self.map_exit_name(values)
+                    let mut exits = None;
+                    for value in values {
+                        match value {
+                            Value::Exits(r) if exits.is_none() => {
+                                exits = Some(r)
+
+                            }
+                            value => {
+                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
+                            }
+                        }
+                    }
+                    if let Some(exits) = exits {
+                        Ok(Value::ExitName(ExitName { exits }))
+                    } else {
+                        Err("Missing values in exit_name".to_string())
+                    }
                 }
                 ("exits", PF4RawValue::KeyValueArray(values)) => {
-                    if values.len() != 1 {
-                        self.warnings.push(format!("Unknown exits: {:?}", values));
+                    let mut names = Vec::new();
+                    for value in values {
+                        if let Value::NLGData(data) = value {
+                            names.push(data)
+                        } else {
+                            self.warnings.push(format!("Unknown routes: {:?}", value));
+                        }
                     }
-                    Ok(Value::Exits(values))
+                    Ok(Value::Exits(Exits { names }))
                 }
                 ("maneuver", PF4RawValue::KeyValueArray(values)) => {
                     self.map_maneuver(values)
@@ -376,27 +477,66 @@ impl Parser {
                 ("first_step", PF4RawValue::KeyValueArray(values)) => Ok(Value::FirstStep(values)),
                 ("second_step", PF4RawValue::KeyValueArray(values)) => Ok(Value::SecondStep(values)),
                 ("sign_direct_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::SignDirectName(values)),
-                ("sign_indirect_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::SignIndirectName(values)),
-                ("routes", PF4RawValue::KeyValueArray(values)) => Ok(Value::Routes(values)),
-                ("intersection_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::IntersectionName(values)),
+                ("sign_indirect_name", PF4RawValue::KeyValueArray(values)) => {
+                    let mut routes = None;
+                    for value in values {
+                        match value {
+                            Value::Routes(r) if routes.is_none() => {
+                                routes = Some(r)
+
+                            }
+                            value => {
+                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
+                            }
+                        }
+                    }
+                    if let Some(routes) = routes {
+                        Ok(Value::SignIndirectName(SignIndirectName { routes }))
+                    } else {
+                        Err("Missing values in sign_indirect_name".to_string())
+                    }
+                }
+                ("routes", PF4RawValue::KeyValueArray(values)) => {
+                    let mut names = Vec::new();
+                    for value in values {
+                        if let Value::NLGData(data) = value {
+                            names.push(data)
+                        } else {
+                            self.warnings.push(format!("Unknown routes: {:?}", value));
+                        }
+                    }
+                    Ok(Value::Routes(Routes { names }))
+                }
+                ("intersection_name", PF4RawValue::KeyValueArray(values)) => {
+                    let mut routes = None;
+                    for value in values {
+                        match value {
+                            Value::Routes(r) if routes.is_none() => {
+                                routes = Some(r)
+
+                            }
+                            value => {
+                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
+                            }
+                        }
+                    }
+                    if let Some(routes) = routes {
+                        Ok(Value::IntersectionName(IntersectionName { routes }))
+                    } else {
+                        Err("Missing values in intersection_name".to_string())
+                    }
+                }
                 ("interchange_name", PF4RawValue::KeyValueArray(values)) => Ok(Value::InterchangeName(values)),
                 (_, value) => {
                     self.warnings.push(format!("Unknown key-value pair: {} = {:?}", key, value));
                     Ok(Value::Unknown(key, format!("{:?}", value)))
                 }
             }
-        } else if let PF4RawValue::NLGData(_) = value {
-            Ok(Value::Unknown("TODO".to_string(), format!("{:?}", value)))
+        } else if let PF4RawValue::NLGData(data) = value {
+            Ok(Value::NLGData(NLGData { text: data.text }))
         } else {
             Err("Missing key in PF4KeyValue".to_string())
         }
-    }
-
-    fn map_exit_name(&mut self, values: Vec<Value>) -> Result<Value, String> {
-        if values.len() != 1 {
-            self.warnings.push(format!("Unknown exit_name: {:?}", values));
-        }
-        Ok(Value::ExitName(values))
     }
 
     fn map_maneuver(&mut self, values: Vec<Value>) -> Result<Value, String> {
