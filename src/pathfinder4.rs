@@ -13,7 +13,7 @@ pub enum Guidance {
     InterchangeStep,
     DestinationStepPrepare,
     DestinationStepAct,
-    ContinueForDistance,
+    ContinueForDistance(f64, DistanceUnit, Option<DistanceOverride>),
     PrepareDistanceMessage,
     CombineMergedGuidanceEvents,    
 }
@@ -23,6 +23,11 @@ pub enum DistanceUnit {
     Meter,
     Kilometer,
     Mile,
+}
+
+#[derive(Debug)]
+pub struct DistanceOverride {
+    value: String
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -111,7 +116,7 @@ enum Value {
     Unknown(String, String),
     Distance(f64),
     DistanceUnit(DistanceUnit),
-    DistanceOverride(String),
+    DistanceOverride(DistanceOverride),
     TurnSharpness(TurnSharpness),
     TurnSide(TurnSide),
     KeepSide(KeepSide),
@@ -366,10 +371,23 @@ impl Parser {
                     [] => Ok(Guidance::DestinationStepAct),
                     values => Err(format!("unknown args for pf_destinationstep_act {:?}", values))
                 }
-                "continue_for_distance" => match args.as_slice() {
-                    [Value::Distance(_), Value::DistanceUnit(_)] => Ok(Guidance::ContinueForDistance),
-                    [Value::Distance(_), Value::DistanceUnit(_), Value::DistanceOverride(_)] => Ok(Guidance::ContinueForDistance),
-                    values => Err(format!("unknown args for continue_for_distance {:?}", values))
+                "continue_for_distance" => {
+                    let mut distance = None;
+                    let mut distanceUnit = None;
+                    let mut distanceOverride = None;
+                    for arg in args {
+                        match arg {
+                            Value::Distance(v) => distance = Some(v),
+                            Value::DistanceUnit(v) => distanceUnit = Some(v),
+                            Value::DistanceOverride(v) => distanceOverride = Some(v),
+                            arg => return Err(format!("unknown args for continue_for_distance {:?}", arg))
+                        }
+                    }
+                    if let (Some(distance), Some(distanceUnit)) = (distance, distanceUnit) {
+                        Ok(Guidance::ContinueForDistance(distance, distanceUnit, distanceOverride))
+                    } else {
+                        Err("Missing field in continue_for_distance".to_string())
+                    }
                 }
                 "prepare_distance_message" => match args.as_slice() {
                     [Value::Distance(_), Value::DistanceUnit(_), Value::Maneuver(_)] => Ok(Guidance::PrepareDistanceMessage),
@@ -417,7 +435,7 @@ impl Parser {
                         }
                     }
                 }
-                ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(symbol)),
+                ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(DistanceOverride { value: symbol })),
                 ("turn_sharpness", PF4RawValue::SymbolValue(symbol)) => {
                     match symbol.as_str() {
                         "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
