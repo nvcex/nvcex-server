@@ -14,8 +14,8 @@ pub enum Guidance {
     DestinationStepPrepare,
     DestinationStepAct,
     ContinueForDistance(f64, DistanceUnit, Option<DistanceOverride>),
-    PrepareDistanceMessage,
-    CombineMergedGuidanceEvents,    
+    PrepareDistanceMessage(f64, DistanceUnit, Box<Guidance>),
+    CombineMergedGuidanceEvents(Box<Guidance>, Box<Guidance>),    
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -129,8 +129,8 @@ enum Value {
     Maneuver(Guidance),
     Key(PF4Enum),
     Args(Vec<Value>),
-    FirstStep(Vec<Value>),
-    SecondStep(Vec<Value>),
+    FirstStep(Guidance),
+    SecondStep(Guidance),
     SignDirectName(SignDirectName),
     SignIndirectName(SignIndirectName),
     Routes(Routes),
@@ -389,13 +389,39 @@ impl Parser {
                         Err("Missing field in continue_for_distance".to_string())
                     }
                 }
-                "prepare_distance_message" => match args.as_slice() {
-                    [Value::Distance(_), Value::DistanceUnit(_), Value::Maneuver(_)] => Ok(Guidance::PrepareDistanceMessage),
-                    values => Err(format!("unknown args for prepare_distance_message {:?}", values))
+                "prepare_distance_message" => {
+                    let mut distance = None;
+                    let mut distanceUnit = None;
+                    let mut maneuver = None;
+                    for arg in args {
+                        match arg {
+                            Value::Distance(v) => distance = Some(v),
+                            Value::DistanceUnit(v) => distanceUnit = Some(v),
+                            Value::Maneuver(v) => maneuver = Some(v),
+                            arg => return Err(format!("unknown args for prepare_distance_message {:?}", arg))
+                        }
+                    }
+                    if let (Some(distance), Some(distanceUnit), Some(maneuver)) = (distance, distanceUnit, maneuver) {
+                        Ok(Guidance::PrepareDistanceMessage(distance, distanceUnit, Box::new(maneuver)))
+                    } else {
+                        Err("Missing field in prepare_distance_message".to_string())
+                    }
                 }
-                "combine_merged_guidance_events" => match args.as_slice() {
-                    [Value::FirstStep(_), Value::SecondStep(_)] => Ok(Guidance::CombineMergedGuidanceEvents),
-                    values => Err(format!("unknown args for combine_merged_guidance_events {:?}", values))
+                "combine_merged_guidance_events" => {
+                    let mut first = None;
+                    let mut second = None;
+                    for arg in args {
+                        match arg {
+                            Value::FirstStep(v) => first = Some(v),
+                            Value::SecondStep(v) => second = Some(v),
+                            arg => return Err(format!("unknown args for combine_merged_guidance_events {:?}", arg))
+                        }
+                    }
+                    if let (Some(first), Some(second)) = (first, second) {
+                        Ok(Guidance::CombineMergedGuidanceEvents(Box::new(first), Box::new(second)))
+                    } else {
+                        Err("Missing field in combine_merged_guidance_events".to_string())
+                    }
                 }
                 v => Err(format!("Unknown command value {}", v))
             }
@@ -529,8 +555,22 @@ impl Parser {
                 }
                 ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
                 ("args", PF4RawValue::KeyValueArray(values)) => Ok(Value::Args(values)),
-                ("first_step", PF4RawValue::KeyValueArray(values)) => Ok(Value::FirstStep(values)),
-                ("second_step", PF4RawValue::KeyValueArray(values)) => Ok(Value::SecondStep(values)),
+                ("first_step", PF4RawValue::KeyValueArray(values)) => {
+                    let [key, args] = values.try_into().map_err(|values| format!("Unknown first_step: {:?}", values))?;
+                    match (key, args) {
+                        (Value::Key(key), Value::Args(args)) =>
+                            Ok(Value::FirstStep(self.map_guidance(key, args)?)),
+                        (key, args) => Err(format!("Unknown first_step: {:?} {:?}", key, args))
+                    }
+                }
+                ("second_step", PF4RawValue::KeyValueArray(values)) => {
+                    let [key, args] = values.try_into().map_err(|values| format!("Unknown first_step: {:?}", values))?;
+                    match (key, args) {
+                        (Value::Key(key), Value::Args(args)) =>
+                            Ok(Value::SecondStep(self.map_guidance(key, args)?)),
+                        (key, args) => Err(format!("Unknown first_step: {:?} {:?}", key, args))
+                    }
+                }
                 ("sign_direct_name", PF4RawValue::KeyValueArray(values)) => {
                     let mut routes = None;
                     for value in values {
