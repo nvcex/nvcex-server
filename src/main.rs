@@ -1,10 +1,8 @@
-use axum::{http::StatusCode, response::IntoResponse, routing::{get, post}, Json, Router};
+use axum::{http::StatusCode, response::{Html, IntoResponse}, routing::{get, post}, Json, Router};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::fs;
 use std::net::SocketAddr;
-use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::net::TcpListener;
 use base64::prelude::*;
 mod pathfinder4;
@@ -33,7 +31,7 @@ struct LogTextRequest {
 #[tokio::main]
 async fn main() {
     let app = Router::new()
-        .route("/", get(hello_world))
+        .route("/", get(index_html))
         .route("/tts", post(handle_tts_request))
         .route("/log_text", post(handle_log_text));
 
@@ -50,8 +48,10 @@ async fn main() {
         .expect("server failed");
 }
 
-async fn hello_world() -> impl IntoResponse {
-    (StatusCode::OK, "Hello, world!")
+const INDEX_HTML: &str = include_str!("../static/index.html");
+
+async fn index_html() -> impl IntoResponse {
+    Html(INDEX_HTML)
 }
 
 async fn handle_log_text(Json(payload): Json<LogTextRequest>) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
