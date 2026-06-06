@@ -55,11 +55,14 @@
 
           const parseResult = document.createElement('pre');
           parseResult.className = 'parse-result';
+          const renderResult = document.createElement('span');
+          parseResult.className = 'render-result';
 
           row.append(label, playButton);
           container.appendChild(row);
           container.appendChild(parseResult);
-          resultNodes.push({ item, parseResult });
+          container.appendChild(renderResult);
+          resultNodes.push({ item, parseResult, renderResult });
         });
 
         parseAllItems(resultNodes);
@@ -69,18 +72,19 @@
     }
 
     async function parseAllItems(resultNodes) {
-      for (const { item, parseResult } of resultNodes) {
+      for (const { item, parseResult, renderResult } of resultNodes) {
         try {
           const res = await fetch('/parse', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: item.text, data: item.data, voice_type: 'standard', format: 'wav' }),
+            body: JSON.stringify({ text: item.text, data: item.data, scenario_name: "VOICEVOX/ずんだもん/ノーマル/P" }),
           });
 
           if (res.ok) {
             const json = await res.json();
             parseResult.textContent = json.parsed || JSON.stringify(json, null, 2);
             parseResult.style.display = 'block';
+            renderResult.textContent = json.render_result;
           } else {
             parseResult.textContent = 'パーズに失敗しました';
             parseResult.style.display = 'block';

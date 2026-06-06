@@ -1,43 +1,190 @@
-use crate::pathfinder4::{Guidance, LaneGuidance, TurnSharpness, TurnSide};
+use crate::{pathfinder4::{DestinationSide, Guidance, IntersectionName, KeepSide, LaneGuidance, StopSign, TrafficLight, TurnSharpness, TurnSide}, voices::{SpeechText, Voice}};
 
-pub fn format_guidance(g: &Guidance) -> String {
+pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
+    fn render_lane(lane: LaneGuidance) -> String {
+        match lane {
+            LaneGuidance::LeftLane => "左車線",
+            LaneGuidance::Left2Lanes => "左側2車線",
+            LaneGuidance::RightLane => "右車線",
+            LaneGuidance::Right2Lanes => "右側2車線",
+            LaneGuidance::MiddleLane => "真ん中の車線",
+            LaneGuidance::SecondFromRight => "右から2番目の車線",
+            LaneGuidance::AnyLane => "任意の車線",
+        }.to_string()        
+    }
+
+    fn render_intersection_name(iname: &IntersectionName) -> String {
+        iname.routes.names[0].text.clone()
+    }
+    
     match g {
         Guidance::StraightStep(opt_lane) => {
-            if let Some(lane) = opt_lane {
-                match lane {
-                    LaneGuidance::LeftLane => "まっすぐ（左車線）に進みます".to_string(),
-                    LaneGuidance::RightLane => "まっすぐ（右車線）に進みます".to_string(),
-                    _ => "まっすぐ進みます".to_string(),
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を", lane))
+                .unwrap_or("".to_string());
+            Ok(format!("{}直進します。", lane))
+        }
+        Guidance::TurnStep(sharpness, side, opt_lane, opt_iname, opt_tlight, opt_stop) => {
+            let stop = match opt_stop {
+                Some(StopSign { index: -1 }) => "一時停止の標識で、",
+                Some(StopSign { index: _ }) => "ずっと先の一時停止の標識で、",
+                _ => ""
+            }.to_string();
+            let tlight = match opt_tlight {
+                Some(TrafficLight { index: -1 }) => "信号で、",
+                Some(TrafficLight { index: _ }) => "ずっと先の信号で、",
+                _ => ""
+            }.to_string();
+            let i_name = opt_iname
+                .as_ref()
+                .map(render_intersection_name)
+                .map(|iname| format!("{}を、", iname))
+                .unwrap_or("".to_string());
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を使用して、", lane))
+                .unwrap_or("".to_string());
+            let side = match (sharpness, side) {
+                (TurnSharpness::Normal, TurnSide::Left) => "左折します",
+                (TurnSharpness::Normal, TurnSide::Right) => "右折します",
+                (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向です",
+                (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向です",
+                (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向です",
+                (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向です",
+            };
+            Ok(format!("{}{}{}{}{}。", stop, tlight, i_name, lane, side))
+        }
+        Guidance::UTurnStep(opt_iname) => {
+            let i_name = opt_iname
+                .as_ref()
+                .map(render_intersection_name)
+                .map(|iname| format!("{}で、", iname))
+                .unwrap_or("".to_string());
+            Ok(format!("{}Uターンします。", i_name))
+        }
+        Guidance::OnRampStep(sharpness, side, opt_lane, opt_iname, opt_tlight, sd_name, si_name) => {
+            let tlight = match opt_tlight {
+                Some(TrafficLight { index: -1 }) => "信号で、",
+                Some(TrafficLight { index: _ }) => "ずっと先の信号で、",
+                _ => ""
+            }.to_string();
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を使用して、", lane))
+                .unwrap_or("".to_string());
+            let side = {
+                if let (Some(sharpness), Some(side)) = (sharpness, side) {
+                    match (sharpness, side) {
+                        (TurnSharpness::Normal, TurnSide::Left) => "左折し",
+                        (TurnSharpness::Normal, TurnSide::Right) => "右折し",
+                        (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向へ進み",
+                        (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向へ進み",
+                        (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向へ進み",
+                        (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向へ進み",
+                    }.to_string()
+                } else {
+                    "".to_string()
                 }
-            } else {
-                "まっすぐ進みます".to_string()
-            }
-        }
-        Guidance::TurnStep(sharpness, side, _lane, _iname, _tlight, _stop) => {
-            let side_s = match side {
-                TurnSide::Left => "左",
-                TurnSide::Right => "右",
             };
-            let sharp_s = match sharpness {
-                TurnSharpness::Slight => "やや",
-                TurnSharpness::Normal => "",
-                TurnSharpness::Sharp => "鋭く",
-            };
-            format!("{}{}方向に曲がります", sharp_s, side_s)
+            let iname = opt_iname
+                .as_ref()
+                .map(|name| name.routes.names[0].text.clone())
+                .map(|name| format!("{}を", name))
+                .unwrap_or("".to_string());
+            let sd_name = sd_name
+                .as_ref()
+                .map(|name| name.routes.names[0].text.clone())
+                .unwrap_or("".to_string());
+            let si_name = si_name
+                .as_ref()
+                .map(|name| name.routes.names[0].text.clone())
+                .unwrap_or("".to_string());
+            Ok(format!("{}{}{}{}{}{}入ります。", tlight, lane, side, iname, sd_name, si_name))
         }
-        Guidance::UTurnStep(_) => "Uターンします".to_string(),
-        Guidance::KeepOrForkStep(_keep, _lane) => "進路を維持するか分岐します".to_string(),
-        Guidance::MergeStep(_) => "合流します".to_string(),
-        Guidance::DestinationStepPrepare(_) => "目的地に向けて準備します".to_string(),
-        Guidance::DestinationStepAct => "目的地に到着しました".to_string(),
-        Guidance::ContinueForDistance(dist, unit, _ovr) => {
+        Guidance::OffRampStep(opt_lane, e_name, si_name) => {
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を使用して、", lane))
+                .unwrap_or("".to_string());
+            let e_name = e_name
+                .as_ref()
+                .map(|name| name.exits.names[0].text.clone())
+                .map(|name| format!("{}を", name))
+                .unwrap_or("".to_string());
+            let si_name = si_name
+                .as_ref()
+                .map(|name| name.routes.names[0].text.clone())
+                .map(|name| format!("{}を", name))
+                .unwrap_or("".to_string());
+            Ok(format!("{}{}{}を出ます。", lane, e_name, si_name))
+        }
+        Guidance::KeepOrForkStep(keep, opt_lane) => {
+            let keep = match keep {
+                KeepSide::Left => "左側を",
+                KeepSide::Right => "右側を",
+            };
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を使用して、", lane))
+                .unwrap_or("".to_string());
+            Ok(format!("{}{}進みます。", lane, keep))
+        }
+        Guidance::MergeStep(opt_lane) => {
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を使用して", lane))
+                .unwrap_or("".to_string());
+            Ok(format!("{}合流します。", lane))
+        }
+        Guidance::DestinationStepPrepare(opt_side) => {
+            let s = match opt_side {
+                Some(DestinationSide::Left) => "目的地は左側です。",
+                Some(DestinationSide::Right) => "目的地は右側です。",
+                _ => "まもなく目的地です。"
+            }.to_string();
+            Ok(s)
+        }
+        Guidance::InterchangeStep(opt_lane, i_name, sd_name, si_name) => {
+            let lane = opt_lane
+                .map(render_lane)
+                .map(|lane| format!("{}を使用して", lane))
+                .unwrap_or("".to_string());
+            let i_name = i_name.exits.names[0].text.clone();
+            let sd_name = sd_name
+                .as_ref()
+                .map(|name| name.routes.names[0].text.clone())
+                .unwrap_or("".to_string());
+            let si_name = si_name
+                .as_ref()
+                .map(|name| name.routes.names[0].text.clone())
+                .unwrap_or("".to_string());
+            Ok(format!("{}{}を{}{}出ます。", lane, i_name, sd_name, si_name))
+        }
+        Guidance::DestinationStepAct => {
+            Ok("目的地に到着しました".to_string())
+        }
+        Guidance::ContinueForDistance(distance, unit, _ovr) => {
             let unit_s = match unit {
-                crate::pathfinder4::DistanceUnit::Meter => "m",
-                crate::pathfinder4::DistanceUnit::Kilometer => "km",
-                crate::pathfinder4::DistanceUnit::Mile => "mi",
+                crate::pathfinder4::DistanceUnit::Meter => "メートル",
+                crate::pathfinder4::DistanceUnit::Kilometer => "キロ",
+                crate::pathfinder4::DistanceUnit::Mile => "マイル",
             };
-            format!("約 {}{} 進みます", dist, unit_s)
+            Ok(format!("およそ{}{}道なりです。", distance, unit_s))
         }
-        other => format!("{:?}", other),
+        Guidance::PrepareDistanceMessage(distance, unit, guidance) => {
+            let unit_s = match unit {
+                crate::pathfinder4::DistanceUnit::Meter => "メートル",
+                crate::pathfinder4::DistanceUnit::Kilometer => "キロ",
+                crate::pathfinder4::DistanceUnit::Mile => "マイル",
+            };
+            let s = default_render_guidance(guidance)?;
+            Ok(format!("およそ{}{}先、{}", distance, unit_s, s))
+        }
+        Guidance::CombineMergedGuidanceEvents(first, second ) => {
+            let f = default_render_guidance(first)?;
+            let s = default_render_guidance(second)?;
+            Ok(format!("{}つづいて、{}", f, s))
+        }
     }
 }

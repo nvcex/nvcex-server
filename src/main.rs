@@ -8,8 +8,7 @@ use base64::prelude::*;
 mod pathfinder4;
 mod scenarios;
 mod voices;
-use crate::voices::{SpeechText, Speaker, Voice, VoicevoxClient};
-use crate::scenarios::{build_voicevox_scenarios, SharedScenario};
+use crate::{scenarios::{SharedScenario, build_voicevox_scenarios}, voices::{Speaker, VoicevoxClient}};
 use axum::extract::State;
 
 #[derive(Clone)]
@@ -21,15 +20,8 @@ struct AppState {
 #[derive(Debug, Deserialize)]
 struct TtsRequest {
     text: String,
-    data: String, // base64-encoded
-    voice_type: String,
-    format: Option<String>,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct LogTextRequest {
-    text: String,
-    data: String, // base64-encoded
+    data: String,
+    scenario_name: String,
 }
 
 #[tokio::main]
@@ -55,8 +47,6 @@ async fn main() {
         .route("/sample.json", get(sample_json))
         .route("/parse", post(handle_parse_request))
         .route("/tts", post(handle_tts_request))
-        .route("/log_text", post(handle_log_text))
-        .route("/voicevox/speakers", get(handle_voicevox_speakers))
         .route("/scenarios", get(handle_scenarios))
         .with_state(state.clone());
 
@@ -93,10 +83,19 @@ async fn sample_json() -> impl IntoResponse {
     )
 }
 
-async fn handle_parse_request(Json(payload): Json<TtsRequest>) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
-    if payload.data.trim().is_empty() {
-        return Err((StatusCode::BAD_REQUEST, Json(json_error("data must not be empty"))));
-    }
+async fn handle_parse_request(
+    State(state): State<Arc<AppState>>,
+    Json(payload): Json<TtsRequest>
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let scenario = match state.scenarios.get(&payload.scenario_name) {
+        Some(s) => s,
+        None => {
+            return Err((
+                StatusCode::BAD_REQUEST,
+                Json(json_error(&format!("unknown scenario: {}", payload.scenario_name))),
+            ));
+        }
+    };
 
     let body_bytes = match BASE64_STANDARD.decode(&payload.data) {
         Ok(bytes) => bytes,
@@ -115,72 +114,48 @@ async fn handle_parse_request(Json(payload): Json<TtsRequest>) -> Result<Json<se
         }
     };
 
+    let input = crate::scenarios::Input {
+        text: &payload.text,
+        guidance: Some(&message),
+    };
+
+    let speech_text = scenario.render(input);
+
     Ok(Json(serde_json::json!({
         "status": "ok",
         "text": payload.text,
-        "voice_type": payload.voice_type,
-        "format": payload.format,
         "parsed": format!("{:#?}", message),
+        "render_result": format!("{:#?}", speech_text),
         "warnings": parser.warnings,
     })))
 }
 
-async fn handle_log_text(Json(payload): Json<LogTextRequest>) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
-    tracing::info!(?payload, "received log_text request");
-    let body_bytes = match BASE64_STANDARD.decode(&payload.data) {
-        Ok(bytes) => bytes,
-        Err(err) => {
-            tracing::error!(?err, "failed to decode base64 body");
-            return Err((StatusCode::BAD_REQUEST, Json(json_error("failed to decode base64 body"))));
-        }
-    };
-
-    let save_path = "log_text.txt";
-    let save_line = format!("{},{}\n", payload.text, payload.data);
-
-    if let Err(err) = std::fs::OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(&save_path)
-        .and_then(|mut file| std::io::Write::write_all(&mut file, save_line.as_bytes()))
-    {
-        tracing::error!(?err, %save_path, "failed to append log_text line to file");
-    }
-
-    print!("{}", pathfinder4::dump_proto(&body_bytes, 0).unwrap());
-    let mut parser = pathfinder4::Parser::new();
-    let message = parser.parse(&body_bytes).unwrap();
-    println!("Parsed message: {:?}", message);
-
-    Ok(Json(serde_json::json!({
-        "status": "success",
-        "log_text_file": save_path,
-    })))
-}
-
-async fn handle_tts_request(State(state): State<Arc<AppState>>, Json(payload): Json<TtsRequest>) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+async fn handle_tts_request(
+    State(state): State<Arc<AppState>>,
+    Json(payload): Json<TtsRequest>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     if payload.text.trim().is_empty() {
         return Err((StatusCode::BAD_REQUEST, Json(json_error("text must not be empty"))));
     }
 
-    let voice_id = match map_voice_type(&payload.voice_type) {
-        Some(id) => id,
+    let scenario = match state.scenarios.get(&payload.scenario_name) {
+        Some(s) => s,
         None => {
-            return Err(
-                (
-                    StatusCode::BAD_REQUEST,
-                    Json(json_error("unsupported voice_type")),
-                ),
-            )
+            return Err((
+                StatusCode::BAD_REQUEST,
+                Json(json_error(&format!("unknown scenario: {}", payload.scenario_name))),
+            ));
         }
     };
 
-    let wav_body = match crate::voices::text_to_speech(
-        SpeechText::DynamicText(payload.text.clone(), Voice::VOICEVOX(voice_id)),
-        &state.voicevox,
-    )
-    .await
-    {
+    let input = crate::scenarios::Input {
+        text: &payload.text,
+        guidance: None,
+    };
+
+    let speech_text = scenario.render(input);
+
+    let wav_body = match crate::voices::text_to_speech(speech_text, &state.voicevox).await {
         Ok(b) => b,
         Err(err) => {
             tracing::error!(?err, "voicevox synth failed");
@@ -188,33 +163,7 @@ async fn handle_tts_request(State(state): State<Arc<AppState>>, Json(payload): J
         }
     };
 
-    Ok((
-        StatusCode::OK,
-        [("Content-Type", "audio/wav")],
-        wav_body,
-    ))
-}
-
-fn map_voice_type(voice_type: &str) -> Option<u32> {
-    let voices = HashMap::from([
-        ("standard", 1),
-        ("soft", 2),
-        ("bright", 3),
-    ]);
-
-    voices.get(voice_type).copied()
-}
-
-async fn handle_voicevox_speakers(State(state): State<Arc<AppState>>) -> Result<Json<Vec<Speaker>>, (StatusCode, Json<serde_json::Value>)> {
-    let speakers = match state.voicevox.speakers().await {
-        Ok(list) => list,
-        Err(err) => {
-            tracing::error!(?err, "failed to fetch voicevox speakers");
-            return Err((StatusCode::BAD_GATEWAY, Json(json_error("failed to fetch speakers"))));
-        }
-    };
-
-    Ok(Json(speakers))
+    Ok((StatusCode::OK, [("Content-Type", "audio/wav")], wav_body))
 }
 
 async fn handle_scenarios(State(state): State<Arc<AppState>>) -> Json<Vec<String>> {

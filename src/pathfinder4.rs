@@ -1,4 +1,4 @@
-use protobuf_core::{AsRefExtProtobuf, Field, FieldValue, WireType::Varint};
+use protobuf_core::{AsRefExtProtobuf, Field, FieldValue};
 use std::str;
 
 #[derive(Debug)]
@@ -27,7 +27,7 @@ pub enum DistanceUnit {
 
 #[derive(Debug)]
 pub struct DistanceOverride {
-    value: String
+    pub value: String
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -68,52 +68,52 @@ pub enum LaneGuidance {
 
 #[derive(Debug)]
 pub struct TrafficLight {
-    index: i64
+    pub index: i64
 }
 
 #[derive(Debug)]
 pub struct StopSign {
-    index: i64
+    pub index: i64
 }
 
 #[derive(Debug)]
 pub struct IntersectionName {
-    routes: Routes
+    pub routes: Routes
 }
 
 #[derive(Debug)]
 pub struct InterchangeName {
-    exits: Exits
+    pub exits: Exits
 }
 
 #[derive(Debug)]
 pub struct ExitName {
-    exits: Exits
+    pub exits: Exits
 }
 
 #[derive(Debug)]
 pub struct Exits {
-    names: Vec<NLGData>
+    pub names: Vec<NLGData>
 }
 
 #[derive(Debug)]
 pub struct SignDirectName {
-    routes: Routes
+    pub routes: Routes
 }
 
 #[derive(Debug)]
 pub struct SignIndirectName {
-    routes: Routes
+    pub routes: Routes
 }
 
 #[derive(Debug)]
 pub struct Routes {
-    names: Vec<NLGData>
+    pub names: Vec<NLGData>
 }
 
 #[derive(Debug)]
 pub struct NLGData {
-    text: String
+    pub text: String
 }
 
 #[derive(Debug)]

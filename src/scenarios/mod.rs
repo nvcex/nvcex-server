@@ -3,11 +3,11 @@ pub mod basic;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;
-use crate::voices::{SpeechText, Voice};
+use crate::{scenarios::basic::default_render_guidance, voices::{SpeechText, Voice}};
 
 pub struct Input<'a> {
-    text: &'a String,
-    guidance: &'a Option<crate::pathfinder4::Guidance>,
+    pub(crate) text: &'a String,
+    pub(crate) guidance: Option<&'a crate::pathfinder4::Guidance>,
 }
 
 /// Scenario trait: implementors can render a `Guidance` into a text string.
@@ -29,8 +29,9 @@ pub struct VoicevoxScenario {
 impl Scenario for VoicevoxScenario {
     fn render(&self, input: Input) -> SpeechText {
         if self.use_parser {
-            if let Some(_guidance) = input.guidance {
-                todo!()
+            if let Some(guidance) = input.guidance {
+                let s = default_render_guidance(guidance).unwrap();
+                SpeechText::DynamicText(s, Voice::VOICEVOX(self.style_id))
             } else {
                 SpeechText::DynamicText(input.text.clone(), Voice::VOICEVOX(self.style_id))
             }
@@ -60,13 +61,18 @@ pub fn build_voicevox_scenarios(speakers: &[crate::voices::Speaker]) -> HashMap<
         }
     }
 
-    scenarios
-}
-
-/// Convenience: pick a named scenario and describe the guidance.
-pub fn describe_with_scenario(name: &str, guidance: &crate::pathfinder4::Guidance) -> String {
-    match name {
-        "basic" => basic::format_guidance(guidance),
-        _ => basic::format_guidance(guidance),
+    for speaker in speakers {
+        for style in &speaker.styles {
+            let scenario = VoicevoxScenario {
+                speaker_name: speaker.name.clone(),
+                style_name: style.name.clone(),
+                style_id: style.id,
+                use_parser: true,
+            };
+            let key = scenario.name();
+            scenarios.insert(key.clone(), Arc::new(scenario) as SharedScenario);
+        }
     }
+
+    scenarios
 }
