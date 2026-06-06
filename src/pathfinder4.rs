@@ -146,8 +146,6 @@ enum Value {
 
 #[derive(Debug)]
 enum PF4RawValue {
-    // field 2: string
-    StringValue(String),
     // field 3: i64
     IntValue(i64),
     // field 4: Symbol
@@ -162,7 +160,6 @@ enum PF4RawValue {
     NLGData(PF4NLGData),
     // field 16: PF4KeyValue
     KeyValueArray(Vec<Value>),
-    PF4Unknown,
 }
 
 #[derive(Debug)]
@@ -176,6 +173,7 @@ struct PF4Enum {
 #[derive(Debug)]
 struct PF4NLGData {
     // field 1: string
+    #[allow(dead_code)]
     pub id: Option<String>,
     // field 2: string
     pub text: String,
@@ -262,42 +260,42 @@ impl Parser {
                     let mut lane = None;
                     let mut sharpness = None;
                     let mut side = None;
-                    let mut intersectionName = None;
-                    let mut trafficLight = None;
+                    let mut intersection_name = None;
+                    let mut traffic_light = None;
                     let mut stop_sign = None;
                     for arg in args {
                         match arg {
                             Value::LaneGuidance(v) => lane = Some(v),
                             Value::TurnSharpness(v) => sharpness = Some(v),
                             Value::TurnSide(v) => side = Some(v),
-                            Value::IntersectionName(v) => intersectionName = Some(v),
-                            Value::TrafficLight(v) => trafficLight = Some(v),
+                            Value::IntersectionName(v) => intersection_name = Some(v),
+                            Value::TrafficLight(v) => traffic_light = Some(v),
                             Value::StopSign(v) => stop_sign = Some(v),
                             arg => return Err(format!("unknown args for pf_turnstep {:?}", arg))
                         }
                     }
                     if let (Some(sharpness), Some(side)) = (sharpness, side) {
-                        Ok(Guidance::TurnStep(sharpness, side, lane, intersectionName, trafficLight, stop_sign))
+                        Ok(Guidance::TurnStep(sharpness, side, lane, intersection_name, traffic_light, stop_sign))
                     } else {
                         Err("missing sharpness or side field in pf_turnstep".to_string())
                     }
                 }
                 "pf_uturnstep" => {
-                    let mut intersectionName = None;
+                    let mut intersection_name = None;
                     for arg in args {
                         match arg {
-                            Value::IntersectionName(v) => intersectionName = Some(v),
+                            Value::IntersectionName(v) => intersection_name = Some(v),
                             arg => return Err(format!("unknown args for pf_uturnstep {:?}", arg))
                         }
                     }
-                    Ok(Guidance::UTurnStep(intersectionName))
+                    Ok(Guidance::UTurnStep(intersection_name))
                 }
                 "pf_onrampstep" => {
                     let mut lane = None;
                     let mut sharpness = None;
                     let mut side = None;
-                    let mut intersectionName = None;
-                    let mut trafficLight = None;
+                    let mut intersection_name = None;
+                    let mut traffic_light = None;
                     let mut sign_direct_name = None;
                     let mut sign_indirect_name = None;
                     for arg in args {
@@ -305,28 +303,28 @@ impl Parser {
                             Value::LaneGuidance(v) => lane = Some(v),
                             Value::TurnSharpness(v) => sharpness = Some(v),
                             Value::TurnSide(v) => side = Some(v),
-                            Value::IntersectionName(v) => intersectionName = Some(v),
-                            Value::TrafficLight(v) => trafficLight = Some(v),
+                            Value::IntersectionName(v) => intersection_name = Some(v),
+                            Value::TrafficLight(v) => traffic_light = Some(v),
                             Value::SignDirectName(v) => sign_direct_name = Some(v),
                             Value::SignIndirectName(v) => sign_indirect_name = Some(v),
                             arg => return Err(format!("unknown args for pf_onrampstep {:?}", arg))
                         }
                     }
-                    Ok(Guidance::OnRampStep(sharpness, side, lane, intersectionName, trafficLight, sign_direct_name, sign_indirect_name))
+                    Ok(Guidance::OnRampStep(sharpness, side, lane, intersection_name, traffic_light, sign_direct_name, sign_indirect_name))
                 }
                 "pf_offrampstep" => {
                     let mut lane = None;
                     let mut exit = None;
-                    let mut signName = None;
+                    let mut sign_name = None;
                     for arg in args {
                         match arg {
                             Value::LaneGuidance(v) => lane = Some(v),
                             Value::ExitName(v) => exit = Some(v),
-                            Value::SignIndirectName(v) => signName = Some(v),
+                            Value::SignIndirectName(v) => sign_name = Some(v),
                             arg => return Err(format!("unknown args for pf_offrampstep {:?}", arg))
                         }
                     }
-                    Ok(Guidance::OffRampStep(lane, exit, signName))
+                    Ok(Guidance::OffRampStep(lane, exit, sign_name))
                 }
                 "pf_keeporforkstep" => {
                     let mut lane = None;
@@ -684,9 +682,6 @@ impl Parser {
                 }
             } else {
                 let new_raw_value = match (field_number.as_u32(), value) {
-                    (2, &FieldValue::Len(nested_bytes)) => {
-                        Some(PF4RawValue::StringValue(self.parse_string(nested_bytes)?))
-                    }
                     (3, &FieldValue::Varint(v)) => {
                         Some(PF4RawValue::IntValue(v.to_sint64()))
                     }
@@ -795,6 +790,7 @@ fn parse_fields(bytes: &[u8]) -> Result<Vec<Field<&[u8]>>, String> {
         .map_err(|e| format!("Failed to parse protobuf fields: {}", e))
 }
 
+#[allow(dead_code)]
 pub fn dump_proto(bytes: &[u8], indent: usize) -> Result<String, String> {
     let mut out = String::new();
     out.push_str(&format!("{}(\n", " ".repeat(indent)));

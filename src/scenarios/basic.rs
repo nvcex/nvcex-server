@@ -1,4 +1,4 @@
-use crate::{pathfinder4::{DestinationSide, Guidance, IntersectionName, KeepSide, LaneGuidance, StopSign, TrafficLight, TurnSharpness, TurnSide}, voices::{SpeechText, Voice}};
+use crate::pathfinder4::{DestinationSide, Guidance, IntersectionName, KeepSide, LaneGuidance, StopSign, TrafficLight, TurnSharpness, TurnSide};
 
 pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
     fn render_lane(lane: LaneGuidance) -> String {
