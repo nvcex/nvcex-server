@@ -133,36 +133,6 @@
       }
     }
 
-    async function parseItem(item, resultNode, button) {
-      button.disabled = true;
-      const original = button.textContent;
-      button.textContent = 'パーズ中...';
-      resultNode.style.display = 'none';
-      resultNode.textContent = '';
-
-      try {
-        const res = await fetch('/parse', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: item.text, data: item.data, voice_type: 'standard', format: 'wav' }),
-        });
-
-        if (!res.ok) {
-          const payload = await res.json().catch(() => ({}));
-          throw new Error(payload.error || 'parse API の呼び出しに失敗しました');
-        }
-
-        const json = await res.json();
-        resultNode.textContent = json.parsed || JSON.stringify(json, null, 2);
-        resultNode.style.display = 'block';
-      } catch (err) {
-        alert(err.message || 'パーズに失敗しました');
-      } finally {
-        button.disabled = false;
-        button.textContent = original;
-      }
-    }
-
     loadSample();
   </script>
 </body>

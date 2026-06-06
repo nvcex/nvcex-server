@@ -1,31 +1,405 @@
 [
   {
-    "text": "およそ 600 メートル先、、右車線を使用してランプに進みます",
-    "data": "EuMBErUBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmUKCG1hbmV1dmVyggFYCiUKA2tleXIeGhwKC3BhdGhmaW5kZXI0Eg1wZl9vbnJhbXBzdGVwCi8KBGFyZ3OCASYKJAoSbGFuZV9ndWlkYW5jZV90eXBlIg5VU0VfUklHSFRfTEFORSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+    "text": "右側 2 車線を使用、直進します",
+    "data": "EiQSACogGh4KC3BhdGhmaW5kZXI0Eg9wZl9zdHJhaWdodHN0ZXA="
+  },
+
+  {
+    "text": "左方向です",
+    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
   },
   {
-    "text": "右車線を使用してランプに進みます",
-    "data": "EiISACoeGhwKC3BhdGhmaW5kZXI0Eg1wZl9vbnJhbXBzdGVw"
+    "text": "信号を右方向です (ギンザ の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
-    "text": "右車線を使用してランプに進みます",
-    "data": "EiISACoeGhwKC3BhdGhmaW5kZXI0Eg1wZl9vbnJhbXBzdGVw"
+    "text": "信号を右方向です",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
-    "text": "およそ 200 メートル先、、左車線を使用して斜め右方向に曲がる",
-    "data": "EpACEuIBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpEBCghtYW5ldXZlcoIBgwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwClwKBGFyZ3OCAVMKIwoSbGFuZV9ndWlkYW5jZV90eXBlIg1VU0VfTEVGVF9MQU5FChgKDnR1cm5fc2hhcnBuZXNzIgZTTElHSFQKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+    "text": "信号を右方向です (大手町 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
-    "text": "信号で左車線を使用して斜め右方向に曲がります、続いて 左折する",
-    "data": "EqYCEvIBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
+    "text": "信号で中央車線を使用して斜め右方向に曲がります (常盤橋 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
-    "text": "信号で左車線を使用して斜め右方向に曲がります、続いて 左折する",
-    "data": "EqYCEvIBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
+    "text": "右側 2 車線を使用して 浜町中ノ橋 で右方向です",
+    "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
+  },
+
+  {
+    "text": "信号で右側 2 車線を使用して右方向です",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "信号を右方向です へ向かいます",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "右側 2 車線を使用して斜め右方向に曲がります",
+    "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
+  },
+  {
+    "text": "信号を右方向です (新橋 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "信号を右方向です (日本橋 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "信号を右方向です",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "左方向です",
+    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
+  },
+  {
+    "text": "信号を左方向です",
+    "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
+  },
+  {
+    "text": "信号を右方向です",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
     "text": "信号を左方向です (日本橋 の表示)",
     "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
+  },
+  {
+    "text": "信号を右方向です (台場 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "斜め左方向に曲がります",
+    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
+  },
+  {
+    "text": "信号を右方向です (芝浦 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "信号で右側 2 車線を使用して右方向です",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+  {
+    "text": "信号を右方向です (祝田橋 の表示)",
+    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
+  },
+
+  {
+    "text": "右車線を使用してランプに進みます",
+    "data": "EiISACoeGhwKC3BhdGhmaW5kZXI0Eg1wZl9vbnJhbXBzdGVw"
+  },
+  {
+    "text": "斜め左方向に曲がり 月島 方面のランプにはいります",
+    "data": "EqEBEn8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Kh4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXA="
+  },
+  {
+    "text": "右から 2 番目の車線を使用して右側を進みます",
+    "data": "EjoSFAoSCglrZWVwX3NpZGUiBVJJR0hUKiIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVw"
+  },
+  {
+    "text": "左車線を進みます",
+    "data": "EjkSEwoRCglrZWVwX3NpZGUiBExFRlQqIhogCgtwYXRoZmluZGVyNBIRcGZfa2VlcG9yZm9ya3N0ZXA="
+  },
+  
+  {
+    "text": "U ターンします",
+    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+  },
+  {
+    "text": "月島警察署前 で U ターンします",
+    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+  },
+  {
+    "text": "新宿中央公園北 で U ターンします (新宿 の表示)",
+    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+  },
+  
+  {
+    "text": "浜崎橋ジャンクション で、右側 2 車線を使用して 銀座 方面 首都高速都心環状線 の標識に従います",
+    "data": "EqYCEv4BCkUKEGludGVyY2hhbmdlX25hbWWCATAKLgoFZXhpdHOCASQKInogEh7mtZzltI7mqYvjgrjjg6Pjg7Pjgq/jgrfjg6fjg7MKYwoQc2lnbl9kaXJlY3RfbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weDk4ZDI0YjM0MDAxOTJhZGISG+mmlumDvemrmOmAn+mDveW/g+eSsOeKtue3mgpQChJzaWduX2luZGlyZWN0X25hbWWCATkKNwoGcm91dGVzggEsCip6KAoeL0ZFQVRVUkVfSUQvMHg2MDQ2ODViMzBiYTk5ODUxEgbpioDluqcqIxohCgtwYXRoZmluZGVyNBIScGZfaW50ZXJjaGFuZ2VzdGVw"
+  },
+
+  {
+    "text": "右側 2 車線を使用して出口を出ます",
+    "data": "EiMSACofGh0KC3BhdGhmaW5kZXI0Eg5wZl9vZmZyYW1wc3RlcA=="
+  },
+  {
+    "text": "外苑インターチェンジ を出ます",
+    "data": "EmMSQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
+  },
+  {
+    "text": "代々木インターチェンジ を出ます",
+    "data": "EoYBEmMKYQoJZXhpdF9uYW1lggFTClEKBWV4aXRzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgxYWRjMGQxNzAyNWQyZDZhEiHku6PjgIXmnKjjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
+  },
+  {
+    "text": "右車線を使用して 新宿インターチェンジ を出ます",
+    "data": "EoMBEmAKXgoJZXhpdF9uYW1lggFQCk4KBWV4aXRzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHgxZDJjOGY1OTM2NDgyYWMwEh7mlrDlrr/jgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
+  },
+
+  {
+    "text": "そのまま1.5キロ進みます",
+    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 2 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 800 m 進みます",
+    "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
+  },
+  {
+    "text": "そのまま 6 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAYQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま1.5キロ進みます",
+    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+
+  {
+    "text": "そのまま 1 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 3 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAIQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 2 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 3 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAIQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 1 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 5 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAUQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+  {
+    "text": "そのまま 2 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+  },
+
+  {
+    "text": "およそ 100 メートル先、、呉服橋（交差点） を左折する",
+    "data": "Es8CEqECChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtABCghtYW5ldXZlcoIBwgEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpoBCgRhcmdzggGQAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weGE2Y2ExOGM1Yjk2YmVjMzUSGOWRieacjeapi++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、左方向です",
+    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 200 メートル先、、日本橋北詰（交差点） を左折する",
+    "data": "EtUCEqcCChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtYBCghtYW5ldXZlcoIByAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqABCgRhcmdzggGWAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVApnChFpbnRlcnNlY3Rpb25fbmFtZYIBUQpPCgZyb3V0ZXOCAUQKQnpACh4vRkVBVFVSRV9JRC8weGY5NjY0ZmZiZjU4Zjg4MzkSHuaXpeacrOapi+WMl+ipsO+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、左方向です",
+    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 300 メートル先、、江戸橋北（交差点） を左折する",
+    "data": "EtICEqQCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtMBCghtYW5ldXZlcoIBxQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCp0BCgRhcmdzggGTAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVApkChFpbnRlcnNlY3Rpb25fbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weGJhMTE2YjBiNzExZTcyM2QSG+axn+aIuOapi+WMl++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、江戸橋北（交差点） を左折する",
+    "data": "EtICEqQCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtMBCghtYW5ldXZlcoIBxQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCp0BCgRhcmdzggGTAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVApkChFpbnRlcnNlY3Rpb25fbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weGJhMTE2YjBiNzExZTcyM2QSG+axn+aIuOapi+WMl++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 400 メートル先、、左車線を進みます",
+    "data": "EtQBEqYBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTClYKCG1hbmV1dmVyggFJCikKA2tleXIiGiAKC3BhdGhmaW5kZXI0EhFwZl9rZWVwb3Jmb3Jrc3RlcAocCgRhcmdzggETChEKCWtlZXBfc2lkZSIETEVGVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、右から 2 番目の車線を使用して右側を進みます",
+    "data": "EoMCEtUBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoQBCghtYW5ldXZlcoIBdwopCgNrZXlyIhogCgtwYXRoZmluZGVyNBIRcGZfa2VlcG9yZm9ya3N0ZXAKSgoEYXJnc4IBQQoSCglrZWVwX3NpZGUiBVJJR0hUCisKEmxhbmVfZ3VpZGFuY2VfdHlwZSIVVVNFX1NFQ09ORF9GUk9NX1JJR0hUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 100 メートル先、、左車線を使用して 銀座東七丁目（交差点） で左折する",
+    "data": "Ev0CEs8CChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCv4BCghtYW5ldXZlcoIB8AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsgBCgRhcmdzggG+AQojChJsYW5lX2d1aWRhbmNlX3R5cGUiDVVTRV9MRUZUX0xBTkUKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHhmZGRmNDkzZDlmNzU5YjU2EiHpioDluqfmnbHkuIPkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 100 メートル先、、市場橋（交差点） を右折する",
+    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg1OGE4ODczNDAzOTEzOTY2EhjluILloLTmqYvvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 500 メートル先、、銀座東五丁目（交差点） を右折する",
+    "data": "EtkCEqsCChMKCGRpc3RhbmNlMQAAAAAAQH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtoBCghtYW5ldXZlcoIBzAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqQBCgRhcmdzggGaAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgzZWJhNDczMmZhOGQxZDdiEiHpioDluqfmnbHkupTkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 600 メートル先、、右車線を使用して斜め右方向に曲がります",
+    "data": "EpECEuMBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpIBCghtYW5ldXZlcoIBhAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCl0KBGFyZ3OCAVQKJAoSbGFuZV9ndWlkYW5jZV90eXBlIg5VU0VfUklHSFRfTEFORQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 200 メートル先、、銀座中学校入口（交差点） を右折する",
+    "data": "EtwCEq4CChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCt0BCghtYW5ldXZlcoIBzwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqcBCgRhcmdzggGdAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbQoRaW50ZXJzZWN0aW9uX25hbWWCAVcKVQoGcm91dGVzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHg4MWVlY2QwN2FiNmYwYmFlEiTpioDluqfkuK3lrabmoKHlhaXlj6PvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 150 メートル先、、U ターンします",
+    "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 150 メートル先、、築地三丁目（交差点） を右折する",
+    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg5ZTgyYjhjNjU3ZmQzMWE3Eh7nr4nlnLDkuInkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 150 メートル先、、右方向です",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 500 メートル先、、新京橋（交差点） で右手前方向に曲がる",
+    "data": "Es4CEqACChMKCGRpc3RhbmNlMQAAAAAAQH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCs8BCghtYW5ldXZlcoIBwQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpkBCgRhcmdzggGPAQoXCg50dXJuX3NoYXJwbmVzcyIFU0hBUlAKEgoJdHVybl9zaWRlIgVSSUdIVApgChFpbnRlcnNlY3Rpb25fbmFtZYIBSgpICgZyb3V0ZXOCAT0KO3o5Ch0vRkVBVFVSRV9JRC8weGM0Y2JhZGQwYjBkODY5YhIY5paw5Lqs5qmL77yI5Lqk5beu54K577yJKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 100 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 100 メートル先、、入船一丁目（交差点） を右折する",
+    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg4NWYzZTJjZmI3ZDI3YzRlEh7lhaXoiLnkuIDkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 400 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 400 メートル先、、京橋一丁目（交差点） を右折する",
+    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg3NDI2Mzc2NTFkNzY2M2MyEh7kuqzmqYvkuIDkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 200 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 100 メートル先、、八丁堀（交差点） を右折する",
+    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHhjZjkwMjRkNjgzN2NhNjQ4EhjlhavkuIHloIDvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+    {
+    "text": "およそ 600 メートル先、、日本橋（交差点） を左折する",
+    "data": "Es8CEqECChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtABCghtYW5ldXZlcoIBwgEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpoBCgRhcmdzggGQAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weDc5ODQ2ODMyZDU4NWU4MjkSGOaXpeacrOapi++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 150 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 200 メートル先、、右側 2 車線を使用して 浜町中ノ橋 で右方向です",
+    "data": "EvACEsICChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvEBCghtYW5ldXZlcoIB4wEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCrsBCgRhcmdzggGxAQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApYChFpbnRlcnNlY3Rpb25fbmFtZYIBQgpACgZyb3V0ZXOCATUKM3oxCh4vRkVBVFVSRV9JRC8weDdlYTFlNzYzMzkzYzIxNWQSD+a1nOeUuuS4reODjuapiyopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 600 メートル先、、中央車線を使用して 蛎殻町（交差点） で斜め右方向に曲がる",
+    "data": "EvcCEskCChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvgBCghtYW5ldXZlcoIB6gEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsIBCgRhcmdzggG4AQolChJsYW5lX2d1aWRhbmNlX3R5cGUiD1VTRV9NSURETEVfTEFORQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHgxMjgzOGZlZTkzZWJmNDhkEhjom47mrrvnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、右側 2 車線を使用して 久松町（交差点） で右折する",
+    "data": "EvkCEssCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvoBCghtYW5ldXZlcoIB7AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsQBCgRhcmdzggG6AQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weDhlMmM3ZmY5ZDA1NDQ5NjYSGOS5headvueUuu+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 200 メートル先、、馬喰町（交差点） を右折する",
+    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHhjNTE3ZmQ4MjA0NmI4NmZkEhjppqzllrDnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、右側 2 車線を使用して右折する",
+    "data": "EpQCEuYBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpUBCghtYW5ldXZlcoIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 600 メートル先、、右側 2 車線を使用して斜め右方向に曲がります",
+    "data": "EpQCEuYBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpUBCghtYW5ldXZlcoIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、岩本町（交差点） を右折する",
+    "data": "Es8CEqECChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtABCghtYW5ldXZlcoIBwgEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpoBCgRhcmdzggGQAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYAoRaW50ZXJzZWN0aW9uX25hbWWCAUoKSAoGcm91dGVzggE9Cjt6OQodL0ZFQVRVUkVfSUQvMHg1MDA1OWIxM2RlMjMzOWISGOWyqeacrOeUuu+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、右折する",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、九段下（交差点） を右折する",
+    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg4MmVlNjIwZDE0OTVlMDRmEhjkuZ3mrrXkuIvvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、右側 2 車線を使用して 市谷見附（交差点） で右折する",
+    "data": "EvwCEs4CChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCv0BCghtYW5ldXZlcoIB7wEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCscBCgRhcmdzggG9AQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApkChFpbnRlcnNlY3Rpb25fbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weGJiZGY4OWUyYWI5ZTgyYmUSG+W4guiwt+imi+mZhO+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 300 メートル先、、市谷本村町（交差点） を右折する",
+    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg5NGRmZjVjNWYxZWEwNzkxEh7luILosLfmnKzmnZHnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 150 メートル先、、左車線を使用して左側を進みます",
+    "data": "EvkBEssBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCnsKCG1hbmV1dmVyggFuCikKA2tleXIiGiAKC3BhdGhmaW5kZXI0EhFwZl9rZWVwb3Jmb3Jrc3RlcApBCgRhcmdzggE4CiMKEmxhbmVfZ3VpZGFuY2VfdHlwZSINVVNFX0xFRlRfTEFORQoRCglrZWVwX3NpZGUiBExFRlQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 100 メートル先、、新宿警察署前（交差点） を右折する",
+    "data": "EtkCEqsCChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtoBCghtYW5ldXZlcoIBzAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqQBCgRhcmdzggGaAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHhjZDExMWRhMjEwZGJkY2ZjEiHmlrDlrr/orablr5/nvbLliY3vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 200 メートル先、、右方向です",
+    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  {
+    "text": "およそ 200 メートル先、、茅場町（交差点） を右折する",
+    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg3ODZmZGMzNDcyNGRlYTM3EhjojIXloLTnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 200 メートル先、、任意の車線を使用して 証券取引所前（交差点） で右折する",
+    "data": "Ev0CEs8CChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCv4BCghtYW5ldXZlcoIB8AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsgBCgRhcmdzggG+AQoiChJsYW5lX2d1aWRhbmNlX3R5cGUiDFVTRV9BTllfTEFORQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHhlNjFlZmNlMmZkY2I3OGZiEiHoqLzliLjlj5blvJXmiYDliY3vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 150 メートル先、、東京医大病院前（交差点） を右折する",
+    "data": "EtwCEq4CChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCt0BCghtYW5ldXZlcoIBzwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqcBCgRhcmdzggGdAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbQoRaW50ZXJzZWN0aW9uX25hbWWCAVcKVQoGcm91dGVzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHgxN2VmZDA1ODRlZmVlMzYzEiTmnbHkuqzljLvlpKfnl4XpmaLliY3vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 600 メートル先、、右車線を使用、その道路にはいります",
+    "data": "EuIBErQBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmQKCG1hbmV1dmVyggFXCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLwoEYXJnc4IBJgokChJsYW5lX2d1aWRhbmNlX3R5cGUiDlVTRV9SSUdIVF9MQU5FKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 300 メートル先、、右車線を使用して 新宿インターチェンジ 出口を 新宿 方面に向かって進みます",
+    "data": "EsgCEpoCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCskBCghtYW5ldXZlcoIBuwEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCpABCgRhcmdzggGGAQokChJsYW5lX2d1aWRhbmNlX3R5cGUiDlVTRV9SSUdIVF9MQU5FCl4KCWV4aXRfbmFtZYIBUApOCgVleGl0c4IBRApCekAKHi9GRUFUVVJFX0lELzB4MWQyYzhmNTkzNjQ4MmFjMBIe5paw5a6/44Kk44Oz44K/44O844OB44Kn44Oz44K4KikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 300 メートル先、、代々木インターチェンジ 出口を 代々木公園 方面に向かって進みます",
+    "data": "EqMCEvUBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCqQBCghtYW5ldXZlcoIBlgEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCmwKBGFyZ3OCAWMKYQoJZXhpdF9uYW1lggFTClEKBWV4aXRzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgxYWRjMGQxNzAyNWQyZDZhEiHku6PjgIXmnKjjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、左折する",
+    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
+  },
+  {
+    "text": "およそ 400 メートル先、、外苑インターチェンジ 出口を 北青山 方面に向かって進みます",
+    "data": "Ev8BEtEBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoABCghtYW5ldXZlcoIBcwomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKSQoEYXJnc4IBQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、外苑インターチェンジ 出口を 北青山 方面に向かって進みます",
+    "data": "Ev8BEtEBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoABCghtYW5ldXZlcoIBcwomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKSQoEYXJnc4IBQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+  {
+    "text": "およそ 300 メートル先、、左車線を使用、その道路にはいります (日本橋 の表示)",
+    "data": "EuEBErMBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmMKCG1hbmV1dmVyggFWCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLgoEYXJnc4IBJQojChJsYW5lX2d1aWRhbmNlX3R5cGUiDVVTRV9MRUZUX0xBTkUqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+  },
+
+  {
+    "text": "およそ 600 メートル先、、右車線を使用してランプに進みます",
+    "data": "EuMBErUBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmUKCG1hbmV1dmVyggFYCiUKA2tleXIeGhwKC3BhdGhmaW5kZXI0Eg1wZl9vbnJhbXBzdGVwCi8KBGFyZ3OCASYKJAoSbGFuZV9ndWlkYW5jZV90eXBlIg5VU0VfUklHSFRfTEFORSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
     "text": "およそ 200 メートル先、、右車線を使用して 東銀座 の標識に従います",
@@ -36,8 +410,8 @@
     "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
   },
   {
-    "text": "信号を左方向です",
-    "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
+    "text": "およそ 200 メートル先、、左車線を使用して斜め右方向に曲がる",
+    "data": "EpACEuIBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpEBCghtYW5ldXZlcoIBgwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwClwKBGFyZ3OCAVMKIwoSbGFuZV9ndWlkYW5jZV90eXBlIg1VU0VfTEVGVF9MQU5FChgKDnR1cm5fc2hhcnBuZXNzIgZTTElHSFQKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
     "text": "およそ 200 メートル先、、その道路にはいります",
@@ -48,132 +422,36 @@
     "data": "EuEBErMBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmMKCG1hbmV1dmVyggFWCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLgoEYXJnc4IBJQojChJsYW5lX2d1aWRhbmNlX3R5cGUiDVVTRV9MRUZUX0xBTkUqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
   },
   {
-    "text": "左車線を使用、その道路にはいります、続いて 斜め左方向に曲がり 月島 方面のランプにはいります",
-    "data": "ErwCEogCCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACsMBCgtzZWNvbmRfc3RlcIIBsgEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKiAEKBGFyZ3OCAX8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Ki8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "左車線を使用、その道路にはいります、続いて 斜め左方向に曲がり 月島 方面のランプにはいります",
-    "data": "ErwCEogCCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACsMBCgtzZWNvbmRfc3RlcIIBsgEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKiAEKBGFyZ3OCAX8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Ki8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "斜め左方向に曲がり 月島 方面のランプにはいります",
-    "data": "EqEBEn8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Kh4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXA="
-  },
-  {
     "text": "およそ 500 メートル先、、U ターンします",
     "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAQH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
   },
   {
     "text": "およそ 200 メートル先、、その道路にはいります",
     "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
-    "text": "その道路にはいります、続いて 月島警察署前 で U ターンします",
-    "data": "EpgCEuQBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACp8BCgtzZWNvbmRfc3RlcIIBjgEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcApmCgRhcmdzggFdClsKEWludGVyc2VjdGlvbl9uYW1lggFFCkMKBnJvdXRlc4IBOAo2ejQKHi9GRUFUVVJFX0lELzB4NDY2OTMzNGEzYWFiNDNjORIS5pyI5bO26K2m5a+f572y5YmNKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "その道路にはいります、続いて 月島警察署前 で U ターンします",
-    "data": "EpgCEuQBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACp8BCgtzZWNvbmRfc3RlcIIBjgEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcApmCgRhcmdzggFdClsKEWludGVyc2VjdGlvbl9uYW1lggFFCkMKBnJvdXRlc4IBOAo2ejQKHi9GRUFUVVJFX0lELzB4NDY2OTMzNGEzYWFiNDNjORIS5pyI5bO26K2m5a+f572y5YmNKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
     "text": "およそ 200 メートル先、、月島警察署前 で U ターンします",
     "data": "EpsCEu0BChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpwBCghtYW5ldXZlcoIBjgEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcApmCgRhcmdzggFdClsKEWludGVyc2VjdGlvbl9uYW1lggFFCkMKBnJvdXRlc4IBOAo2ejQKHi9GRUFUVVJFX0lELzB4NDY2OTMzNGEzYWFiNDNjORIS5pyI5bO26K2m5a+f572y5YmNKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "月島警察署前 で U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "月島警察署前 で U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
   },
   {
     "text": "およそ 150 メートル先、、右車線を進みます",
     "data": "EtUBEqcBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTClcKCG1hbmV1dmVyggFKCikKA2tleXIiGiAKC3BhdGhmaW5kZXI0EhFwZl9rZWVwb3Jmb3Jrc3RlcAodCgRhcmdzggEUChIKCWtlZXBfc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
   },
   {
-    "text": "左方向です、続いて 左方向です",
-    "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
-    "text": "左方向です、続いて 左方向です",
-    "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
-    "text": "そのまま 800 m 進みます",
-    "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
-  },
-  {
     "text": "およそ 300 メートル先、、左折する",
     "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "およそ 300 メートル先、、左折する",
-    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "信号を左方向です (木場 の表示)、続いて U ターンします",
-    "data": "EvgBEsQBCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCkEKC3NlY29uZF9zdGVwggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "信号を左方向です (木場 の表示)、続いて U ターンします",
-    "data": "EvgBEsQBCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCkEKC3NlY29uZF9zdGVwggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "U ターンします、続いて 右側 2 車線を使用して右折する",
-    "data": "EpECEt0BCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAoJCgRhcmdzggEACpgBCgtzZWNvbmRfc3RlcIIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
     "text": "およそ 600 メートル先、、U ターンします",
     "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "そのまま 2 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
     "text": "およそ 100 メートル先、、有明コロシアム東（交差点） を右折する",
     "data": "Et8CErECChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCuABCghtYW5ldXZlcoIB0gEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqoBCgRhcmdzggGgAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKcAoRaW50ZXJzZWN0aW9uX25hbWWCAVoKWAoGcm91dGVzggFNCkt6SQoeL0ZFQVRVUkVfSUQvMHg2ZGYzNGNjODY5Y2RiNGJiEifmnInmmI7jgrPjg63jgrfjgqLjg6DmnbHvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
   },
   {
-    "text": "信号を右方向です (台場 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "そのまま 1 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "斜め左方向に曲がります",
-    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
-  },
-  {
     "text": "およそ 400 メートル先、、左折する",
     "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "そのまま 3 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAIQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
     "text": "およそ 150 メートル先、、その道路にはいります",
@@ -182,14 +460,6 @@
   {
     "text": "およそ 400 メートル先、、有明二丁目（交差点） を右折する",
     "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg2ZGRjY2ZjMzg1NDhmY2UzEh7mnInmmI7kuozkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です (芝浦 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (芝浦 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
     "text": "およそ 300 メートル先、、有明テニスの森（交差点） を左折する",
@@ -208,36 +478,8 @@
     "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
-    "text": "そのまま 2 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
     "text": "およそ 300 メートル先、、右車線を使用、その道路にはいります",
     "data": "EuIBErQBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmQKCG1hbmV1dmVyggFXCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLwoEYXJnc4IBJgokChJsYW5lX2d1aWRhbmNlX3R5cGUiDlVTRV9SSUdIVF9MQU5FKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "およそ 300 メートル先、、右車線を使用、その道路にはいります",
-    "data": "EuIBErQBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmQKCG1hbmV1dmVyggFXCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLwoEYXJnc4IBJgokChJsYW5lX2d1aWRhbmNlX3R5cGUiDlVTRV9SSUdIVF9MQU5FKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "右車線を使用、その道路にはいります、続いて 浜崎橋ジャンクション で、右側 2 車線を使用して 銀座 方面 首都高速都心環状線 の標識に従います",
-    "data": "EuoDErYDCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACvECCgtzZWNvbmRfc3RlcIIB4AIKKgoDa2V5ciMaIQoLcGF0aGZpbmRlcjQSEnBmX2ludGVyY2hhbmdlc3RlcAqxAgoEYXJnc4IBpwIKRQoQaW50ZXJjaGFuZ2VfbmFtZYIBMAouCgVleGl0c4IBJAoieiASHua1nOW0juapi+OCuOODo+ODs+OCr+OCt+ODp+ODswonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTCmMKEHNpZ25fZGlyZWN0X25hbWWCAU4KTAoGcm91dGVzggFBCj96PQoeL0ZFQVRVUkVfSUQvMHg5OGQyNGIzNDAwMTkyYWRiEhvpppbpg73pq5jpgJ/pg73lv4PnkrDnirbnt5oKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4NjA0Njg1YjMwYmE5OTg1MRIG6YqA5bqnKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "右車線を使用、その道路にはいります、続いて 浜崎橋ジャンクション で、右側 2 車線を使用して 銀座 方面 首都高速都心環状線 の標識に従います",
-    "data": "EuoDErYDCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACvECCgtzZWNvbmRfc3RlcIIB4AIKKgoDa2V5ciMaIQoLcGF0aGZpbmRlcjQSEnBmX2ludGVyY2hhbmdlc3RlcAqxAgoEYXJnc4IBpwIKRQoQaW50ZXJjaGFuZ2VfbmFtZYIBMAouCgVleGl0c4IBJAoieiASHua1nOW0juapi+OCuOODo+ODs+OCr+OCt+ODp+ODswonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTCmMKEHNpZ25fZGlyZWN0X25hbWWCAU4KTAoGcm91dGVzggFBCj96PQoeL0ZFQVRVUkVfSUQvMHg5OGQyNGIzNDAwMTkyYWRiEhvpppbpg73pq5jpgJ/pg73lv4PnkrDnirbnt5oKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4NjA0Njg1YjMwYmE5OTg1MRIG6YqA5bqnKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "浜崎橋ジャンクション で、右側 2 車線を使用して 銀座 方面 首都高速都心環状線 の標識に従います",
-    "data": "EqYCEv4BCkUKEGludGVyY2hhbmdlX25hbWWCATAKLgoFZXhpdHOCASQKInogEh7mtZzltI7mqYvjgrjjg6Pjg7Pjgq/jgrfjg6fjg7MKYwoQc2lnbl9kaXJlY3RfbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weDk4ZDI0YjM0MDAxOTJhZGISG+mmlumDvemrmOmAn+mDveW/g+eSsOeKtue3mgpQChJzaWduX2luZGlyZWN0X25hbWWCATkKNwoGcm91dGVzggEsCip6KAoeL0ZFQVRVUkVfSUQvMHg2MDQ2ODViMzBiYTk5ODUxEgbpioDluqcqIxohCgtwYXRoZmluZGVyNBIScGZfaW50ZXJjaGFuZ2VzdGVw"
-  },
-  {
-    "text": "浜崎橋ジャンクション で、右側 2 車線を使用して 銀座 方面 首都高速都心環状線 の標識に従います",
-    "data": "EqYCEv4BCkUKEGludGVyY2hhbmdlX25hbWWCATAKLgoFZXhpdHOCASQKInogEh7mtZzltI7mqYvjgrjjg6Pjg7Pjgq/jgrfjg6fjg7MKYwoQc2lnbl9kaXJlY3RfbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weDk4ZDI0YjM0MDAxOTJhZGISG+mmlumDvemrmOmAn+mDveW/g+eSsOeKtue3mgpQChJzaWduX2luZGlyZWN0X25hbWWCATkKNwoGcm91dGVzggEsCip6KAoeL0ZFQVRVUkVfSUQvMHg2MDQ2ODViMzBiYTk5ODUxEgbpioDluqcqIxohCgtwYXRoZmluZGVyNBIScGZfaW50ZXJjaGFuZ2VzdGVw"
-  },
-  {
-    "text": "そのまま 3 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAIQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
     "text": "およそ 150 メートル先、、その道路にはいります",
@@ -248,196 +490,70 @@
     "data": "EqICEvQBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCqMBCghtYW5ldXZlcoIBlQEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCmsKBGFyZ3OCAWIKYAoJZXhpdF9uYW1lggFSClAKBWV4aXRzggFGCkR6QgodL0ZFQVRVUkVfSUQvMHhlOWJjZTU1OGRhY2NhNmYSIeiKneWFrOWckuOCpOODs+OCv+ODvOODgeOCp+ODs+OCuCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
-    "text": "芝公園インターチェンジ を出ます、続いて 左折する",
-    "data": "EssCEpcCCqUBCgpmaXJzdF9zdGVwggGVAQomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKawoEYXJnc4IBYgpgCglleGl0X25hbWWCAVIKUAoFZXhpdHOCAUYKRHpCCh0vRkVBVFVSRV9JRC8weGU5YmNlNTU4ZGFjY2E2ZhIh6Iqd5YWs5ZyS44Kk44Oz44K/44O844OB44Kn44Oz44K4Cm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "芝公園インターチェンジ を出ます、続いて 左折する",
-    "data": "EssCEpcCCqUBCgpmaXJzdF9zdGVwggGVAQomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKawoEYXJnc4IBYgpgCglleGl0X25hbWWCAVIKUAoFZXhpdHOCAUYKRHpCCh0vRkVBVFVSRV9JRC8weGU5YmNlNTU4ZGFjY2E2ZhIh6Iqd5YWs5ZyS44Kk44Oz44K/44O844OB44Kn44Oz44K4Cm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
     "text": "およそ 300 メートル先、、右側 2 車線を使用、直進します",
     "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCicKA2tleXIgGh4KC3BhdGhmaW5kZXI0Eg9wZl9zdHJhaWdodHN0ZXAKMgoEYXJnc4IBKQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
   },
   {
-    "text": "およそ 300 メートル先、、右側 2 車線を使用、直進します",
-    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCicKA2tleXIgGh4KC3BhdGhmaW5kZXI0Eg9wZl9zdHJhaWdodHN0ZXAKMgoEYXJnc4IBKQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "右側 2 車線を使用、直進します",
-    "data": "EiQSACogGh4KC3BhdGhmaW5kZXI0Eg9wZl9zdHJhaWdodHN0ZXA="
-  },
-  {
-    "text": "右側 2 車線を使用、直進します",
-    "data": "EiQSACogGh4KC3BhdGhmaW5kZXI0Eg9wZl9zdHJhaWdodHN0ZXA="
-  },
-  {
-    "text": "そのまま 1 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
     "text": "およそ 300 メートル先、、右側 2 車線を使用して出口を出ます",
     "data": "EucBErkBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmkKCG1hbmV1dmVyggFcCiYKA2tleXIfGh0KC3BhdGhmaW5kZXI0Eg5wZl9vZmZyYW1wc3RlcAoyCgRhcmdzggEpCicKEmxhbmVfZ3VpZGFuY2VfdHlwZSIRVVNFX1JJR0hUXzJfTEFORVMqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 300 メートル先、、右側 2 車線を使用して出口を出ます",
-    "data": "EucBErkBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmkKCG1hbmV1dmVyggFcCiYKA2tleXIfGh0KC3BhdGhmaW5kZXI0Eg5wZl9vZmZyYW1wc3RlcAoyCgRhcmdzggEpCicKEmxhbmVfZ3VpZGFuY2VfdHlwZSIRVVNFX1JJR0hUXzJfTEFORVMqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "右側 2 車線を使用して出口を出ます",
-    "data": "EiMSACofGh0KC3BhdGhmaW5kZXI0Eg5wZl9vZmZyYW1wc3RlcA=="
-  },
-  {
-    "text": "右側 2 車線を使用して出口を出ます",
-    "data": "EiMSACofGh0KC3BhdGhmaW5kZXI0Eg5wZl9vZmZyYW1wc3RlcA=="
-  },
-  {
-    "text": "そのまま 6 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAYQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "およそ 300 メートル先、、左車線を使用、その道路にはいります (日本橋 の表示)",
-    "data": "EuEBErMBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmMKCG1hbmV1dmVyggFWCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLgoEYXJnc4IBJQojChJsYW5lX2d1aWRhbmNlX3R5cGUiDVVTRV9MRUZUX0xBTkUqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "そのまま 5 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAUQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "そのまま 2 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "およそ 400 メートル先、、外苑インターチェンジ 出口を 北青山 方面に向かって進みます",
-    "data": "Ev8BEtEBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoABCghtYW5ldXZlcoIBcwomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKSQoEYXJnc4IBQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 300 メートル先、、外苑インターチェンジ 出口を 北青山 方面に向かって進みます",
-    "data": "Ev8BEtEBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoABCghtYW5ldXZlcoIBcwomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKSQoEYXJnc4IBQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "外苑インターチェンジ を出ます",
-    "data": "EmMSQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
-  },
-  {
-    "text": "外苑インターチェンジ を出ます",
-    "data": "EmMSQAo+CglleGl0X25hbWWCATAKLgoFZXhpdHOCASQKInogEh7lpJboi5HjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
-  },
-  {
-    "text": "およそ 300 メートル先、、左折する",
-    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "そのまま 2 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "およそ 300 メートル先、、代々木インターチェンジ 出口を 代々木公園 方面に向かって進みます",
-    "data": "EqMCEvUBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCqQBCghtYW5ldXZlcoIBlgEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCmwKBGFyZ3OCAWMKYQoJZXhpdF9uYW1lggFTClEKBWV4aXRzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgxYWRjMGQxNzAyNWQyZDZhEiHku6PjgIXmnKjjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 300 メートル先、、代々木インターチェンジ 出口を 代々木公園 方面に向かって進みます",
-    "data": "EqMCEvUBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCqQBCghtYW5ldXZlcoIBlgEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCmwKBGFyZ3OCAWMKYQoJZXhpdF9uYW1lggFTClEKBWV4aXRzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgxYWRjMGQxNzAyNWQyZDZhEiHku6PjgIXmnKjjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "代々木インターチェンジ を出ます",
-    "data": "EoYBEmMKYQoJZXhpdF9uYW1lggFTClEKBWV4aXRzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgxYWRjMGQxNzAyNWQyZDZhEiHku6PjgIXmnKjjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
-  },
-  {
-    "text": "代々木インターチェンジ を出ます",
-    "data": "EoYBEmMKYQoJZXhpdF9uYW1lggFTClEKBWV4aXRzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgxYWRjMGQxNzAyNWQyZDZhEiHku6PjgIXmnKjjgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
-  },
-  {
-    "text": "そのまま 800 m 進みます",
-    "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
-  },
-  {
-    "text": "およそ 300 メートル先、、右車線を使用して 新宿インターチェンジ 出口を 新宿 方面に向かって進みます",
-    "data": "EsgCEpoCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCskBCghtYW5ldXZlcoIBuwEKJgoDa2V5ch8aHQoLcGF0aGZpbmRlcjQSDnBmX29mZnJhbXBzdGVwCpABCgRhcmdzggGGAQokChJsYW5lX2d1aWRhbmNlX3R5cGUiDlVTRV9SSUdIVF9MQU5FCl4KCWV4aXRfbmFtZYIBUApOCgVleGl0c4IBRApCekAKHi9GRUFUVVJFX0lELzB4MWQyYzhmNTkzNjQ4MmFjMBIe5paw5a6/44Kk44Oz44K/44O844OB44Kn44Oz44K4KikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "右車線を使用して 新宿インターチェンジ を出ます",
-    "data": "EoMBEmAKXgoJZXhpdF9uYW1lggFQCk4KBWV4aXRzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHgxZDJjOGY1OTM2NDgyYWMwEh7mlrDlrr/jgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
-  },
-  {
-    "text": "右車線を使用して 新宿インターチェンジ を出ます",
-    "data": "EoMBEmAKXgoJZXhpdF9uYW1lggFQCk4KBWV4aXRzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHgxZDJjOGY1OTM2NDgyYWMwEh7mlrDlrr/jgqTjg7Pjgr/jg7zjg4Hjgqfjg7PjgrgqHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXA="
-  },
-  {
-    "text": "およそ 600 メートル先、、右車線を使用、その道路にはいります",
-    "data": "EuIBErQBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmQKCG1hbmV1dmVyggFXCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl9tZXJnZXN0ZXAKLwoEYXJnc4IBJgokChJsYW5lX2d1aWRhbmNlX3R5cGUiDlVTRV9SSUdIVF9MQU5FKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "右車線を使用、その道路にはいります、続いて 新宿中央公園南 で U ターンします",
-    "data": "EpsCEucBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACqIBCgtzZWNvbmRfc3RlcIIBkQEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAppCgRhcmdzggFgCl4KEWludGVyc2VjdGlvbl9uYW1lggFICkYKBnJvdXRlc4IBOwo5ejcKHi9GRUFUVVJFX0lELzB4ZTdkMDMyZWI5Y2I5MTJkNBIV5paw5a6/5Lit5aSu5YWs5ZyS5Y2XKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "右車線を使用、その道路にはいります、続いて 新宿中央公園南 で U ターンします",
-    "data": "EpsCEucBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACqIBCgtzZWNvbmRfc3RlcIIBkQEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAppCgRhcmdzggFgCl4KEWludGVyc2VjdGlvbl9uYW1lggFICkYKBnJvdXRlc4IBOwo5ejcKHi9GRUFUVVJFX0lELzB4ZTdkMDMyZWI5Y2I5MTJkNBIV5paw5a6/5Lit5aSu5YWs5ZyS5Y2XKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "新宿中央公園南 で U ターンします、続いて 右側 2 車線を使用して斜め右方向に曲がり、首都高速４号 のランプにはいります",
-    "data": "EvECEr0CCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAoJCgRhcmdzggEACvgBCgtzZWNvbmRfc3RlcIIB5wEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKvQEKBGFyZ3OCAbMBCicKEmxhbmVfZ3VpZGFuY2VfdHlwZSIRVVNFX1JJR0hUXzJfTEFORVMKGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoSCgl0dXJuX3NpZGUiBVJJR0hUCloKEHNpZ25fZGlyZWN0X25hbWWCAUUKQwoGcm91dGVzggE4CjZ6NAoeL0ZFQVRVUkVfSUQvMHgxMWJkZGUyZmY5NTRmZGM2EhLpppbpg73pq5jpgJ/vvJTlj7cqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
-    "text": "新宿中央公園南 で U ターンします、続いて 右側 2 車線を使用して斜め右方向に曲がり、首都高速４号 のランプにはいります",
-    "data": "EvECEr0CCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAoJCgRhcmdzggEACvgBCgtzZWNvbmRfc3RlcIIB5wEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKvQEKBGFyZ3OCAbMBCicKEmxhbmVfZ3VpZGFuY2VfdHlwZSIRVVNFX1JJR0hUXzJfTEFORVMKGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoSCgl0dXJuX3NpZGUiBVJJR0hUCloKEHNpZ25fZGlyZWN0X25hbWWCAUUKQwoGcm91dGVzggE4CjZ6NAoeL0ZFQVRVUkVfSUQvMHgxMWJkZGUyZmY5NTRmZGM2EhLpppbpg73pq5jpgJ/vvJTlj7cqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
     "text": "およそ 300 メートル先、、新宿中央公園北 で U ターンします (新宿 の表示)",
     "data": "Ep0CEu8BChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCp4BCghtYW5ldXZlcoIBkAEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcApoCgRhcmdzggFfCl0KEWludGVyc2VjdGlvbl9uYW1lggFHCkUKBnJvdXRlc4IBOgo4ejYKHS9GRUFUVVJFX0lELzB4ZDc1NzU3NjY2OTA1MGNlEhXmlrDlrr/kuK3lpK7lhazlnJLljJcqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
   },
   {
-    "text": "新宿中央公園北 で U ターンします (新宿 の表示)",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+    "text": "およそ 200 メートル先、、U ターンします",
+    "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+  },
+  
+
+  {
+    "text": "左方向です、続いて 左方向です",
+    "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
-    "text": "新宿中央公園北 で U ターンします (新宿 の表示)",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+    "text": "新宿中央公園南 で U ターンします、続いて 右側 2 車線を使用して斜め右方向に曲がり、首都高速４号 のランプにはいります",
+    "data": "EvECEr0CCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAoJCgRhcmdzggEACvgBCgtzZWNvbmRfc3RlcIIB5wEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKvQEKBGFyZ3OCAbMBCicKEmxhbmVfZ3VpZGFuY2VfdHlwZSIRVVNFX1JJR0hUXzJfTEFORVMKGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoSCgl0dXJuX3NpZGUiBVJJR0hUCloKEHNpZ25fZGlyZWN0X25hbWWCAUUKQwoGcm91dGVzggE4CjZ6NAoeL0ZFQVRVUkVfSUQvMHgxMWJkZGUyZmY5NTRmZGM2EhLpppbpg73pq5jpgJ/vvJTlj7cqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
+  },
+  {
+    "text": "右車線を使用、その道路にはいります、続いて 新宿中央公園南 で U ターンします",
+    "data": "EpsCEucBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACqIBCgtzZWNvbmRfc3RlcIIBkQEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAppCgRhcmdzggFgCl4KEWludGVyc2VjdGlvbl9uYW1lggFICkYKBnJvdXRlc4IBOwo5ejcKHi9GRUFUVVJFX0lELzB4ZTdkMDMyZWI5Y2I5MTJkNBIV5paw5a6/5Lit5aSu5YWs5ZyS5Y2XKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
+  },
+  {
+    "text": "信号で左車線を使用して斜め右方向に曲がります、続いて 左折する",
+    "data": "EqYCEvIBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
+  },
+  {
+    "text": "左車線を使用、その道路にはいります、続いて 斜め左方向に曲がり 月島 方面のランプにはいります",
+    "data": "ErwCEogCCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACsMBCgtzZWNvbmRfc3RlcIIBsgEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKiAEKBGFyZ3OCAX8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Ki8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
+  },
+  {
+    "text": "左車線を使用、その道路にはいります、続いて 斜め左方向に曲がり 月島 方面のランプにはいります",
+    "data": "ErwCEogCCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACsMBCgtzZWNvbmRfc3RlcIIBsgEKJQoDa2V5ch4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXAKiAEKBGFyZ3OCAX8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Ki8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
+  },
+  {
+    "text": "その道路にはいります、続いて 月島警察署前 で U ターンします",
+    "data": "EpgCEuQBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACp8BCgtzZWNvbmRfc3RlcIIBjgEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcApmCgRhcmdzggFdClsKEWludGVyc2VjdGlvbl9uYW1lggFFCkMKBnJvdXRlc4IBOAo2ejQKHi9GRUFUVVJFX0lELzB4NDY2OTMzNGEzYWFiNDNjORIS5pyI5bO26K2m5a+f572y5YmNKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
     "text": "左方向です、続いて 左方向です",
     "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
-    "text": "およそ 200 メートル先、、U ターンします",
-    "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
+    "text": "信号を左方向です (木場 の表示)、続いて U ターンします",
+    "data": "EvgBEsQBCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCkEKC3NlY29uZF9zdGVwggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
   },
   {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+    "text": "U ターンします、続いて 右側 2 車線を使用して右折する",
+    "data": "EpECEt0BCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcAoJCgRhcmdzggEACpgBCgtzZWNvbmRfc3RlcIIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
+    "text": "右車線を使用、その道路にはいります、続いて 浜崎橋ジャンクション で、右側 2 車線を使用して 銀座 方面 首都高速都心環状線 の標識に従います",
+    "data": "EuoDErYDCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACvECCgtzZWNvbmRfc3RlcIIB4AIKKgoDa2V5ciMaIQoLcGF0aGZpbmRlcjQSEnBmX2ludGVyY2hhbmdlc3RlcAqxAgoEYXJnc4IBpwIKRQoQaW50ZXJjaGFuZ2VfbmFtZYIBMAouCgVleGl0c4IBJAoieiASHua1nOW0juapi+OCuOODo+ODs+OCr+OCt+ODp+ODswonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTCmMKEHNpZ25fZGlyZWN0X25hbWWCAU4KTAoGcm91dGVzggFBCj96PQoeL0ZFQVRVUkVfSUQvMHg5OGQyNGIzNDAwMTkyYWRiEhvpppbpg73pq5jpgJ/pg73lv4PnkrDnirbnt5oKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4NjA0Njg1YjMwYmE5OTg1MRIG6YqA5bqnKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "そのまま 1 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 150 メートル先、、東京医大病院前（交差点） を右折する",
-    "data": "EtwCEq4CChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCt0BCghtYW5ldXZlcoIBzwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqcBCgRhcmdzggGdAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbQoRaW50ZXJzZWN0aW9uX25hbWWCAVcKVQoGcm91dGVzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHgxN2VmZDA1ODRlZmVlMzYzEiTmnbHkuqzljLvlpKfnl4XpmaLliY3vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 200 メートル先、、右方向です",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です、続いて 新宿警察署裏（交差点） を右折する",
-    "data": "EpcDEuMCCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQK3QEKC3NlY29uZF9zdGVwggHMAQojCgNrZXlyHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXAKpAEKBGFyZ3OCAZoBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApqChFpbnRlcnNlY3Rpb25fbmFtZYIBVApSCgZyb3V0ZXOCAUcKRXpDCh4vRkVBVFVSRV9JRC8weDVkYjg3MDQyNDM3OGNiZDASIeaWsOWuv+itpuWvn+e9suijj++8iOS6pOW3rueCue+8iSovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "およそ 100 メートル先、、新宿警察署前（交差点） を右折する",
-    "data": "EtkCEqsCChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtoBCghtYW5ldXZlcoIBzAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqQBCgRhcmdzggGaAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHhjZDExMWRhMjEwZGJkY2ZjEiHmlrDlrr/orablr5/nvbLliY3vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
+    "text": "芝公園インターチェンジ を出ます、続いて 左折する",
+    "data": "EssCEpcCCqUBCgpmaXJzdF9zdGVwggGVAQomCgNrZXlyHxodCgtwYXRoZmluZGVyNBIOcGZfb2ZmcmFtcHN0ZXAKawoEYXJnc4IBYgpgCglleGl0X25hbWWCAVIKUAoFZXhpdHOCAUYKRHpCCh0vRkVBVFVSRV9JRC8weGU5YmNlNTU4ZGFjY2E2ZhIh6Iqd5YWs5ZyS44Kk44Oz44K/44O844OB44Kn44Oz44K4Cm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
     "text": "信号を右方向です、続いて 新宿警察署裏（交差点） を右折する",
@@ -452,14 +568,6 @@
     "data": "EtACEpwCCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChcKDnR1cm5fc2hhcnBuZXNzIgVTSEFSUAoSCgl0dXJuX3NpZGUiBVJJR0hUCpgBCgtzZWNvbmRfc3RlcIIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
-    "text": "およそ 150 メートル先、、左車線を使用して左側を進みます",
-    "data": "EvkBEssBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCnsKCG1hbmV1dmVyggFuCikKA2tleXIiGiAKC3BhdGhmaW5kZXI0EhFwZl9rZWVwb3Jmb3Jrc3RlcApBCgRhcmdzggE4CiMKEmxhbmVfZ3VpZGFuY2VfdHlwZSINVVNFX0xFRlRfTEFORQoRCglrZWVwX3NpZGUiBExFRlQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "左車線を使用して左側を進みます、続いて 左方向です",
-    "data": "Ev0BEskBClgKCmZpcnN0X3N0ZXCCAUkKKQoDa2V5ciIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVwChwKBGFyZ3OCARMKEQoJa2VlcF9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
     "text": "左車線を使用して左側を進みます、続いて 左方向です",
     "data": "Ev0BEskBClgKCmZpcnN0X3N0ZXCCAUkKKQoDa2V5ciIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVwChwKBGFyZ3OCARMKEQoJa2VlcF9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
@@ -468,160 +576,12 @@
     "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
-    "text": "およそ 300 メートル先、、市谷本村町（交差点） を右折する",
-    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg5NGRmZjVjNWYxZWEwNzkxEh7luILosLfmnKzmnZHnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 300 メートル先、、市谷本村町（交差点） を右折する",
-    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg5NGRmZjVjNWYxZWEwNzkxEh7luILosLfmnKzmnZHnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
     "text": "信号を右方向です、続いて 右折する",
     "data": "EqcCEvMBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbgoLc2Vjb25kX3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "信号を右方向です、続いて 右折する",
-    "data": "EqcCEvMBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbgoLc2Vjb25kX3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "およそ 300 メートル先、、右側 2 車線を使用して 市谷見附（交差点） で右折する",
-    "data": "EvwCEs4CChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCv0BCghtYW5ldXZlcoIB7wEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCscBCgRhcmdzggG9AQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApkChFpbnRlcnNlY3Rpb25fbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weGJiZGY4OWUyYWI5ZTgyYmUSG+W4guiwt+imi+mZhO+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号で右側 2 車線を使用して右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号で右側 2 車線を使用して右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "そのまま1.5キロ進みます",
-    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "およそ 300 メートル先、、九段下（交差点） を右折する",
-    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg4MmVlNjIwZDE0OTVlMDRmEhjkuZ3mrrXkuIvvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 300 メートル先、、九段下（交差点） を右折する",
-    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg4MmVlNjIwZDE0OTVlMDRmEhjkuZ3mrrXkuIvvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です (祝田橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (祝田橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "そのまま1.5キロ進みます",
-    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "左方向です",
-    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
-  },
-  {
-    "text": "そのまま1.5キロ進みます",
-    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "およそ 300 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "およそ 300 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です (日本橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (日本橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "そのまま1.5キロ進みます",
-    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "およそ 300 メートル先、、岩本町（交差点） を右折する",
-    "data": "Es8CEqECChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtABCghtYW5ldXZlcoIBwgEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpoBCgRhcmdzggGQAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYAoRaW50ZXJzZWN0aW9uX25hbWWCAUoKSAoGcm91dGVzggE9Cjt6OQodL0ZFQVRVUkVfSUQvMHg1MDA1OWIxM2RlMjMzOWISGOWyqeacrOeUuu+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です (新橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (新橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 600 メートル先、、右側 2 車線を使用して斜め右方向に曲がります",
-    "data": "EpQCEuYBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpUBCghtYW5ldXZlcoIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 300 メートル先、、右側 2 車線を使用して右折する",
-    "data": "EpQCEuYBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpUBCghtYW5ldXZlcoIBhwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCmAKBGFyZ3OCAVcKJwoSbGFuZV9ndWlkYW5jZV90eXBlIhFVU0VfUklHSFRfMl9MQU5FUwoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
     "text": "信号で右側 2 車線を使用して右方向です、続いて 右側 2 車線を使用して斜め右方向に曲がります",
     "data": "EtICEp4CCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKmAEKC3NlY29uZF9zdGVwggGHAQojCgNrZXlyHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXAKYAoEYXJnc4IBVwonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZTTElHSFQKEgoJdHVybl9zaWRlIgVSSUdIVCovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "信号で右側 2 車線を使用して右方向です、続いて 右側 2 車線を使用して斜め右方向に曲がります",
-    "data": "EtICEp4CCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKmAEKC3NlY29uZF9zdGVwggGHAQojCgNrZXlyHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXAKYAoEYXJnc4IBVwonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZTTElHSFQKEgoJdHVybl9zaWRlIgVSSUdIVCovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "右側 2 車線を使用して斜め右方向に曲がります",
-    "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "右側 2 車線を使用して斜め右方向に曲がります",
-    "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "そのまま 800 m 進みます",
-    "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
-  },
-  {
-    "text": "およそ 200 メートル先、、馬喰町（交差点） を右折する",
-    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHhjNTE3ZmQ4MjA0NmI4NmZkEhjppqzllrDnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です へ向かいます",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です へ向かいます",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "そのまま 800 m 進みます",
-    "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
-  },
-  {
-    "text": "およそ 300 メートル先、、右側 2 車線を使用して 久松町（交差点） で右折する",
-    "data": "EvkCEssCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvoBCghtYW5ldXZlcoIB7AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsQBCgRhcmdzggG6AQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weDhlMmM3ZmY5ZDA1NDQ5NjYSGOS5headvueUuu+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "およそ 300 メートル先、、右側 2 車線を使用して 久松町（交差点） で右折する",
-    "data": "EvkCEssCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvoBCghtYW5ldXZlcoIB7AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsQBCgRhcmdzggG6AQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weDhlMmM3ZmY5ZDA1NDQ5NjYSGOS5headvueUuu+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号で右側 2 車線を使用して右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号で右側 2 車線を使用して右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "そのまま 1 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
     "text": "右方向です、続いて 右折する",
@@ -632,292 +592,20 @@
     "data": "EqECEu0BCnwKCmZpcnN0X3N0ZXCCAW0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkYKBGFyZ3OCAT0KDQoJc3RvcF9zaWduGAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "およそ 200 メートル先、、右側 2 車線を使用して 浜町中ノ橋 で右方向です",
-    "data": "EvACEsICChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvEBCghtYW5ldXZlcoIB4wEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCrsBCgRhcmdzggGxAQonChJsYW5lX2d1aWRhbmNlX3R5cGUiEVVTRV9SSUdIVF8yX0xBTkVTChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApYChFpbnRlcnNlY3Rpb25fbmFtZYIBQgpACgZyb3V0ZXOCATUKM3oxCh4vRkVBVFVSRV9JRC8weDdlYTFlNzYzMzkzYzIxNWQSD+a1nOeUuuS4reODjuapiyopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "右側 2 車線を使用して 浜町中ノ橋 で右方向です",
-    "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "右側 2 車線を使用して 浜町中ノ橋 で右方向です",
-    "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "およそ 600 メートル先、、中央車線を使用して 蛎殻町（交差点） で斜め右方向に曲がる",
-    "data": "EvcCEskCChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCvgBCghtYW5ldXZlcoIB6gEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsIBCgRhcmdzggG4AQolChJsYW5lX2d1aWRhbmNlX3R5cGUiD1VTRV9NSURETEVfTEFORQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHgxMjgzOGZlZTkzZWJmNDhkEhjom47mrrvnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号で中央車線を使用して斜め右方向に曲がります (常盤橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号で中央車線を使用して斜め右方向に曲がります (常盤橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 200 メートル先、、任意の車線を使用して 証券取引所前（交差点） で右折する",
-    "data": "Ev0CEs8CChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCv4BCghtYW5ldXZlcoIB8AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsgBCgRhcmdzggG+AQoiChJsYW5lX2d1aWRhbmNlX3R5cGUiDFVTRV9BTllfTEFORQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHhlNjFlZmNlMmZkY2I3OGZiEiHoqLzliLjlj5blvJXmiYDliY3vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 200 メートル先、、茅場町（交差点） を右折する",
-    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg3ODZmZGMzNDcyNGRlYTM3EhjojIXloLTnlLrvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です (大手町 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (大手町 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 600 メートル先、、日本橋（交差点） を左折する",
-    "data": "Es8CEqECChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtABCghtYW5ldXZlcoIBwgEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpoBCgRhcmdzggGQAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weDc5ODQ2ODMyZDU4NWU4MjkSGOaXpeacrOapi++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "およそ 150 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 200 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "およそ 100 メートル先、、八丁堀（交差点） を右折する",
-    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHhjZjkwMjRkNjgzN2NhNjQ4EhjlhavkuIHloIDvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 400 メートル先、、京橋一丁目（交差点） を右折する",
-    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg3NDI2Mzc2NTFkNzY2M2MyEh7kuqzmqYvkuIDkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 400 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 400 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 100 メートル先、、入船一丁目（交差点） を右折する",
-    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg4NWYzZTJjZmI3ZDI3YzRlEh7lhaXoiLnkuIDkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 500 メートル先、、新京橋（交差点） で右手前方向に曲がる",
-    "data": "Es4CEqACChMKCGRpc3RhbmNlMQAAAAAAQH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCs8BCghtYW5ldXZlcoIBwQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpkBCgRhcmdzggGPAQoXCg50dXJuX3NoYXJwbmVzcyIFU0hBUlAKEgoJdHVybl9zaWRlIgVSSUdIVApgChFpbnRlcnNlY3Rpb25fbmFtZYIBSgpICgZyb3V0ZXOCAT0KO3o5Ch0vRkVBVFVSRV9JRC8weGM0Y2JhZGQwYjBkODY5YhIY5paw5Lqs5qmL77yI5Lqk5beu54K577yJKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "およそ 100 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
     "text": "信号を右方向です、続いて 新富町郵便局（交差点） を右折する",
     "data": "EpcDEuMCCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQK3QEKC3NlY29uZF9zdGVwggHMAQojCgNrZXlyHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXAKpAEKBGFyZ3OCAZoBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApqChFpbnRlcnNlY3Rpb25fbmFtZYIBVApSCgZyb3V0ZXOCAUcKRXpDCh4vRkVBVFVSRV9JRC8weDE4YzY1NTJmNjFhYmU3YzMSIeaWsOWvjOeUuumDteS+v+WxgO+8iOS6pOW3rueCue+8iSovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "信号を右方向です、続いて 新富町郵便局（交差点） を右折する",
-    "data": "EpcDEuMCCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQK3QEKC3NlY29uZF9zdGVwggHMAQojCgNrZXlyHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXAKpAEKBGFyZ3OCAZoBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVApqChFpbnRlcnNlY3Rpb25fbmFtZYIBVApSCgZyb3V0ZXOCAUcKRXpDCh4vRkVBVFVSRV9JRC8weDE4YzY1NTJmNjFhYmU3YzMSIeaWsOWvjOeUuumDteS+v+WxgO+8iOS6pOW3rueCue+8iSovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
-  },
-  {
-    "text": "およそ 150 メートル先、、右方向です",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
   },
   {
     "text": "右方向です、続いて 中央区役所入口（交差点） を右折する",
     "data": "EoYDEtICCm0KCmZpcnN0X3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUCuABCgtzZWNvbmRfc3RlcIIBzwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqcBCgRhcmdzggGdAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbQoRaW50ZXJzZWN0aW9uX25hbWWCAVcKVQoGcm91dGVzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHhlYTkwNTNlOWFjN2YxNTYyEiTkuK3lpK7ljLrlvbnmiYDlhaXlj6PvvIjkuqTlt67ngrnvvIkqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
   },
   {
-    "text": "右方向です、続いて 中央区役所入口（交差点） を右折する",
-    "data": "EoYDEtICCm0KCmZpcnN0X3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUCuABCgtzZWNvbmRfc3RlcIIBzwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqcBCgRhcmdzggGdAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbQoRaW50ZXJzZWN0aW9uX25hbWWCAVcKVQoGcm91dGVzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHhlYTkwNTNlOWFjN2YxNTYyEiTkuK3lpK7ljLrlvbnmiYDlhaXlj6PvvIjkuqTlt67ngrnvvIkqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
-    "text": "およそ 150 メートル先、、築地三丁目（交差点） を右折する",
-    "data": "EtYCEqgCChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtcBCghtYW5ldXZlcoIByQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqEBCgRhcmdzggGXAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKZwoRaW50ZXJzZWN0aW9uX25hbWWCAVEKTwoGcm91dGVzggFECkJ6QAoeL0ZFQVRVUkVfSUQvMHg5ZTgyYjhjNjU3ZmQzMWE3Eh7nr4nlnLDkuInkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 300 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "およそ 150 メートル先、、U ターンします",
-    "data": "ErwBEo4BChMKCGRpc3RhbmNlMQAAAAAAwGJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCj4KCG1hbmV1dmVyggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "信号を右方向です (ギンザ の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 300 メートル先、、右折する",
-    "data": "EukBErsBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmsKCG1hbmV1dmVyggFeCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo3CgRhcmdzggEuChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEgoJdHVybl9zaWRlIgVSSUdIVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 100 メートル先、、市場橋（交差点） を右折する",
-    "data": "EtACEqICChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtEBCghtYW5ldXZlcoIBwwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpsBCgRhcmdzggGRAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKYQoRaW50ZXJzZWN0aW9uX25hbWWCAUsKSQoGcm91dGVzggE+Cjx6OgoeL0ZFQVRVUkVfSUQvMHg1OGE4ODczNDAzOTEzOTY2EhjluILloLTmqYvvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "およそ 500 メートル先、、銀座東五丁目（交差点） を右折する",
-    "data": "EtkCEqsCChMKCGRpc3RhbmNlMQAAAAAAQH9ACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtoBCghtYW5ldXZlcoIBzAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqQBCgRhcmdzggGaAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHgzZWJhNDczMmZhOGQxZDdiEiHpioDluqfmnbHkupTkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 600 メートル先、、右車線を使用して斜め右方向に曲がります",
-    "data": "EpECEuMBChMKCGRpc3RhbmNlMQAAAAAAwIJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCpIBCghtYW5ldXZlcoIBhAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCl0KBGFyZ3OCAVQKJAoSbGFuZV9ndWlkYW5jZV90eXBlIg5VU0VfUklHSFRfTEFORQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "およそ 200 メートル先、、銀座中学校入口（交差点） を右折する",
-    "data": "EtwCEq4CChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCt0BCghtYW5ldXZlcoIBzwEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqcBCgRhcmdzggGdAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbQoRaW50ZXJzZWN0aW9uX25hbWWCAVcKVQoGcm91dGVzggFKCkh6RgoeL0ZFQVRVUkVfSUQvMHg4MWVlY2QwN2FiNmYwYmFlEiTpioDluqfkuK3lrabmoKHlhaXlj6PvvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
     "text": "信号で左車線を使用して左方向です、続いて 左方向です",
     "data": "EqQCEvABCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "およそ 100 メートル先、、左車線を使用して 銀座東七丁目（交差点） で左折する",
-    "data": "Ev0CEs8CChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCv4BCghtYW5ldXZlcoIB8AEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCsgBCgRhcmdzggG+AQojChJsYW5lX2d1aWRhbmNlX3R5cGUiDVVTRV9MRUZUX0xBTkUKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKagoRaW50ZXJzZWN0aW9uX25hbWWCAVQKUgoGcm91dGVzggFHCkV6QwoeL0ZFQVRVUkVfSUQvMHhmZGRmNDkzZDlmNzU5YjU2EiHpioDluqfmnbHkuIPkuIHnm67vvIjkuqTlt67ngrnvvIkqKRonCgtwYXRoZmluZGVyNBIYcHJlcGFyZV9kaXN0YW5jZV9tZXNzYWdl"
-  },
-  {
     "text": "信号で左車線を使用して左方向です、続いて 左方向です",
     "data": "EqQCEvABCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "およそ 300 メートル先、、右から 2 番目の車線を使用して右側を進みます",
-    "data": "EoMCEtUBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoQBCghtYW5ldXZlcoIBdwopCgNrZXlyIhogCgtwYXRoZmluZGVyNBIRcGZfa2VlcG9yZm9ya3N0ZXAKSgoEYXJnc4IBQQoSCglrZWVwX3NpZGUiBVJJR0hUCisKEmxhbmVfZ3VpZGFuY2VfdHlwZSIVVVNFX1NFQ09ORF9GUk9NX1JJR0hUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "およそ 300 メートル先、、右から 2 番目の車線を使用して右側を進みます",
-    "data": "EoMCEtUBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCoQBCghtYW5ldXZlcoIBdwopCgNrZXlyIhogCgtwYXRoZmluZGVyNBIRcGZfa2VlcG9yZm9ya3N0ZXAKSgoEYXJnc4IBQQoSCglrZWVwX3NpZGUiBVJJR0hUCisKEmxhbmVfZ3VpZGFuY2VfdHlwZSIVVVNFX1NFQ09ORF9GUk9NX1JJR0hUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "右から 2 番目の車線を使用して右側を進みます",
-    "data": "EjoSFAoSCglrZWVwX3NpZGUiBVJJR0hUKiIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVw"
-  },
-  {
-    "text": "右から 2 番目の車線を使用して右側を進みます",
-    "data": "EjoSFAoSCglrZWVwX3NpZGUiBVJJR0hUKiIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVw"
-  },
-  {
-    "text": "およそ 400 メートル先、、左車線を進みます",
-    "data": "EtQBEqYBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTClYKCG1hbmV1dmVyggFJCikKA2tleXIiGiAKC3BhdGhmaW5kZXI0EhFwZl9rZWVwb3Jmb3Jrc3RlcAocCgRhcmdzggETChEKCWtlZXBfc2lkZSIETEVGVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "およそ 400 メートル先、、左車線を進みます",
-    "data": "EtQBEqYBChMKCGRpc3RhbmNlMQAAAAAAAHlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTClYKCG1hbmV1dmVyggFJCikKA2tleXIiGiAKC3BhdGhmaW5kZXI0EhFwZl9rZWVwb3Jmb3Jrc3RlcAocCgRhcmdzggETChEKCWtlZXBfc2lkZSIETEVGVCopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "左車線を進みます",
-    "data": "EjkSEwoRCglrZWVwX3NpZGUiBExFRlQqIhogCgtwYXRoZmluZGVyNBIRcGZfa2VlcG9yZm9ya3N0ZXA="
-  },
-  {
-    "text": "左車線を進みます",
-    "data": "EjkSEwoRCglrZWVwX3NpZGUiBExFRlQqIhogCgtwYXRoZmluZGVyNBIRcGZfa2VlcG9yZm9ya3N0ZXA="
-  },
-  {
-    "text": "およそ 300 メートル先、、左方向です",
-    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
-  },
-  {
-    "text": "そのまま 800 m 進みます",
-    "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
-  },
-  {
-    "text": "およそ 300 メートル先、、江戸橋北（交差点） を左折する",
-    "data": "EtICEqQCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtMBCghtYW5ldXZlcoIBxQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCp0BCgRhcmdzggGTAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVApkChFpbnRlcnNlY3Rpb25fbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weGJhMTE2YjBiNzExZTcyM2QSG+axn+aIuOapi+WMl++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "およそ 300 メートル先、、江戸橋北（交差点） を左折する",
-    "data": "EtICEqQCChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtMBCghtYW5ldXZlcoIBxQEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCp0BCgRhcmdzggGTAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVApkChFpbnRlcnNlY3Rpb25fbmFtZYIBTgpMCgZyb3V0ZXOCAUEKP3o9Ch4vRkVBVFVSRV9JRC8weGJhMTE2YjBiNzExZTcyM2QSG+axn+aIuOapi+WMl++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を左方向です",
-    "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "信号を左方向です",
-    "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "およそ 200 メートル先、、日本橋北詰（交差点） を左折する",
-    "data": "EtUCEqcCChMKCGRpc3RhbmNlMQAAAAAAAGlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtYBCghtYW5ldXZlcoIByAEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCqABCgRhcmdzggGWAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVApnChFpbnRlcnNlY3Rpb25fbmFtZYIBUQpPCgZyb3V0ZXOCAUQKQnpACh4vRkVBVFVSRV9JRC8weGY5NjY0ZmZiZjU4Zjg4MzkSHuaXpeacrOapi+WMl+ipsO+8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
-    "text": "信号を左方向です",
-    "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "信号を左方向です",
-    "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "およそ 300 メートル先、、左方向です",
-    "data": "EugBEroBChMKCGRpc3RhbmNlMQAAAAAAwHJACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCmoKCG1hbmV1dmVyggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKikaJwoLcGF0aGZpbmRlcjQSGHByZXBhcmVfZGlzdGFuY2VfbWVzc2FnZQ=="
   },
   {
     "text": "左方向です、続いて 目的地は右側です。",
@@ -928,23 +616,7 @@
     "data": "EqcCEvMBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbgoLc2Vjb25kX3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "信号を右方向です、続いて 右折する",
-    "data": "EqcCEvMBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbgoLc2Vjb25kX3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "およそ 100 メートル先、、呉服橋（交差点） を左折する",
-    "data": "Es8CEqECChMKCGRpc3RhbmNlMQAAAAAAAFlACjcKDWRpc3RhbmNlX3VuaXRaJgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSC1VOSVRfTUVURVJTCtABCghtYW5ldXZlcoIBwgEKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCpoBCgRhcmdzggGQAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVAphChFpbnRlcnNlY3Rpb25fbmFtZYIBSwpJCgZyb3V0ZXOCAT4KPHo6Ch4vRkVBVFVSRV9JRC8weGE2Y2ExOGM1Yjk2YmVjMzUSGOWRieacjeapi++8iOS6pOW3rueCue+8iSopGicKC3BhdGhmaW5kZXI0EhhwcmVwYXJlX2Rpc3RhbmNlX21lc3NhZ2U="
-  },
-  {
     "text": "信号を左方向です、続いて 左方向です",
     "data": "EqQCEvABCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
-    "text": "左方向です",
-    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
-  },
-  {
-    "text": "左方向です",
-    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
   }
 ]
