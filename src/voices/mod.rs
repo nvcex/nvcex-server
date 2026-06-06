@@ -55,7 +55,7 @@ impl From<reqwest::Error> for VoiceError {
 pub async fn text_to_speech(text: SpeechText, voicebox: &VoicevoxClient) -> Result<Vec<u8>, VoiceError> {
     let spec = WavSpec {
         channels: 1,
-        sample_rate: 16_000,
+        sample_rate: 24_000,
         bits_per_sample: 16,
         sample_format: SampleFormat::Int,
     };
@@ -102,7 +102,7 @@ async fn write_segment<W: std::io::Write + std::io::Seek + Send>(
         .map_err(|err| VoiceError::Decode(err.to_string()))?;
 
     let spec = reader.spec();
-    if spec.channels != 1 || spec.sample_rate != 16_000 || spec.bits_per_sample != 16 {
+    if spec.channels != 1 || spec.sample_rate != 24_000 || spec.bits_per_sample != 16 {
         return Err(VoiceError::Decode(
             "expected 16kHz mono 16-bit WAV from Voicevox".to_string(),
         ));

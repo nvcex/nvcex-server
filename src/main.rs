@@ -8,7 +8,7 @@ use base64::prelude::*;
 mod pathfinder4;
 mod scenarios;
 mod voices;
-use crate::{scenarios::{SharedScenario, build_voicevox_scenarios}, voices::VoicevoxClient};
+use crate::{pathfinder4::parse, scenarios::{SharedScenario, build_voicevox_scenarios}, voices::VoicevoxClient};
 use axum::extract::State;
 
 #[derive(Clone)]
@@ -105,8 +105,7 @@ async fn handle_parse_request(
         }
     };
 
-    let mut parser = pathfinder4::Parser::new();
-    let message = match parser.parse(&body_bytes) {
+    let message = match parse(&body_bytes) {
         Ok(message) => message,
         Err(err) => {
             tracing::error!(?err, "failed to parse data");
@@ -126,7 +125,6 @@ async fn handle_parse_request(
         "text": payload.text,
         "parsed": format!("{:#?}", message),
         "render_result": format!("{:#?}", speech_text),
-        "warnings": parser.warnings,
     })))
 }
 
@@ -148,9 +146,25 @@ async fn handle_tts_request(
         }
     };
 
+        let body_bytes = match BASE64_STANDARD.decode(&payload.data) {
+        Ok(bytes) => bytes,
+        Err(err) => {
+            tracing::error!(?err, "failed to decode base64 data");
+            return Err((StatusCode::BAD_REQUEST, Json(json_error("failed to decode base64 data"))));
+        }
+    };
+
+    let message = match parse(&body_bytes) {
+        Ok(message) => message,
+        Err(err) => {
+            tracing::error!(?err, "failed to parse data");
+            return Err((StatusCode::BAD_REQUEST, Json(json_error(&format!("failed to parse data: {}", err)))));
+        }
+    };
+
     let input = crate::scenarios::Input {
         text: &payload.text,
-        guidance: None,
+        guidance: Some(&message),
     };
 
     let speech_text = scenario.render(input);

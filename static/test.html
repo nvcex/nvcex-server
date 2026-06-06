@@ -108,7 +108,7 @@
         const res = await fetch('/tts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: item.text, data: item.data, voice_type: 'standard', format: 'wav' }),
+          body: JSON.stringify({ text: item.text, data: item.data, scenario_name: "VOICEVOX/ずんだもん/ノーマル/P" }),
         });
 
         if (!res.ok) {

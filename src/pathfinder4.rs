@@ -179,608 +179,588 @@ struct PF4NLGData {
     pub text: String,
 }
 
-pub struct Parser {
-    pub warnings: Vec<String>,
+pub fn parse(bytes: &[u8]) -> Result<Guidance, String> {
+    let mut body = None;
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value } in &fields {
+        match (field_number.as_u32(), value) {
+            (2, &FieldValue::Len(nested_bytes)) if body.is_none()=> {
+                body = Some(parse_guidance(nested_bytes)?);
+            }
+            (n, _) => return Err(format!("Unexpected field number {} in envelope", n))
+        }
+    }
+    if let Some(body) = body {
+        Ok(body)
+    } else {
+        Err("Missing required field 2 in StructuredMessage".to_string())
+    }
 }
 
-impl Parser {
-    pub fn new() -> Self {
-        Parser { warnings: Vec::new() }
+fn parse_string(bytes: &[u8]) -> Result<String, String> {
+    match str::from_utf8(bytes) {
+        Ok(s) => Ok(s.to_string()),
+        Err(e) => Err(format!("invalid utf-8 sequence: {}", e)),
     }
+}
 
-    fn warn(&mut self, message: String) {
-        self.warnings.push(message);
-    }
-
-    pub fn parse(&mut self, bytes: &[u8]) -> Result<Guidance, String> {
-        let mut body = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
+fn parse_guidance(bytes: &[u8]) -> Result<Guidance, String> {
+    let mut args = None;
+    let mut command = None;
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value } in &fields {
             match (field_number.as_u32(), value) {
-                (2, &FieldValue::Len(nested_bytes)) if body.is_none()=> {
-                    body = Some(self.parse_guidance(nested_bytes)?);
-                }
-                (n, _) => {
-                    self.warn(format!("Unexpected field number {} in envelope", n));
-                }
+            (2, &FieldValue::Len(nested_bytes)) if args.is_none() => {
+                args = Some(parse_values(nested_bytes)?);
             }
-        }
-        if let Some(body) = body {
-            Ok(body)
-        } else {
-            Err("Missing required field 2 in StructuredMessage".to_string())
-        }
-    }
-
-    fn parse_string(&mut self, bytes: &[u8]) -> Result<String, String> {
-        match str::from_utf8(bytes) {
-            Ok(s) => Ok(s.to_string()),
-            Err(e) => Err(format!("invalid utf-8 sequence: {}", e)),
-        }
-    }
-
-    fn parse_guidance(&mut self, bytes: &[u8]) -> Result<Guidance, String> {
-        let mut args = None;
-        let mut command = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
-             match (field_number.as_u32(), value) {
-                (2, &FieldValue::Len(nested_bytes)) if args.is_none() => {
-                    args = Some(self.parse_values(nested_bytes)?);
-                }
-                (5, &FieldValue::Len(nested_bytes)) if command.is_none() => {
-                    command = Some(self.parse_command(nested_bytes)?);
-                }
-                (n, _) => {
-                    self.warn(format!("Unexpected field number {} in PF4Message", n));
-                }
+            (5, &FieldValue::Len(nested_bytes)) if command.is_none() => {
+                command = Some(parse_command(nested_bytes)?);
             }
-        }
-        if let (Some(args), Some(command)) = (args, command) {
-            self.map_guidance(command, args)
-        } else {
-            Err("Missing required fields in PF4Message".to_string())
+            (n, _) => return Err(format!("Unexpected field number {} in PF4Message", n))
         }
     }
+    if let (Some(args), Some(command)) = (args, command) {
+        map_guidance(command, args)
+    } else {
+        Err("Missing required fields in PF4Message".to_string())
+    }
+}
 
-    fn map_guidance(&mut self, command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> {
-        if command.type_name == "pathfinder4" {
-            match command.value.as_str() {
-                "pf_straightstep" => {
-                    let mut lane = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            arg => return Err(format!("unknown args for pf_straightstep {:?}", arg))
-                        }
-                    }
-                    Ok(Guidance::StraightStep(lane))
-                }
-                "pf_turnstep" => {
-                    let mut lane = None;
-                    let mut sharpness = None;
-                    let mut side = None;
-                    let mut intersection_name = None;
-                    let mut traffic_light = None;
-                    let mut stop_sign = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            Value::TurnSharpness(v) => sharpness = Some(v),
-                            Value::TurnSide(v) => side = Some(v),
-                            Value::IntersectionName(v) => intersection_name = Some(v),
-                            Value::TrafficLight(v) => traffic_light = Some(v),
-                            Value::StopSign(v) => stop_sign = Some(v),
-                            arg => return Err(format!("unknown args for pf_turnstep {:?}", arg))
-                        }
-                    }
-                    if let (Some(sharpness), Some(side)) = (sharpness, side) {
-                        Ok(Guidance::TurnStep(sharpness, side, lane, intersection_name, traffic_light, stop_sign))
-                    } else {
-                        Err("missing sharpness or side field in pf_turnstep".to_string())
+fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> {
+    if command.type_name == "pathfinder4" {
+        match command.value.as_str() {
+            "pf_straightstep" => {
+                let mut lane = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        arg => return Err(format!("unknown args for pf_straightstep {:?}", arg))
                     }
                 }
-                "pf_uturnstep" => {
-                    let mut intersection_name = None;
-                    for arg in args {
-                        match arg {
-                            Value::IntersectionName(v) => intersection_name = Some(v),
-                            arg => return Err(format!("unknown args for pf_uturnstep {:?}", arg))
-                        }
-                    }
-                    Ok(Guidance::UTurnStep(intersection_name))
-                }
-                "pf_onrampstep" => {
-                    let mut lane = None;
-                    let mut sharpness = None;
-                    let mut side = None;
-                    let mut intersection_name = None;
-                    let mut traffic_light = None;
-                    let mut sign_direct_name = None;
-                    let mut sign_indirect_name = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            Value::TurnSharpness(v) => sharpness = Some(v),
-                            Value::TurnSide(v) => side = Some(v),
-                            Value::IntersectionName(v) => intersection_name = Some(v),
-                            Value::TrafficLight(v) => traffic_light = Some(v),
-                            Value::SignDirectName(v) => sign_direct_name = Some(v),
-                            Value::SignIndirectName(v) => sign_indirect_name = Some(v),
-                            arg => return Err(format!("unknown args for pf_onrampstep {:?}", arg))
-                        }
-                    }
-                    Ok(Guidance::OnRampStep(sharpness, side, lane, intersection_name, traffic_light, sign_direct_name, sign_indirect_name))
-                }
-                "pf_offrampstep" => {
-                    let mut lane = None;
-                    let mut exit = None;
-                    let mut sign_name = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            Value::ExitName(v) => exit = Some(v),
-                            Value::SignIndirectName(v) => sign_name = Some(v),
-                            arg => return Err(format!("unknown args for pf_offrampstep {:?}", arg))
-                        }
-                    }
-                    Ok(Guidance::OffRampStep(lane, exit, sign_name))
-                }
-                "pf_keeporforkstep" => {
-                    let mut lane = None;
-                    let mut side = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            Value::KeepSide(v) => side = Some(v),
-                            arg => return Err(format!("unknown args for pf_keeporforkstep {:?}", arg))
-                        }
-                    }
-                    if let Some(side) = side {
-                        Ok(Guidance::KeepOrForkStep(side, lane))
-                    } else {
-                        Err("Missing keep field in pf_keeporforkstep".to_string())
-                    }
-                }
-                "pf_mergestep" => {
-                    let mut lane = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            arg => return Err(format!("unknown args for pf_mergestep {:?}", arg))
-                        }
-                    }
-                    Ok(Guidance::MergeStep(lane))
-                }
-                "pf_interchangestep" => {
-                    let mut lane = None;
-                    let mut name = None;
-                    let mut sign_direct_name = None;
-                    let mut sign_indirect_name = None;
-                    for arg in args {
-                        match arg {
-                            Value::LaneGuidance(v) => lane = Some(v),
-                            Value::InterchangeName(v) => name = Some(v),
-                            Value::SignDirectName(v) => sign_direct_name = Some(v),
-                            Value::SignIndirectName(v) => sign_indirect_name = Some(v),
-                            arg => return Err(format!("unknown args for pf_interchangestep {:?}", arg))
-                        }
-                    }
-                    if let Some(name) = name {
-                        Ok(Guidance::InterchangeStep(lane, name, sign_direct_name, sign_indirect_name))
-                    } else {
-                        Err("Missing field in pf_interchangestep".to_string())
-                    }
-                }
-                "pf_destinationstep_prepare" => {
-                    let mut side = None;
-                    for arg in args {
-                        match arg {
-                            Value::DestinationSide(v) => side = Some(v),
-                            arg => return Err(format!("unknown args for pf_destinationstep_prepare {:?}", arg))
-                        }
-                    }
-                    Ok(Guidance::DestinationStepPrepare(side))
-                }
-                "pf_destinationstep_act" => match args.as_slice() {
-                    [] => Ok(Guidance::DestinationStepAct),
-                    values => Err(format!("unknown args for pf_destinationstep_act {:?}", values))
-                }
-                "continue_for_distance" => {
-                    let mut distance = None;
-                    let mut distance_unit = None;
-                    let mut distance_override = None;
-                    for arg in args {
-                        match arg {
-                            Value::Distance(v) => distance = Some(v),
-                            Value::DistanceUnit(v) => distance_unit = Some(v),
-                            Value::DistanceOverride(v) => distance_override = Some(v),
-                            arg => return Err(format!("unknown args for continue_for_distance {:?}", arg))
-                        }
-                    }
-                    if let (Some(distance), Some(distance_unit)) = (distance, distance_unit) {
-                        Ok(Guidance::ContinueForDistance(distance, distance_unit, distance_override))
-                    } else {
-                        Err("Missing field in continue_for_distance".to_string())
-                    }
-                }
-                "prepare_distance_message" => {
-                    let mut distance = None;
-                    let mut distance_unit = None;
-                    let mut maneuver = None;
-                    for arg in args {
-                        match arg {
-                            Value::Distance(v) => distance = Some(v),
-                            Value::DistanceUnit(v) => distance_unit = Some(v),
-                            Value::Maneuver(v) => maneuver = Some(v),
-                            arg => return Err(format!("unknown args for prepare_distance_message {:?}", arg))
-                        }
-                    }
-                    if let (Some(distance), Some(distance_unit), Some(maneuver)) = (distance, distance_unit, maneuver) {
-                        Ok(Guidance::PrepareDistanceMessage(distance, distance_unit, Box::new(maneuver)))
-                    } else {
-                        Err("Missing field in prepare_distance_message".to_string())
-                    }
-                }
-                "combine_merged_guidance_events" => {
-                    let mut first = None;
-                    let mut second = None;
-                    for arg in args {
-                        match arg {
-                            Value::FirstStep(v) => first = Some(v),
-                            Value::SecondStep(v) => second = Some(v),
-                            arg => return Err(format!("unknown args for combine_merged_guidance_events {:?}", arg))
-                        }
-                    }
-                    if let (Some(first), Some(second)) = (first, second) {
-                        Ok(Guidance::CombineMergedGuidanceEvents(Box::new(first), Box::new(second)))
-                    } else {
-                        Err("Missing field in combine_merged_guidance_events".to_string())
-                    }
-                }
-                v => Err(format!("Unknown command value {}", v))
+                Ok(Guidance::StraightStep(lane))
             }
-        } else {
-            Err(format!("Unknown command type {}", command.type_name))
-        }
-    }
-
-    fn parse_values(&mut self, bytes: &[u8]) -> Result<Vec<Value>, String> {
-        let mut values = Vec::new();
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
-            match (field_number.as_u32(), value) {
-                (1, &FieldValue::Len(nested_bytes)) => {
-                    values.push(self.parse_value(nested_bytes)?);
-                }
-                (n, _) => {
-                    self.warn(format!("Unexpected field number {} in PF4MessageFields", n));
-                }
-            }
-        }
-        Ok(values)
-    }
-
-    fn map_value(&mut self, key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
-        if let Some(key) = key {
-            match (key.as_str(), value) {
-                ("distance", PF4RawValue::FloatValue(f)) => Ok(Value::Distance(f)),
-                ("distance_unit", PF4RawValue::EnumValue(enum_value)) if enum_value.type_name == "nlp_generation.UnitType" => {
-                    match enum_value.value.as_str() {
-                        "UNIT_METERS" => Ok(Value::DistanceUnit(DistanceUnit::Meter)),
-                        "UNIT_KILOMETERS" => Ok(Value::DistanceUnit(DistanceUnit::Kilometer)),
-                        "UNIT_MILES" => Ok(Value::DistanceUnit(DistanceUnit::Mile)),
-                        _ => Err(format!("Unexpected value for field 'distance_unit': {}", enum_value.value))
+            "pf_turnstep" => {
+                let mut lane = None;
+                let mut sharpness = None;
+                let mut side = None;
+                let mut intersection_name = None;
+                let mut traffic_light = None;
+                let mut stop_sign = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        Value::TurnSharpness(v) => sharpness = Some(v),
+                        Value::TurnSide(v) => side = Some(v),
+                        Value::IntersectionName(v) => intersection_name = Some(v),
+                        Value::TrafficLight(v) => traffic_light = Some(v),
+                        Value::StopSign(v) => stop_sign = Some(v),
+                        arg => return Err(format!("unknown args for pf_turnstep {:?}", arg))
                     }
                 }
-                ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(DistanceOverride { value: symbol })),
-                ("turn_sharpness", PF4RawValue::SymbolValue(symbol)) => {
-                    match symbol.as_str() {
-                        "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
-                        "NORMAL" => Ok(Value::TurnSharpness(TurnSharpness::Normal)),
-                        "SHARP" => Ok(Value::TurnSharpness(TurnSharpness::Sharp)),
-                        _ => Err(format!("Unexpected value for field 'turn_sharpness': {}", symbol))
-                    }
-                }
-                ("turn_side", PF4RawValue::SymbolValue(symbol)) => {
-                    match symbol.as_str() {
-                        "LEFT" => Ok(Value::TurnSide(TurnSide::Left)),
-                        "RIGHT" => Ok(Value::TurnSide(TurnSide::Right)),
-                        _ => Err(format!("Unexpected value for field 'turn_side': {}", symbol))
-                    }
-                }
-                ("keep_side", PF4RawValue::SymbolValue(symbol)) => {
-                    match symbol.as_str() {
-                        "LEFT" => Ok(Value::KeepSide(KeepSide::Left)),
-                        "RIGHT" => Ok(Value::KeepSide(KeepSide::Right)),
-                        _ => Err(format!("Unexpected value for field 'keep_side': {}", symbol))
-                    }
-                }
-                ("destination_side", PF4RawValue::SymbolValue(symbol)) => {
-                    match symbol.as_str() {
-                        "LEFT" => Ok(Value::DestinationSide(DestinationSide::Left)),
-                        "RIGHT" => Ok(Value::DestinationSide(DestinationSide::Right)),
-                        _ => Err(format!("Unexpected value for field 'destination_side': {}", symbol))
-                    }
-                }
-                ("lane_guidance_type", PF4RawValue::SymbolValue(symbol)) => {
-                    match symbol.as_str() {
-                        "USE_LEFT_LANE" => Ok(Value::LaneGuidance(LaneGuidance::LeftLane)),
-                        "USE_LEFT_2_LANES" => Ok(Value::LaneGuidance(LaneGuidance::Left2Lanes)),
-                        "USE_RIGHT_LANE" => Ok(Value::LaneGuidance(LaneGuidance::RightLane)),
-                        "USE_RIGHT_2_LANES" => Ok(Value::LaneGuidance(LaneGuidance::Right2Lanes)),
-                        "USE_SECOND_FROM_RIGHT" => Ok(Value::LaneGuidance(LaneGuidance::SecondFromRight)),
-                        "USE_MIDDLE_LANE" => Ok(Value::LaneGuidance(LaneGuidance::MiddleLane)),
-                        "USE_ANY_LANE" => Ok(Value::LaneGuidance(LaneGuidance::AnyLane)),
-                        _ => Err(format!("Unexpected value for field 'lane_guidance': {}", symbol))
-                    }
-                }
-                ("traffic_light", PF4RawValue::IntValue(index)) => Ok(Value::TrafficLight(TrafficLight { index })),
-                ("stop_sign", PF4RawValue::IntValue(index)) => Ok(Value::StopSign(StopSign { index })),
-                ("exit_name", PF4RawValue::KeyValueArray(values)) => {
-                    let mut exits = None;
-                    for value in values {
-                        match value {
-                            Value::Exits(r) if exits.is_none() => {
-                                exits = Some(r)
-
-                            }
-                            value => return Err(format!("Unknown exit_name: {:?}", value))
-                        }
-                    }
-                    if let Some(exits) = exits {
-                        Ok(Value::ExitName(ExitName { exits }))
-                    } else {
-                        Err("Missing values in exit_name".to_string())
-                    }
-                }
-                ("exits", PF4RawValue::KeyValueArray(values)) => {
-                    let mut names = Vec::new();
-                    for value in values {
-                        if let Value::NLGData(data) = value {
-                            names.push(data)
-                        } else {
-                            return Err(format!("Unknown exits: {:?}", value))
-                        }
-                    }
-                    Ok(Value::Exits(Exits { names }))
-                }
-                ("maneuver", PF4RawValue::KeyValueArray(values)) => {
-                    self.map_maneuver(values)
-                }
-                ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
-                ("args", PF4RawValue::KeyValueArray(values)) => Ok(Value::Args(values)),
-                ("first_step", PF4RawValue::KeyValueArray(values)) => {
-                    let [key, args] = values.try_into().map_err(|values| format!("Unknown first_step: {:?}", values))?;
-                    match (key, args) {
-                        (Value::Key(key), Value::Args(args)) =>
-                            Ok(Value::FirstStep(self.map_guidance(key, args)?)),
-                        (key, args) => Err(format!("Unknown first_step: {:?} {:?}", key, args))
-                    }
-                }
-                ("second_step", PF4RawValue::KeyValueArray(values)) => {
-                    let [key, args] = values.try_into().map_err(|values| format!("Unknown second_step: {:?}", values))?;
-                    match (key, args) {
-                        (Value::Key(key), Value::Args(args)) =>
-                            Ok(Value::SecondStep(self.map_guidance(key, args)?)),
-                        (key, args) => Err(format!("Unknown second_step: {:?} {:?}", key, args))
-                    }
-                }
-                ("sign_direct_name", PF4RawValue::KeyValueArray(values)) => {
-                    let mut routes = None;
-                    for value in values {
-                        match value {
-                            Value::Routes(r) if routes.is_none() => {
-                                routes = Some(r)
-
-                            }
-                            value => return Err(format!("Unknown sign_direct_name: {:?}", value))
-                        }
-                    }
-                    if let Some(routes) = routes {
-                        Ok(Value::SignDirectName(SignDirectName { routes }))
-                    } else {
-                        Err("Missing values in sign_direct_name".to_string())
-                    }
-                }
-                ("sign_indirect_name", PF4RawValue::KeyValueArray(values)) => {
-                    let mut routes = None;
-                    for value in values {
-                        match value {
-                            Value::Routes(r) if routes.is_none() => {
-                                routes = Some(r)
-
-                            }
-                            value => return Err(format!("Unknown sign_indirect_name: {:?}", value))
-                        }
-                    }
-                    if let Some(routes) = routes {
-                        Ok(Value::SignIndirectName(SignIndirectName { routes }))
-                    } else {
-                        Err("Missing values in sign_indirect_name".to_string())
-                    }
-                }
-                ("routes", PF4RawValue::KeyValueArray(values)) => {
-                    let mut names = Vec::new();
-                    for value in values {
-                        if let Value::NLGData(data) = value {
-                            names.push(data)
-                        } else {
-                            return Err(format!("Unknown routes: {:?}", value))
-                        }
-                    }
-                    Ok(Value::Routes(Routes { names }))
-                }
-                ("intersection_name", PF4RawValue::KeyValueArray(values)) => {
-                    let mut routes = None;
-                    for value in values {
-                        match value {
-                            Value::Routes(r) if routes.is_none() => {
-                                routes = Some(r)
-
-                            }
-                            value => return Err(format!("Unknown intersection_name: {:?}", value))
-                        }
-                    }
-                    if let Some(routes) = routes {
-                        Ok(Value::IntersectionName(IntersectionName { routes }))
-                    } else {
-                        Err("Missing values in intersection_name".to_string())
-                    }
-                }
-                ("interchange_name", PF4RawValue::KeyValueArray(values)) => {
-                    let mut exits = None;
-                    for value in values {
-                        match value {
-                            Value::Exits(r) if exits.is_none() => {
-                                exits = Some(r)
-
-                            }
-                            value => return Err(format!("Unknown intersection_name: {:?}", value))
-                        }
-                    }
-                    if let Some(exits) = exits {
-                        Ok(Value::InterchangeName(InterchangeName { exits }))
-                    } else {
-                        Err("Missing values in interchange_name".to_string())
-                    }
-                }
-                (_, value) => {
-                    Err(format!("Unknown key-value pair: {} = {:?}", key, value))
-                }
-            }
-        } else if let PF4RawValue::NLGData(data) = value {
-            Ok(Value::NLGData(NLGData { text: data.text }))
-        } else {
-            Err("Missing key in PF4KeyValue".to_string())
-        }
-    }
-
-    fn map_maneuver(&mut self, values: Vec<Value>) -> Result<Value, String> {
-        let [key, args] = values.try_into().map_err(|values| format!("Unknown maneuver: {:?}", values))?;
-        match (key, args) {
-            (Value::Key(key), Value::Args(args)) =>
-                Ok(Value::Maneuver(self.map_guidance(key, args)?)),
-            (key, args) => Err(format!("Unknown maneuver: {:?} {:?}", key, args))
-        }
-    }
-
-    fn parse_value(&mut self, bytes: &[u8]) -> Result<Value, String> {
-        let mut key = None;
-        let mut raw_value = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value} in &fields {
-            if field_number.as_u32() == 1 {
-                if let FieldValue::Len(nested_bytes) = value {
-                    if key.is_some() {
-                        return Err("Duplicate field 1 in PF4KeyValue".to_string())
-                    } else {
-                        key = Some(self.parse_string(nested_bytes)?)
-                    }
+                if let (Some(sharpness), Some(side)) = (sharpness, side) {
+                    Ok(Guidance::TurnStep(sharpness, side, lane, intersection_name, traffic_light, stop_sign))
                 } else {
-                    return Err(format!("Unexpected field type for field 1 in PF4KeyValue: {:?}", value))
+                    Err("missing sharpness or side field in pf_turnstep".to_string())
+                }
+            }
+            "pf_uturnstep" => {
+                let mut intersection_name = None;
+                for arg in args {
+                    match arg {
+                        Value::IntersectionName(v) => intersection_name = Some(v),
+                        arg => return Err(format!("unknown args for pf_uturnstep {:?}", arg))
+                    }
+                }
+                Ok(Guidance::UTurnStep(intersection_name))
+            }
+            "pf_onrampstep" => {
+                let mut lane = None;
+                let mut sharpness = None;
+                let mut side = None;
+                let mut intersection_name = None;
+                let mut traffic_light = None;
+                let mut sign_direct_name = None;
+                let mut sign_indirect_name = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        Value::TurnSharpness(v) => sharpness = Some(v),
+                        Value::TurnSide(v) => side = Some(v),
+                        Value::IntersectionName(v) => intersection_name = Some(v),
+                        Value::TrafficLight(v) => traffic_light = Some(v),
+                        Value::SignDirectName(v) => sign_direct_name = Some(v),
+                        Value::SignIndirectName(v) => sign_indirect_name = Some(v),
+                        arg => return Err(format!("unknown args for pf_onrampstep {:?}", arg))
+                    }
+                }
+                Ok(Guidance::OnRampStep(sharpness, side, lane, intersection_name, traffic_light, sign_direct_name, sign_indirect_name))
+            }
+            "pf_offrampstep" => {
+                let mut lane = None;
+                let mut exit = None;
+                let mut sign_name = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        Value::ExitName(v) => exit = Some(v),
+                        Value::SignIndirectName(v) => sign_name = Some(v),
+                        arg => return Err(format!("unknown args for pf_offrampstep {:?}", arg))
+                    }
+                }
+                Ok(Guidance::OffRampStep(lane, exit, sign_name))
+            }
+            "pf_keeporforkstep" => {
+                let mut lane = None;
+                let mut side = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        Value::KeepSide(v) => side = Some(v),
+                        arg => return Err(format!("unknown args for pf_keeporforkstep {:?}", arg))
+                    }
+                }
+                if let Some(side) = side {
+                    Ok(Guidance::KeepOrForkStep(side, lane))
+                } else {
+                    Err("Missing keep field in pf_keeporforkstep".to_string())
+                }
+            }
+            "pf_mergestep" => {
+                let mut lane = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        arg => return Err(format!("unknown args for pf_mergestep {:?}", arg))
+                    }
+                }
+                Ok(Guidance::MergeStep(lane))
+            }
+            "pf_interchangestep" => {
+                let mut lane = None;
+                let mut name = None;
+                let mut sign_direct_name = None;
+                let mut sign_indirect_name = None;
+                for arg in args {
+                    match arg {
+                        Value::LaneGuidance(v) => lane = Some(v),
+                        Value::InterchangeName(v) => name = Some(v),
+                        Value::SignDirectName(v) => sign_direct_name = Some(v),
+                        Value::SignIndirectName(v) => sign_indirect_name = Some(v),
+                        arg => return Err(format!("unknown args for pf_interchangestep {:?}", arg))
+                    }
+                }
+                if let Some(name) = name {
+                    Ok(Guidance::InterchangeStep(lane, name, sign_direct_name, sign_indirect_name))
+                } else {
+                    Err("Missing field in pf_interchangestep".to_string())
+                }
+            }
+            "pf_destinationstep_prepare" => {
+                let mut side = None;
+                for arg in args {
+                    match arg {
+                        Value::DestinationSide(v) => side = Some(v),
+                        arg => return Err(format!("unknown args for pf_destinationstep_prepare {:?}", arg))
+                    }
+                }
+                Ok(Guidance::DestinationStepPrepare(side))
+            }
+            "pf_destinationstep_act" => match args.as_slice() {
+                [] => Ok(Guidance::DestinationStepAct),
+                values => Err(format!("unknown args for pf_destinationstep_act {:?}", values))
+            }
+            "continue_for_distance" => {
+                let mut distance = None;
+                let mut distance_unit = None;
+                let mut distance_override = None;
+                for arg in args {
+                    match arg {
+                        Value::Distance(v) => distance = Some(v),
+                        Value::DistanceUnit(v) => distance_unit = Some(v),
+                        Value::DistanceOverride(v) => distance_override = Some(v),
+                        arg => return Err(format!("unknown args for continue_for_distance {:?}", arg))
+                    }
+                }
+                if let (Some(distance), Some(distance_unit)) = (distance, distance_unit) {
+                    Ok(Guidance::ContinueForDistance(distance, distance_unit, distance_override))
+                } else {
+                    Err("Missing field in continue_for_distance".to_string())
+                }
+            }
+            "prepare_distance_message" => {
+                let mut distance = None;
+                let mut distance_unit = None;
+                let mut maneuver = None;
+                for arg in args {
+                    match arg {
+                        Value::Distance(v) => distance = Some(v),
+                        Value::DistanceUnit(v) => distance_unit = Some(v),
+                        Value::Maneuver(v) => maneuver = Some(v),
+                        arg => return Err(format!("unknown args for prepare_distance_message {:?}", arg))
+                    }
+                }
+                if let (Some(distance), Some(distance_unit), Some(maneuver)) = (distance, distance_unit, maneuver) {
+                    Ok(Guidance::PrepareDistanceMessage(distance, distance_unit, Box::new(maneuver)))
+                } else {
+                    Err("Missing field in prepare_distance_message".to_string())
+                }
+            }
+            "combine_merged_guidance_events" => {
+                let mut first = None;
+                let mut second = None;
+                for arg in args {
+                    match arg {
+                        Value::FirstStep(v) => first = Some(v),
+                        Value::SecondStep(v) => second = Some(v),
+                        arg => return Err(format!("unknown args for combine_merged_guidance_events {:?}", arg))
+                    }
+                }
+                if let (Some(first), Some(second)) = (first, second) {
+                    Ok(Guidance::CombineMergedGuidanceEvents(Box::new(first), Box::new(second)))
+                } else {
+                    Err("Missing field in combine_merged_guidance_events".to_string())
+                }
+            }
+            v => Err(format!("Unknown command value {}", v))
+        }
+    } else {
+        Err(format!("Unknown command type {}", command.type_name))
+    }
+}
+
+fn parse_values(bytes: &[u8]) -> Result<Vec<Value>, String> {
+    let mut values = Vec::new();
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value } in &fields {
+        match (field_number.as_u32(), value) {
+            (1, &FieldValue::Len(nested_bytes)) => {
+                values.push(parse_value(nested_bytes)?);
+            }
+            (n, _) => return Err(format!("Unexpected field number {} in PF4MessageFields", n))
+        }
+    }
+    Ok(values)
+}
+
+fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
+    if let Some(key) = key {
+        match (key.as_str(), value) {
+            ("distance", PF4RawValue::FloatValue(f)) => Ok(Value::Distance(f)),
+            ("distance_unit", PF4RawValue::EnumValue(enum_value)) if enum_value.type_name == "nlp_generation.UnitType" => {
+                match enum_value.value.as_str() {
+                    "UNIT_METERS" => Ok(Value::DistanceUnit(DistanceUnit::Meter)),
+                    "UNIT_KILOMETERS" => Ok(Value::DistanceUnit(DistanceUnit::Kilometer)),
+                    "UNIT_MILES" => Ok(Value::DistanceUnit(DistanceUnit::Mile)),
+                    _ => Err(format!("Unexpected value for field 'distance_unit': {}", enum_value.value))
+                }
+            }
+            ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(DistanceOverride { value: symbol })),
+            ("turn_sharpness", PF4RawValue::SymbolValue(symbol)) => {
+                match symbol.as_str() {
+                    "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
+                    "NORMAL" => Ok(Value::TurnSharpness(TurnSharpness::Normal)),
+                    "SHARP" => Ok(Value::TurnSharpness(TurnSharpness::Sharp)),
+                    _ => Err(format!("Unexpected value for field 'turn_sharpness': {}", symbol))
+                }
+            }
+            ("turn_side", PF4RawValue::SymbolValue(symbol)) => {
+                match symbol.as_str() {
+                    "LEFT" => Ok(Value::TurnSide(TurnSide::Left)),
+                    "RIGHT" => Ok(Value::TurnSide(TurnSide::Right)),
+                    _ => Err(format!("Unexpected value for field 'turn_side': {}", symbol))
+                }
+            }
+            ("keep_side", PF4RawValue::SymbolValue(symbol)) => {
+                match symbol.as_str() {
+                    "LEFT" => Ok(Value::KeepSide(KeepSide::Left)),
+                    "RIGHT" => Ok(Value::KeepSide(KeepSide::Right)),
+                    _ => Err(format!("Unexpected value for field 'keep_side': {}", symbol))
+                }
+            }
+            ("destination_side", PF4RawValue::SymbolValue(symbol)) => {
+                match symbol.as_str() {
+                    "LEFT" => Ok(Value::DestinationSide(DestinationSide::Left)),
+                    "RIGHT" => Ok(Value::DestinationSide(DestinationSide::Right)),
+                    _ => Err(format!("Unexpected value for field 'destination_side': {}", symbol))
+                }
+            }
+            ("lane_guidance_type", PF4RawValue::SymbolValue(symbol)) => {
+                match symbol.as_str() {
+                    "USE_LEFT_LANE" => Ok(Value::LaneGuidance(LaneGuidance::LeftLane)),
+                    "USE_LEFT_2_LANES" => Ok(Value::LaneGuidance(LaneGuidance::Left2Lanes)),
+                    "USE_RIGHT_LANE" => Ok(Value::LaneGuidance(LaneGuidance::RightLane)),
+                    "USE_RIGHT_2_LANES" => Ok(Value::LaneGuidance(LaneGuidance::Right2Lanes)),
+                    "USE_SECOND_FROM_RIGHT" => Ok(Value::LaneGuidance(LaneGuidance::SecondFromRight)),
+                    "USE_MIDDLE_LANE" => Ok(Value::LaneGuidance(LaneGuidance::MiddleLane)),
+                    "USE_ANY_LANE" => Ok(Value::LaneGuidance(LaneGuidance::AnyLane)),
+                    _ => Err(format!("Unexpected value for field 'lane_guidance': {}", symbol))
+                }
+            }
+            ("traffic_light", PF4RawValue::IntValue(index)) => Ok(Value::TrafficLight(TrafficLight { index })),
+            ("stop_sign", PF4RawValue::IntValue(index)) => Ok(Value::StopSign(StopSign { index })),
+            ("exit_name", PF4RawValue::KeyValueArray(values)) => {
+                let mut exits = None;
+                for value in values {
+                    match value {
+                        Value::Exits(r) if exits.is_none() => {
+                            exits = Some(r)
+
+                        }
+                        value => return Err(format!("Unknown exit_name: {:?}", value))
+                    }
+                }
+                if let Some(exits) = exits {
+                    Ok(Value::ExitName(ExitName { exits }))
+                } else {
+                    Err("Missing values in exit_name".to_string())
+                }
+            }
+            ("exits", PF4RawValue::KeyValueArray(values)) => {
+                let mut names = Vec::new();
+                for value in values {
+                    if let Value::NLGData(data) = value {
+                        names.push(data)
+                    } else {
+                        return Err(format!("Unknown exits: {:?}", value))
+                    }
+                }
+                Ok(Value::Exits(Exits { names }))
+            }
+            ("maneuver", PF4RawValue::KeyValueArray(values)) => {
+                map_maneuver(values)
+            }
+            ("key", PF4RawValue::CommandValue(cmd)) => Ok(Value::Key(cmd)),
+            ("args", PF4RawValue::KeyValueArray(values)) => Ok(Value::Args(values)),
+            ("first_step", PF4RawValue::KeyValueArray(values)) => {
+                let [key, args] = values.try_into().map_err(|values| format!("Unknown first_step: {:?}", values))?;
+                match (key, args) {
+                    (Value::Key(key), Value::Args(args)) =>
+                        Ok(Value::FirstStep(map_guidance(key, args)?)),
+                    (key, args) => Err(format!("Unknown first_step: {:?} {:?}", key, args))
+                }
+            }
+            ("second_step", PF4RawValue::KeyValueArray(values)) => {
+                let [key, args] = values.try_into().map_err(|values| format!("Unknown second_step: {:?}", values))?;
+                match (key, args) {
+                    (Value::Key(key), Value::Args(args)) =>
+                        Ok(Value::SecondStep(map_guidance(key, args)?)),
+                    (key, args) => Err(format!("Unknown second_step: {:?} {:?}", key, args))
+                }
+            }
+            ("sign_direct_name", PF4RawValue::KeyValueArray(values)) => {
+                let mut routes = None;
+                for value in values {
+                    match value {
+                        Value::Routes(r) if routes.is_none() => {
+                            routes = Some(r)
+
+                        }
+                        value => return Err(format!("Unknown sign_direct_name: {:?}", value))
+                    }
+                }
+                if let Some(routes) = routes {
+                    Ok(Value::SignDirectName(SignDirectName { routes }))
+                } else {
+                    Err("Missing values in sign_direct_name".to_string())
+                }
+            }
+            ("sign_indirect_name", PF4RawValue::KeyValueArray(values)) => {
+                let mut routes = None;
+                for value in values {
+                    match value {
+                        Value::Routes(r) if routes.is_none() => {
+                            routes = Some(r)
+
+                        }
+                        value => return Err(format!("Unknown sign_indirect_name: {:?}", value))
+                    }
+                }
+                if let Some(routes) = routes {
+                    Ok(Value::SignIndirectName(SignIndirectName { routes }))
+                } else {
+                    Err("Missing values in sign_indirect_name".to_string())
+                }
+            }
+            ("routes", PF4RawValue::KeyValueArray(values)) => {
+                let mut names = Vec::new();
+                for value in values {
+                    if let Value::NLGData(data) = value {
+                        names.push(data)
+                    } else {
+                        return Err(format!("Unknown routes: {:?}", value))
+                    }
+                }
+                Ok(Value::Routes(Routes { names }))
+            }
+            ("intersection_name", PF4RawValue::KeyValueArray(values)) => {
+                let mut routes = None;
+                for value in values {
+                    match value {
+                        Value::Routes(r) if routes.is_none() => {
+                            routes = Some(r)
+
+                        }
+                        value => return Err(format!("Unknown intersection_name: {:?}", value))
+                    }
+                }
+                if let Some(routes) = routes {
+                    Ok(Value::IntersectionName(IntersectionName { routes }))
+                } else {
+                    Err("Missing values in intersection_name".to_string())
+                }
+            }
+            ("interchange_name", PF4RawValue::KeyValueArray(values)) => {
+                let mut exits = None;
+                for value in values {
+                    match value {
+                        Value::Exits(r) if exits.is_none() => {
+                            exits = Some(r)
+
+                        }
+                        value => return Err(format!("Unknown intersection_name: {:?}", value))
+                    }
+                }
+                if let Some(exits) = exits {
+                    Ok(Value::InterchangeName(InterchangeName { exits }))
+                } else {
+                    Err("Missing values in interchange_name".to_string())
+                }
+            }
+            (_, value) => {
+                Err(format!("Unknown key-value pair: {} = {:?}", key, value))
+            }
+        }
+    } else if let PF4RawValue::NLGData(data) = value {
+        Ok(Value::NLGData(NLGData { text: data.text }))
+    } else {
+        Err("Missing key in PF4KeyValue".to_string())
+    }
+}
+
+fn map_maneuver(values: Vec<Value>) -> Result<Value, String> {
+    let [key, args] = values.try_into().map_err(|values| format!("Unknown maneuver: {:?}", values))?;
+    match (key, args) {
+        (Value::Key(key), Value::Args(args)) =>
+            Ok(Value::Maneuver(map_guidance(key, args)?)),
+        (key, args) => Err(format!("Unknown maneuver: {:?} {:?}", key, args))
+    }
+}
+
+fn parse_value(bytes: &[u8]) -> Result<Value, String> {
+    let mut key = None;
+    let mut raw_value = None;
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value} in &fields {
+        if field_number.as_u32() == 1 {
+            if let FieldValue::Len(nested_bytes) = value {
+                if key.is_some() {
+                    return Err("Duplicate field 1 in PF4KeyValue".to_string())
+                } else {
+                    key = Some(parse_string(nested_bytes)?)
                 }
             } else {
-                let new_raw_value = match (field_number.as_u32(), value) {
-                    (3, &FieldValue::Varint(v)) => {
-                        Some(PF4RawValue::IntValue(v.to_sint64()))
-                    }
-                    (4, &FieldValue::Len(nested_bytes)) => {
-                        Some(PF4RawValue::SymbolValue(self.parse_string(nested_bytes)?))
-                    }
-                    (6, &FieldValue::I64(nested_bytes)) => {
-                        Some(PF4RawValue::FloatValue(f64::from_le_bytes(nested_bytes)))
-                    }
-                    (11, &FieldValue::Len(nested_bytes)) => {
-                        Some(PF4RawValue::EnumValue(self.parse_enum(nested_bytes)?))
-                    }
-                    (14, &FieldValue::Len(nested_bytes)) => {
-                        Some(PF4RawValue::CommandValue(self.parse_command(nested_bytes)?))
-                    }
-                    (15, &FieldValue::Len(nested_bytes)) => {
-                        Some(PF4RawValue::NLGData(self.parse_nlg_data(nested_bytes)?))
-                    }
-                    (16, &FieldValue::Len(nested_bytes)) => {
-                        Some(PF4RawValue::KeyValueArray(self.parse_values(nested_bytes)?))
-                    }
-                    (n, _) => {
-                        return Err(format!("Unexpected field number {} in PF4KeyValue", n))
-                    }
-                };
-                if raw_value.is_some() {
-                    return Err(format!("Duplicate value field in PF4KeyValue: {:?}", raw_value))
-                } else {
-                    raw_value = new_raw_value;
+                return Err(format!("Unexpected field type for field 1 in PF4KeyValue: {:?}", value))
+            }
+        } else {
+            let new_raw_value = match (field_number.as_u32(), value) {
+                (3, &FieldValue::Varint(v)) => {
+                    Some(PF4RawValue::IntValue(v.to_sint64()))
                 }
+                (4, &FieldValue::Len(nested_bytes)) => {
+                    Some(PF4RawValue::SymbolValue(parse_string(nested_bytes)?))
+                }
+                (6, &FieldValue::I64(nested_bytes)) => {
+                    Some(PF4RawValue::FloatValue(f64::from_le_bytes(nested_bytes)))
+                }
+                (11, &FieldValue::Len(nested_bytes)) => {
+                    Some(PF4RawValue::EnumValue(parse_enum(nested_bytes)?))
+                }
+                (14, &FieldValue::Len(nested_bytes)) => {
+                    Some(PF4RawValue::CommandValue(parse_command(nested_bytes)?))
+                }
+                (15, &FieldValue::Len(nested_bytes)) => {
+                    Some(PF4RawValue::NLGData(parse_nlg_data(nested_bytes)?))
+                }
+                (16, &FieldValue::Len(nested_bytes)) => {
+                    Some(PF4RawValue::KeyValueArray(parse_values(nested_bytes)?))
+                }
+                (n, _) => {
+                    return Err(format!("Unexpected field number {} in PF4KeyValue", n))
+                }
+            };
+            if raw_value.is_some() {
+                return Err(format!("Duplicate value field in PF4KeyValue: {:?}", raw_value))
+            } else {
+                raw_value = new_raw_value;
             }
         }
-        if let Some(value) = raw_value {
-            self.map_value(key, value)
-        } else {
-            Err("Missing value in PF4KeyValue".to_string())
-        }
     }
-
-    fn parse_enum(&mut self, bytes: &[u8]) -> Result<PF4Enum, String> {
-        let mut type_name = None;
-        let mut enum_value = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
-             match (field_number.as_u32(), value) {
-                (1, &FieldValue::Len(nested_bytes)) if type_name.is_none() => {
-                    type_name = Some(self.parse_string(nested_bytes)?);
-                }
-                (2, &FieldValue::Len(nested_bytes)) if enum_value.is_none() => {
-                    enum_value = Some(self.parse_string(nested_bytes)?);
-                }
-                (n, _) => return Err(format!("Unexpected field number {} in PF4Enum", n))
-            }
-        }
-        if let (Some(type_name), Some(enum_value)) = (type_name, enum_value) {
-            Ok(PF4Enum { type_name, value: enum_value })
-        } else {
-            Err("Missing required fields in PF4Enum".to_string())
-        }
+    if let Some(value) = raw_value {
+        map_value(key, value)
+    } else {
+        Err("Missing value in PF4KeyValue".to_string())
     }
+}
 
-    fn parse_nlg_data(&mut self, bytes: &[u8]) -> Result<PF4NLGData, String> {
-        let mut id = None;
-        let mut text = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
+fn parse_enum(bytes: &[u8]) -> Result<PF4Enum, String> {
+    let mut type_name = None;
+    let mut enum_value = None;
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value } in &fields {
             match (field_number.as_u32(), value) {
-                (1, &FieldValue::Len(nested_bytes)) if id.is_none() => {
-                    id = Some(self.parse_string(nested_bytes)?);
-                }
-                (2, &FieldValue::Len(nested_bytes)) if text.is_none() => {
-                    text = Some(self.parse_string(nested_bytes)?);
-                }
-                (n, _) => return Err(format!("Unexpected field number {} in PF4NLGData", n))
+            (1, &FieldValue::Len(nested_bytes)) if type_name.is_none() => {
+                type_name = Some(parse_string(nested_bytes)?);
             }
-        }
-        if let Some(text) = text {
-            Ok(PF4NLGData { id, text })
-        } else {
-            Err("Missing required fields in PF4NLGData".to_string())
+            (2, &FieldValue::Len(nested_bytes)) if enum_value.is_none() => {
+                enum_value = Some(parse_string(nested_bytes)?);
+            }
+            (n, _) => return Err(format!("Unexpected field number {} in PF4Enum", n))
         }
     }
+    if let (Some(type_name), Some(enum_value)) = (type_name, enum_value) {
+        Ok(PF4Enum { type_name, value: enum_value })
+    } else {
+        Err("Missing required fields in PF4Enum".to_string())
+    }
+}
 
-    fn parse_command(&mut self, bytes: &[u8]) -> Result<PF4Enum, String> {
-        let mut command_value = None;
-        let fields = parse_fields(bytes)?;
-        for &Field { ref field_number, ref value } in &fields {
-             match (field_number.as_u32(), value) {
-                (3, &FieldValue::Len(nested_bytes)) if command_value.is_none() => {
-                    command_value = Some(self.parse_enum(nested_bytes)?);
-                }
-                (n, _) => return Err(format!("Unexpected field number {} in PF4Command", n))
+fn parse_nlg_data(bytes: &[u8]) -> Result<PF4NLGData, String> {
+    let mut id = None;
+    let mut text = None;
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value } in &fields {
+        match (field_number.as_u32(), value) {
+            (1, &FieldValue::Len(nested_bytes)) if id.is_none() => {
+                id = Some(parse_string(nested_bytes)?);
             }
+            (2, &FieldValue::Len(nested_bytes)) if text.is_none() => {
+                text = Some(parse_string(nested_bytes)?);
+            }
+            (n, _) => return Err(format!("Unexpected field number {} in PF4NLGData", n))
         }
-        if let Some(value) = command_value {
-            Ok(value)
-        } else {
-            Err("Missing required field 3 in PF4Command".to_string())
+    }
+    if let Some(text) = text {
+        Ok(PF4NLGData { id, text })
+    } else {
+        Err("Missing required fields in PF4NLGData".to_string())
+    }
+}
+
+fn parse_command(bytes: &[u8]) -> Result<PF4Enum, String> {
+    let mut command_value = None;
+    let fields = parse_fields(bytes)?;
+    for &Field { ref field_number, ref value } in &fields {
+            match (field_number.as_u32(), value) {
+            (3, &FieldValue::Len(nested_bytes)) if command_value.is_none() => {
+                command_value = Some(parse_enum(nested_bytes)?);
+            }
+            (n, _) => return Err(format!("Unexpected field number {} in PF4Command", n))
         }
+    }
+    if let Some(value) = command_value {
+        Ok(value)
+    } else {
+        Err("Missing required field 3 in PF4Command".to_string())
     }
 }
 
@@ -957,11 +937,8 @@ mod tests {
     fn parse_and_warn(s64: &str) {
         let s = BASE64_STANDARD.decode(s64).expect("failed to decode base64");
         let dump = dump_proto(&s, 0).unwrap_or_else(|e| format!("failed to dump proto: {}", e));
-        let mut parser = Parser::new();
-        let result = parser.parse(&s);
+        let result = parse(&s);
         assert!(result.is_ok(), "parse failed for {}: {:?}\nDump:\n{}", s64, result, dump);
-        let warnings = parser.warnings;
-        assert!(warnings.is_empty(), "warnings for {}: {:?}\nDump:\n{}", s64, warnings, dump);
     }
 
     #[test]
