@@ -1,5 +1,5 @@
 use axum::{http::StatusCode, response::{Html, IntoResponse}, routing::{get, post}, Json, Router};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -8,7 +8,7 @@ use base64::prelude::*;
 mod pathfinder4;
 mod scenarios;
 mod voices;
-use crate::{scenarios::{SharedScenario, build_voicevox_scenarios}, voices::{Speaker, VoicevoxClient}};
+use crate::{scenarios::{SharedScenario, build_voicevox_scenarios}, voices::VoicevoxClient};
 use axum::extract::State;
 
 #[derive(Clone)]

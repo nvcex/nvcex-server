@@ -27,6 +27,7 @@ pub enum DistanceUnit {
 
 #[derive(Debug)]
 pub struct DistanceOverride {
+    #[allow(dead_code)]
     pub value: String
 }
 
@@ -118,7 +119,6 @@ pub struct NLGData {
 
 #[derive(Debug)]
 enum Value {
-    Unknown(String, String),
     Distance(f64),
     DistanceUnit(DistanceUnit),
     DistanceOverride(DistanceOverride),
@@ -472,10 +472,7 @@ impl Parser {
                         "UNIT_METERS" => Ok(Value::DistanceUnit(DistanceUnit::Meter)),
                         "UNIT_KILOMETERS" => Ok(Value::DistanceUnit(DistanceUnit::Kilometer)),
                         "UNIT_MILES" => Ok(Value::DistanceUnit(DistanceUnit::Mile)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'distance_unit': {}", enum_value.value));
-                            Ok(Value::Unknown(key, enum_value.value.clone()))
-                        }
+                        _ => Err(format!("Unexpected value for field 'distance_unit': {}", enum_value.value))
                     }
                 }
                 ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(DistanceOverride { value: symbol })),
@@ -484,40 +481,28 @@ impl Parser {
                         "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
                         "NORMAL" => Ok(Value::TurnSharpness(TurnSharpness::Normal)),
                         "SHARP" => Ok(Value::TurnSharpness(TurnSharpness::Sharp)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'turn_sharpness': {}", symbol));
-                            Ok(Value::Unknown(key, symbol))
-                        }
+                        _ => Err(format!("Unexpected value for field 'turn_sharpness': {}", symbol))
                     }
                 }
                 ("turn_side", PF4RawValue::SymbolValue(symbol)) => {
                     match symbol.as_str() {
                         "LEFT" => Ok(Value::TurnSide(TurnSide::Left)),
                         "RIGHT" => Ok(Value::TurnSide(TurnSide::Right)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'turn_side': {}", symbol));
-                            Ok(Value::Unknown(key, symbol.clone()))
-                        }
+                        _ => Err(format!("Unexpected value for field 'turn_side': {}", symbol))
                     }
                 }
                 ("keep_side", PF4RawValue::SymbolValue(symbol)) => {
                     match symbol.as_str() {
                         "LEFT" => Ok(Value::KeepSide(KeepSide::Left)),
                         "RIGHT" => Ok(Value::KeepSide(KeepSide::Right)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'keep_side': {}", symbol));
-                            Ok(Value::Unknown(key, symbol.clone()))
-                        }
+                        _ => Err(format!("Unexpected value for field 'keep_side': {}", symbol))
                     }
                 }
                 ("destination_side", PF4RawValue::SymbolValue(symbol)) => {
                     match symbol.as_str() {
                         "LEFT" => Ok(Value::DestinationSide(DestinationSide::Left)),
                         "RIGHT" => Ok(Value::DestinationSide(DestinationSide::Right)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'destination_side': {}", symbol));
-                            Ok(Value::Unknown(key, symbol.clone()))
-                        }
+                        _ => Err(format!("Unexpected value for field 'destination_side': {}", symbol))
                     }
                 }
                 ("lane_guidance_type", PF4RawValue::SymbolValue(symbol)) => {
@@ -529,10 +514,7 @@ impl Parser {
                         "USE_SECOND_FROM_RIGHT" => Ok(Value::LaneGuidance(LaneGuidance::SecondFromRight)),
                         "USE_MIDDLE_LANE" => Ok(Value::LaneGuidance(LaneGuidance::MiddleLane)),
                         "USE_ANY_LANE" => Ok(Value::LaneGuidance(LaneGuidance::AnyLane)),
-                        _ => {
-                            self.warnings.push(format!("Unexpected value for field 'lane_guidance': {}", symbol));
-                            Ok(Value::Unknown(key, symbol.clone()))
-                        }
+                        _ => Err(format!("Unexpected value for field 'lane_guidance': {}", symbol))
                     }
                 }
                 ("traffic_light", PF4RawValue::IntValue(index)) => Ok(Value::TrafficLight(TrafficLight { index })),
@@ -545,9 +527,7 @@ impl Parser {
                                 exits = Some(r)
 
                             }
-                            value => {
-                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
-                            }
+                            value => return Err(format!("Unknown exit_name: {:?}", value))
                         }
                     }
                     if let Some(exits) = exits {
@@ -562,7 +542,7 @@ impl Parser {
                         if let Value::NLGData(data) = value {
                             names.push(data)
                         } else {
-                            self.warnings.push(format!("Unknown routes: {:?}", value));
+                            return Err(format!("Unknown exits: {:?}", value))
                         }
                     }
                     Ok(Value::Exits(Exits { names }))
@@ -581,11 +561,11 @@ impl Parser {
                     }
                 }
                 ("second_step", PF4RawValue::KeyValueArray(values)) => {
-                    let [key, args] = values.try_into().map_err(|values| format!("Unknown first_step: {:?}", values))?;
+                    let [key, args] = values.try_into().map_err(|values| format!("Unknown second_step: {:?}", values))?;
                     match (key, args) {
                         (Value::Key(key), Value::Args(args)) =>
                             Ok(Value::SecondStep(self.map_guidance(key, args)?)),
-                        (key, args) => Err(format!("Unknown first_step: {:?} {:?}", key, args))
+                        (key, args) => Err(format!("Unknown second_step: {:?} {:?}", key, args))
                     }
                 }
                 ("sign_direct_name", PF4RawValue::KeyValueArray(values)) => {
@@ -596,9 +576,7 @@ impl Parser {
                                 routes = Some(r)
 
                             }
-                            value => {
-                                self.warnings.push(format!("Unknown sign_direct_name: {:?}", value));
-                            }
+                            value => return Err(format!("Unknown sign_direct_name: {:?}", value))
                         }
                     }
                     if let Some(routes) = routes {
@@ -615,9 +593,7 @@ impl Parser {
                                 routes = Some(r)
 
                             }
-                            value => {
-                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
-                            }
+                            value => return Err(format!("Unknown sign_indirect_name: {:?}", value))
                         }
                     }
                     if let Some(routes) = routes {
@@ -632,7 +608,7 @@ impl Parser {
                         if let Value::NLGData(data) = value {
                             names.push(data)
                         } else {
-                            self.warnings.push(format!("Unknown routes: {:?}", value));
+                            return Err(format!("Unknown routes: {:?}", value))
                         }
                     }
                     Ok(Value::Routes(Routes { names }))
@@ -645,9 +621,7 @@ impl Parser {
                                 routes = Some(r)
 
                             }
-                            value => {
-                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
-                            }
+                            value => return Err(format!("Unknown intersection_name: {:?}", value))
                         }
                     }
                     if let Some(routes) = routes {
@@ -664,9 +638,7 @@ impl Parser {
                                 exits = Some(r)
 
                             }
-                            value => {
-                                self.warnings.push(format!("Unknown intersection_name: {:?}", value));
-                            }
+                            value => return Err(format!("Unknown intersection_name: {:?}", value))
                         }
                     }
                     if let Some(exits) = exits {
@@ -676,8 +648,7 @@ impl Parser {
                     }
                 }
                 (_, value) => {
-                    self.warnings.push(format!("Unknown key-value pair: {} = {:?}", key, value));
-                    Ok(Value::Unknown(key, format!("{:?}", value)))
+                    Err(format!("Unknown key-value pair: {} = {:?}", key, value))
                 }
             }
         } else if let PF4RawValue::NLGData(data) = value {
@@ -704,12 +675,12 @@ impl Parser {
             if field_number.as_u32() == 1 {
                 if let FieldValue::Len(nested_bytes) = value {
                     if key.is_some() {
-                        self.warnings.push("Duplicate field 1 in PF4KeyValue".to_string());
+                        return Err("Duplicate field 1 in PF4KeyValue".to_string())
                     } else {
-                        key = Some(self.parse_string(nested_bytes)?);
+                        key = Some(self.parse_string(nested_bytes)?)
                     }
                 } else {
-                    self.warnings.push(format!("Unexpected field type for field 1 in PF4KeyValue: {:?}", value));
+                    return Err(format!("Unexpected field type for field 1 in PF4KeyValue: {:?}", value))
                 }
             } else {
                 let new_raw_value = match (field_number.as_u32(), value) {
@@ -738,12 +709,11 @@ impl Parser {
                         Some(PF4RawValue::KeyValueArray(self.parse_values(nested_bytes)?))
                     }
                     (n, _) => {
-                        self.warn(format!("Unexpected field number {} in PF4KeyValue", n));
-                        None
+                        return Err(format!("Unexpected field number {} in PF4KeyValue", n))
                     }
                 };
                 if raw_value.is_some() {
-                    self.warnings.push(format!("Duplicate value field in PF4KeyValue: {:?}", raw_value));
+                    return Err(format!("Duplicate value field in PF4KeyValue: {:?}", raw_value))
                 } else {
                     raw_value = new_raw_value;
                 }
@@ -768,9 +738,7 @@ impl Parser {
                 (2, &FieldValue::Len(nested_bytes)) if enum_value.is_none() => {
                     enum_value = Some(self.parse_string(nested_bytes)?);
                 }
-                (n, _) => {
-                    self.warn(format!("Unexpected field number {} in PF4Enum", n));
-                }
+                (n, _) => return Err(format!("Unexpected field number {} in PF4Enum", n))
             }
         }
         if let (Some(type_name), Some(enum_value)) = (type_name, enum_value) {
@@ -792,9 +760,7 @@ impl Parser {
                 (2, &FieldValue::Len(nested_bytes)) if text.is_none() => {
                     text = Some(self.parse_string(nested_bytes)?);
                 }
-                (n, _) => {
-                    self.warn(format!("Unexpected field number {} in PF4NLGData", n));
-                }
+                (n, _) => return Err(format!("Unexpected field number {} in PF4NLGData", n))
             }
         }
         if let Some(text) = text {
@@ -812,9 +778,7 @@ impl Parser {
                 (3, &FieldValue::Len(nested_bytes)) if command_value.is_none() => {
                     command_value = Some(self.parse_enum(nested_bytes)?);
                 }
-                (n, _) => {
-                    self.warn(format!("Unexpected field number {} in PF4Command", n));
-                }
+                (n, _) => return Err(format!("Unexpected field number {} in PF4Command", n))
             }
         }
         if let Some(value) = command_value {
