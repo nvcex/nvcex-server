@@ -1,11 +1,22 @@
 use axum::{http::StatusCode, response::{Html, IntoResponse}, routing::{get, post}, Json, Router};
-use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::net::SocketAddr;
+use std::sync::Arc;
 use tokio::net::TcpListener;
 use base64::prelude::*;
 mod pathfinder4;
+mod scenarios;
+mod voices;
+use crate::voices::{SpeechText, Speaker, Voice, VoicevoxClient};
+use crate::scenarios::{build_voicevox_scenarios, SharedScenario};
+use axum::extract::State;
+
+#[derive(Clone)]
+struct AppState {
+    voicevox: VoicevoxClient,
+    scenarios: HashMap<String, SharedScenario>,
+}
 
 #[derive(Debug, Deserialize)]
 struct TtsRequest {
@@ -23,13 +34,31 @@ struct LogTextRequest {
 
 #[tokio::main]
 async fn main() {
+    let voicevox = VoicevoxClient::new("http://localhost:50000");
+    let supported_speakers = match voicevox.speakers().await {
+        Ok(list) => list,
+        Err(err) => {
+            tracing::warn!(?err, "failed to fetch voicevox speakers, continuing with empty scenarios");
+            Vec::new()
+        }
+    };
+    let scenarios = build_voicevox_scenarios(&supported_speakers);
+
+    let state = Arc::new(AppState {
+        voicevox,
+        scenarios,
+    });
+
     let app = Router::new()
         .route("/", get(index_html))
         .route("/test", get(test_html))
         .route("/sample.json", get(sample_json))
         .route("/parse", post(handle_parse_request))
         .route("/tts", post(handle_tts_request))
-        .route("/log_text", post(handle_log_text));
+        .route("/log_text", post(handle_log_text))
+        .route("/voicevox/speakers", get(handle_voicevox_speakers))
+        .route("/scenarios", get(handle_scenarios))
+        .with_state(state.clone());
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
     tracing_subscriber::fmt().init();
@@ -129,12 +158,12 @@ async fn handle_log_text(Json(payload): Json<LogTextRequest>) -> Result<Json<ser
     })))
 }
 
-async fn handle_tts_request(Json(payload): Json<TtsRequest>) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+async fn handle_tts_request(State(state): State<Arc<AppState>>, Json(payload): Json<TtsRequest>) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     if payload.text.trim().is_empty() {
         return Err((StatusCode::BAD_REQUEST, Json(json_error("text must not be empty"))));
     }
 
-    let _voice_id = match map_voice_type(&payload.voice_type) {
+    let voice_id = match map_voice_type(&payload.voice_type) {
         Some(id) => id,
         None => {
             return Err(
@@ -146,94 +175,16 @@ async fn handle_tts_request(Json(payload): Json<TtsRequest>) -> Result<impl Into
         }
     };
 
-    let client = Client::new();
-
-    let audio_query_url = "http://localhost:50000/audio_query";
-    let audio_query_response = client
-        .post(audio_query_url)
-        .query(&[("text", payload.text.as_str()), ("speaker", "1"), ("enable_katakana_english", "true")])
-        .header("Accept", "application/json")
-        .send()
-        .await;
-
-    let audio_query_response = match audio_query_response {
-        Ok(res) => res,
+    let wav_body = match crate::voices::text_to_speech(
+        SpeechText::DynamicText(payload.text.clone(), Voice::VOICEVOX(voice_id)),
+        &state.voicevox,
+    )
+    .await
+    {
+        Ok(b) => b,
         Err(err) => {
-            tracing::error!(?err, "failed to call TTS backend");
-            return Err(
-                (
-                    StatusCode::BAD_GATEWAY,
-                    Json(json_error("failed to communicate with TTS backend")),
-                ),
-            );
-        }
-    };
-
-    if !audio_query_response.status().is_success() {
-        tracing::error!(status = ?audio_query_response.status(), "tts backend returned error");
-        return Err(
-            (
-                StatusCode::BAD_GATEWAY,
-                Json(json_error("TTS backend returned an error")),
-            ),
-        );
-    }
-
-    let audio_query_body = match audio_query_response.bytes().await {
-        Ok(body) => body,
-        Err(err) => {
-            tracing::error!(?err, "failed to read body from TTS backend");
-            return Err(
-                (
-                    StatusCode::BAD_GATEWAY,
-                    Json(json_error("failed to read body from TTS backend")),
-                ),
-            );
-        }
-    };
-
-    let synthesis_url = "http://localhost:50000/synthesis";
-    let synthesis_response = client
-        .post(synthesis_url)
-        .query(&[("speaker", "1"), ("enable_interrogative_upspeak", "true")])
-        .header("Content-Type", "application/json")
-        .body(audio_query_body)
-        .send()
-        .await;
-
-    let synthesis_response = match synthesis_response {
-        Ok(res) => res,
-        Err(err) => {
-            tracing::error!(?err, "failed to call synthesis endpoint");
-            return Err(
-                (
-                    StatusCode::BAD_GATEWAY,
-                    Json(json_error("failed to communicate with TTS synthesis backend")),
-                ),
-            );
-        }
-    };
-
-    if !synthesis_response.status().is_success() {
-        tracing::error!(status = ?synthesis_response.status(), "tts synthesis backend returned error");
-        return Err(
-            (
-                StatusCode::BAD_GATEWAY,
-                Json(json_error("TTS synthesis backend returned an error")),
-            ),
-        );
-    }
-
-    let wav_body = match synthesis_response.bytes().await {
-        Ok(body) => body,
-        Err(err) => {
-            tracing::error!(?err, "failed to read wav body from synthesis response");
-            return Err(
-                (
-                    StatusCode::BAD_GATEWAY,
-                    Json(json_error("failed to read audio body from TTS backend")),
-                ),
-            );
+            tracing::error!(?err, "voicevox synth failed");
+            return Err((StatusCode::BAD_GATEWAY, Json(json_error("failed to synthesize audio"))));
         }
     };
 
@@ -244,21 +195,33 @@ async fn handle_tts_request(Json(payload): Json<TtsRequest>) -> Result<impl Into
     ))
 }
 
-fn map_voice_type(voice_type: &str) -> Option<String> {
+fn map_voice_type(voice_type: &str) -> Option<u32> {
     let voices = HashMap::from([
-        ("standard", "voice_standard"),
-        ("soft", "voice_soft"),
-        ("bright", "voice_bright"),
+        ("standard", 1),
+        ("soft", 2),
+        ("bright", 3),
     ]);
 
-    voices.get(voice_type).map(|s| s.to_string())
+    voices.get(voice_type).copied()
+}
+
+async fn handle_voicevox_speakers(State(state): State<Arc<AppState>>) -> Result<Json<Vec<Speaker>>, (StatusCode, Json<serde_json::Value>)> {
+    let speakers = match state.voicevox.speakers().await {
+        Ok(list) => list,
+        Err(err) => {
+            tracing::error!(?err, "failed to fetch voicevox speakers");
+            return Err((StatusCode::BAD_GATEWAY, Json(json_error("failed to fetch speakers"))));
+        }
+    };
+
+    Ok(Json(speakers))
+}
+
+async fn handle_scenarios(State(state): State<Arc<AppState>>) -> Json<Vec<String>> {
+    let names = state.scenarios.keys().cloned().collect::<Vec<_>>();
+    Json(names)
 }
 
 fn json_error(message: &str) -> serde_json::Value {
     serde_json::json!({ "error": message })
-}
-
-#[derive(Debug, Deserialize)]
-struct BackendResponse {
-    source_url: String,
 }

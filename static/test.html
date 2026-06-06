@@ -30,6 +30,7 @@
         if (!Array.isArray(data)) throw new Error('sample.json は配列ではありません');
 
         container.textContent = '';
+        const resultNodes = [];
 
         data.forEach((item, index) => {
           const row = document.createElement('div');
@@ -54,18 +55,42 @@
 
           const parseResult = document.createElement('pre');
           parseResult.className = 'parse-result';
-          parseResult.style.display = 'none';
 
-          const parseButton = document.createElement('button');
-          parseButton.textContent = 'パーズ';
-          parseButton.addEventListener('click', () => parseItem(item, parseResult, parseButton));
-
-          row.append(label, playButton, parseButton);
+          row.append(label, playButton);
           container.appendChild(row);
           container.appendChild(parseResult);
+          resultNodes.push({ item, parseResult });
         });
+
+        parseAllItems(resultNodes);
       } catch (err) {
         container.textContent = err.message || '読み込みに失敗しました';
+      }
+    }
+
+    async function parseAllItems(resultNodes) {
+      for (const { item, parseResult } of resultNodes) {
+        try {
+          const res = await fetch('/parse', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: item.text, data: item.data, voice_type: 'standard', format: 'wav' }),
+          });
+
+          if (res.ok) {
+            const json = await res.json();
+            parseResult.textContent = json.parsed || JSON.stringify(json, null, 2);
+            parseResult.style.display = 'block';
+          } else {
+            parseResult.textContent = 'パーズに失敗しました';
+            parseResult.style.display = 'block';
+          }
+        } catch (err) {
+          parseResult.textContent = `エラー: ${err.message}`;
+          parseResult.style.display = 'block';
+        }
+        // ちょっと待ってから次へ（サーバー負荷軽減）
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
 
