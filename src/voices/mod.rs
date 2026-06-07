@@ -46,6 +46,21 @@ pub enum SpeechText {
     Seq(Vec<SpeechText>),
 }
 
+pub fn format_speech_text(text: &SpeechText) -> String {
+    fn fmt(text: &SpeechText, indent: usize) -> String {
+        let pad = "  ".repeat(indent);
+        match text {
+            SpeechText::StaticText(t, voice) => format!("{}static {:?} [{}]", pad, t, voice.name()),
+            SpeechText::DynamicText(t, voice) => format!("{}dynamic {:?} [{}]", pad, t, voice.name()),
+            SpeechText::Seq(children) => children.iter()
+                .map(|c| fmt(c, indent))
+                .collect::<Vec<_>>()
+                .join("\n"),
+        }
+    }
+    fmt(text, 0)
+}
+
 #[derive(Debug)]
 pub enum VoiceError {
     Request(reqwest::Error),

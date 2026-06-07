@@ -8,7 +8,7 @@ use base64::prelude::*;
 mod pathfinder4;
 mod scenarios;
 mod voices;
-use crate::{pathfinder4::parse, scenarios::{SharedScenario, build_scenarios}, voices::{VoicevoxClient, VoiceProviders, StaticVoiceRepository}};
+use crate::{pathfinder4::parse, scenarios::{SharedScenario, build_scenarios}, voices::{VoicevoxClient, VoiceProviders, StaticVoiceRepository, format_speech_text}};
 use axum::extract::State;
 
 #[derive(Clone)]
@@ -125,7 +125,7 @@ async fn handle_parse_request(
         "status": "ok",
         "text": payload.text,
         "parsed": format!("{:#?}", message),
-        "render_result": format!("{:#?}", speech_text),
+        "render_result": format_speech_text(&speech_text),
     })))
 }
 

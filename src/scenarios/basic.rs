@@ -1,4 +1,4 @@
-use crate::pathfinder4::{DestinationSide, DistanceUnit, Guidance, KeepSide, LaneGuidance, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide};
+use crate::pathfinder4::{DestinationSide, DistanceUnit, Guidance, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide};
 
 fn render_distance_unit(unit: DistanceUnit) -> &'static str {
     match unit {
@@ -21,41 +21,66 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
         }.to_string()        
     }
 
+    fn render_opt_lane(opt_lane: &Option<LaneGuidance>, postfix: &str) -> String {
+        opt_lane
+            .map(render_lane)
+            .map(|lane| format!("{}{}", lane, postfix))
+            .unwrap_or_default()
+    }
+
+    fn render_intersection(intersection: &Intersection, postfix: &str) -> String {
+        let s = if let Some(stop) = &intersection.stop_sign {
+            match stop {
+                StopSign { index: -1 } => "一時停止の標識",
+                StopSign { index: _ } => "ずっと先の一時停止の標識",
+            }.to_string()
+        } else if let Some(tlight) = &intersection.traffic_light {
+            match tlight {
+                TrafficLight { index: -1 } => "信号",
+                TrafficLight { index: _ } => "ずっと先の信号"
+            }.to_string()
+        } else if let Some(name) = &intersection.name {
+            name.replace("（交差点）", "交差点")
+        } else {
+            return Default::default()
+        };
+        format!("{}{}", s, postfix)
+    }
+
+    fn render_turn(turn: &Turn, postfix: &str) -> String {
+        let s = match (turn.sharpness, turn.side) {
+                (TurnSharpness::Normal, TurnSide::Left) => "左方向",
+                (TurnSharpness::Normal, TurnSide::Right) => "右方向",
+                (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向",
+                (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向",
+                (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向",
+                (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向",
+        };
+        format!("{}{}", s, postfix)
+    }
+
+    fn render_opt_turn(opt_turn: &Option<Turn>, postfix: &str) -> String {
+        opt_turn.as_ref().map(|turn| render_turn(turn, postfix)).unwrap_or_default()
+    }
+
+    fn render_sign(sign: &SignName, postfix: &str) -> String {
+        match (sign.indirect.as_ref(), sign.direct.as_ref()) {
+            (Some(indirect), Some(direct)) => format!("{}方面{}{}", indirect, direct, postfix),
+            (Some(indirect), None) => format!("{}方面{}", indirect, postfix),
+            (None, Some(direct)) => format!("{}{}", direct, postfix),
+            (None, None) => Default::default()
+        }
+    }
+
     match g {
         Guidance::StraightStep(opt_lane) => {
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を", lane))
-                .unwrap_or("".to_string());
-            Ok(format!("{}直進します。", lane))
+            Ok(format!("{}直進します。", render_opt_lane(opt_lane, "を")))
         }
-        Guidance::TurnStep(Turn { sharpness, side }, opt_lane, intersection) => {
-            let stop = match intersection.stop_sign.as_ref() {
-                Some(StopSign { index: -1 }) => "一時停止の標識で、",
-                Some(StopSign { index: _ }) => "ずっと先の一時停止の標識で、",
-                _ => ""
-            }.to_string();
-            let tlight = match intersection.traffic_light.as_ref() {
-                Some(TrafficLight { index: -1 }) => "信号で、",
-                Some(TrafficLight { index: _ }) => "ずっと先の信号で、",
-                _ => ""
-            }.to_string();
-            let i_name = intersection.name.as_deref()
-                .map(|name| format!("{}を、", name))
-                .unwrap_or("".to_string());
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を使用して、", lane))
-                .unwrap_or("".to_string());
-            let side = match (sharpness, side) {
-                (TurnSharpness::Normal, TurnSide::Left) => "左折します",
-                (TurnSharpness::Normal, TurnSide::Right) => "右折します",
-                (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向です",
-                (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向です",
-                (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向です",
-                (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向です",
-            };
-            Ok(format!("{}{}{}{}{}。", stop, tlight, i_name, lane, side))
+        Guidance::TurnStep(turn, opt_lane, intersection) => {
+            let i = render_intersection(intersection, "で");
+            let lane = render_opt_lane(opt_lane, "を使用して");
+            let turn = render_turn(turn, "です");
+            Ok(format!("{}{}{}。", lane, i, turn))
         }
         Guidance::UTurnStep(intersection) => {
             let i_name = intersection.name.as_deref()
@@ -64,39 +89,17 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
             Ok(format!("{}Uターンします。", i_name))
         }
         Guidance::OnRampStep(opt_turn, opt_lane, intersection, sign) => {
-            let tlight = match intersection.traffic_light.as_ref() {
-                Some(TrafficLight { index: -1 }) => "信号で、",
-                Some(TrafficLight { index: _ }) => "ずっと先の信号で、",
-                _ => ""
-            }.to_string();
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を使用して、", lane))
-                .unwrap_or("".to_string());
-            let side = opt_turn.map(|Turn { sharpness, side }| match (sharpness, side) {
-                (TurnSharpness::Normal, TurnSide::Left) => "左折し",
-                (TurnSharpness::Normal, TurnSide::Right) => "右折し",
-                (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向へ進み",
-                (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向へ進み",
-                (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向へ進み",
-                (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向へ進み",
-            }).unwrap_or("").to_string();
-            let iname = intersection.name.as_deref()
-                .map(|name| format!("{}を", name))
-                .unwrap_or("".to_string());
-            let sd_name = sign.direct.as_deref().unwrap_or("");
-            let si_name = sign.indirect.as_deref().unwrap_or("");
-            Ok(format!("{}{}{}{}{}{}入ります。", tlight, lane, side, iname, sd_name, si_name))
+            let i = render_intersection(intersection, "で");
+            let lane = render_opt_lane(opt_lane, "を使用して");
+            let turn = render_opt_turn(opt_turn, "に進み");
+            let sign = render_sign(sign, "の");
+            Ok(format!("{}{}{}{}ランプに進みます。", lane, i, turn, sign))
         }
         Guidance::OffRampStep(opt_lane, e_name, sign) => {
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を使用して、", lane))
-                .unwrap_or("".to_string());
-            let e_name = e_name.as_ref().map(|name| format!("{}を", name.name)).unwrap_or("".to_string());
-            let sd_name = sign.direct.as_deref().unwrap_or("");
-            let si_name = sign.indirect.as_deref().unwrap_or("");
-            Ok(format!("{}{}{}{}を出ます。", lane, e_name, sd_name, si_name))
+            let lane = render_opt_lane(opt_lane, "を使用して");
+            let e_name = e_name.as_ref().map(|name| format!("{}の", name.name)).unwrap_or_default();
+            let sign = render_sign(sign, "");
+            Ok(format!("{}{}{}出口を出ます。", lane, sign, e_name).replace("インターチェンジの出口", "出口"))
         }
         Guidance::KeepOrForkStep(keep, opt_lane) => {
             let keep = match keep {
