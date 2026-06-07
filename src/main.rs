@@ -8,12 +8,12 @@ use base64::prelude::*;
 mod pathfinder4;
 mod scenarios;
 mod voices;
-use crate::{pathfinder4::parse, scenarios::{SharedScenario, build_voicevox_scenarios}, voices::VoicevoxClient};
+use crate::{pathfinder4::parse, scenarios::{SharedScenario, build_scenarios}, voices::{VoicevoxClient, VoiceProviders, StaticVoiceRepository}};
 use axum::extract::State;
 
 #[derive(Clone)]
 struct AppState {
-    voicevox: VoicevoxClient,
+    providers: VoiceProviders,
     scenarios: HashMap<String, SharedScenario>,
 }
 
@@ -34,10 +34,14 @@ async fn main() {
             Vec::new()
         }
     };
-    let scenarios = build_voicevox_scenarios(&supported_speakers);
+    let scenarios = build_scenarios(&supported_speakers);
 
+    let providers = VoiceProviders {
+        static_voices: StaticVoiceRepository::new("./static_voices"),
+        voicebox: Some(voicevox),
+    };
     let state = Arc::new(AppState {
-        voicevox,
+        providers,
         scenarios,
     });
 
@@ -169,7 +173,7 @@ async fn handle_tts_request(
 
     let speech_text = scenario.render(input);
 
-    let wav_body = match crate::voices::text_to_speech(speech_text, &state.voicevox).await {
+    let wav_body = match crate::voices::text_to_speech(speech_text, &state.providers).await {
         Ok(b) => b,
         Err(err) => {
             tracing::error!(?err, "voicevox synth failed");
@@ -181,7 +185,8 @@ async fn handle_tts_request(
 }
 
 async fn handle_scenarios(State(state): State<Arc<AppState>>) -> Json<Vec<String>> {
-    let names = state.scenarios.keys().cloned().collect::<Vec<_>>();
+    let mut names = state.scenarios.keys().cloned().collect::<Vec<_>>();
+    names.sort();
     Json(names)
 }
 

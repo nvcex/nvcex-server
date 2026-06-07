@@ -1,9 +1,11 @@
 pub mod basic;
+#[path ="六花とつむぎのスタンプラリー.rs"]
+mod 六花とつむぎのスタンプラリー;
 
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;
-use crate::{scenarios::basic::default_render_guidance, voices::{SpeechText, Voice}};
+use crate::{scenarios::{basic::default_render_guidance, 六花とつむぎのスタンプラリー::六花とつむぎのスタンプラリーScenario}, voices::{SpeechText, Voice}};
 
 pub struct Input<'a> {
     pub(crate) text: &'a String,
@@ -31,12 +33,12 @@ impl Scenario for VoicevoxScenario {
         if self.use_parser {
             if let Some(guidance) = input.guidance {
                 let s = default_render_guidance(guidance).unwrap();
-                SpeechText::DynamicText(s, Voice::VOICEVOX(self.style_id))
+                SpeechText::DynamicText(s, Arc::new(Voice::VOICEVOX(self.style_id)))
             } else {
-                SpeechText::DynamicText(input.text.clone(), Voice::VOICEVOX(self.style_id))
+                SpeechText::DynamicText(input.text.clone(), Arc::new(Voice::VOICEVOX(self.style_id)))
             }
         } else {
-            SpeechText::DynamicText(input.text.clone(), Voice::VOICEVOX(self.style_id))
+            SpeechText::DynamicText(input.text.clone(), Arc::new(Voice::VOICEVOX(self.style_id)))
         }
     }
 
@@ -45,9 +47,10 @@ impl Scenario for VoicevoxScenario {
     }
 }
 
-pub fn build_voicevox_scenarios(speakers: &[crate::voices::Speaker]) -> HashMap<String, SharedScenario> {
+pub fn build_scenarios(speakers: &[crate::voices::Speaker]) -> HashMap<String, SharedScenario> {
     let mut scenarios = HashMap::new();
 
+    let mut add = |scenario: Arc<dyn Scenario + Send + Sync>| scenarios.insert(scenario.name(), scenario);
     for speaker in speakers {
         for style in &speaker.styles {
             let scenario = VoicevoxScenario {
@@ -56,8 +59,7 @@ pub fn build_voicevox_scenarios(speakers: &[crate::voices::Speaker]) -> HashMap<
                 style_id: style.id,
                 use_parser: false,
             };
-            let key = scenario.name();
-            scenarios.insert(key.clone(), Arc::new(scenario) as SharedScenario);
+            add(Arc::new(scenario));
         }
     }
 
@@ -69,10 +71,11 @@ pub fn build_voicevox_scenarios(speakers: &[crate::voices::Speaker]) -> HashMap<
                 style_id: style.id,
                 use_parser: true,
             };
-            let key = scenario.name();
-            scenarios.insert(key.clone(), Arc::new(scenario) as SharedScenario);
+            add(Arc::new(scenario));
         }
     }
+
+    add(Arc::new(六花とつむぎのスタンプラリーScenario {}));
 
     scenarios
 }

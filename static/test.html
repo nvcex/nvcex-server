@@ -6,18 +6,58 @@
   <title>Sample JSON Player</title>
   <style>
     body { font-family: system-ui, sans-serif; padding: 2rem; }
-    .item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-    .item button { padding: 0.5rem 1rem; }
-    .item pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
-    .parse-result { display: none; margin: 0 0 1rem 1rem; padding: 0.75rem; background: #f7f7f7; border-radius: 6px; font-size: 0.95rem; max-width: calc(100% - 1rem); }
+    .controls { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .controls label { font-weight: bold; }
+    .controls select { padding: 0.4rem 0.6rem; font-size: 1rem; min-width: 20rem; }
+    .controls button { padding: 0.4rem 1rem; }
+    .entry { margin-bottom: 1.5rem; border-bottom: 1px solid #e0e0e0; padding-bottom: 1rem; }
+    .item { display: flex; align-items: center; gap: 1rem; }
+    .item-label { flex: 1; }
+    .item-label .data-line { font-size: 0.9rem; color: #555; white-space: pre-wrap; word-break: break-word; margin-top: 0.25rem; }
+    .item-actions { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .item-actions button { padding: 0.4rem 0.8rem; }
+    .item-audio { width: 220px; height: 32px; }
+    .parse-row { display: none; gap: 1rem; margin-top: 0.5rem; }
+    .parse-row.visible { display: flex; }
+    .parse-col { flex: 1; padding: 0.75rem; background: #f7f7f7; border-radius: 6px; font-size: 0.85rem; min-width: 0; }
+    .parse-col h4 { margin: 0 0 0.4rem; font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+    .parse-col pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
+    .parse-col .render-text { white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
 <body>
   <h1>/sample.json の内容</h1>
+  <div class="controls">
+    <label for="scenario-select">シナリオ:</label>
+    <select id="scenario-select"><option value="">読み込み中...</option></select>
+    <button id="reload-btn" onclick="reloadItems()">再パーズ</button>
+  </div>
   <div id="items">Loading...</div>
-  <audio id="player" controls style="display:none; width:100%; margin-top:1rem;"></audio>
 
   <script>
+    function getScenario() {
+      return document.getElementById('scenario-select').value;
+    }
+
+    async function loadScenarios() {
+      const sel = document.getElementById('scenario-select');
+      try {
+        const res = await fetch('/scenarios');
+        if (!res.ok) throw new Error();
+        const names = await res.json();
+        sel.innerHTML = '';
+        names.forEach(name => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          if (name === 'VOICEVOX/ずんだもん/ノーマル/P') opt.selected = true;
+          sel.appendChild(opt);
+        });
+      } catch {
+        sel.innerHTML = '<option value="">シナリオの取得に失敗しました</option>';
+      }
+    }
+
     async function loadSample() {
       const container = document.getElementById('items');
       container.textContent = 'Loading...';
@@ -33,73 +73,111 @@
         const resultNodes = [];
 
         data.forEach((item, index) => {
+          const entry = document.createElement('div');
+          entry.className = 'entry';
+
+          // 行ヘッダー
           const row = document.createElement('div');
           row.className = 'item';
 
           const label = document.createElement('div');
+          label.className = 'item-label';
           label.innerHTML = `<strong>${index + 1}.</strong> ${item.text}`;
-          label.style.flex = '1';
-
           const dataLine = document.createElement('div');
+          dataLine.className = 'data-line';
           dataLine.textContent = item.data;
-          dataLine.style.fontSize = '0.9rem';
-          dataLine.style.color = '#555';
-          dataLine.style.whiteSpace = 'pre-wrap';
-          dataLine.style.wordBreak = 'break-word';
-          dataLine.style.marginTop = '0.25rem';
           label.appendChild(dataLine);
+
+          // 再生ボタン + 行内 audio
+          const actions = document.createElement('div');
+          actions.className = 'item-actions';
 
           const playButton = document.createElement('button');
           playButton.textContent = '再生';
-          playButton.addEventListener('click', () => playText(item, playButton));
 
-          const parseResult = document.createElement('pre');
-          parseResult.className = 'parse-result';
-          const renderResult = document.createElement('span');
-          parseResult.className = 'render-result';
+          const audio = document.createElement('audio');
+          audio.className = 'item-audio';
+          audio.controls = true;
+          audio.style.display = 'none';
 
-          row.append(label, playButton);
-          container.appendChild(row);
-          container.appendChild(parseResult);
-          container.appendChild(renderResult);
-          resultNodes.push({ item, parseResult, renderResult });
+          playButton.addEventListener('click', () => playText(item, playButton, audio));
+
+          actions.append(playButton, audio);
+          row.append(label, actions);
+
+          // パーズ結果（横並び）
+          const parseRow = document.createElement('div');
+          parseRow.className = 'parse-row';
+
+          const parseCol = document.createElement('div');
+          parseCol.className = 'parse-col';
+          const parseTitle = document.createElement('h4');
+          parseTitle.textContent = 'parsed';
+          const parsePre = document.createElement('pre');
+          parseCol.append(parseTitle, parsePre);
+
+          const renderCol = document.createElement('div');
+          renderCol.className = 'parse-col';
+          const renderTitle = document.createElement('h4');
+          renderTitle.textContent = 'render result';
+          const renderSpan = document.createElement('div');
+          renderSpan.className = 'render-text';
+          renderCol.append(renderTitle, renderSpan);
+
+          parseRow.append(parseCol, renderCol);
+          entry.append(row, parseRow);
+          container.appendChild(entry);
+
+          resultNodes.push({ item, parseRow, parsePre, renderSpan });
         });
 
+        container._resultNodes = resultNodes;
         parseAllItems(resultNodes);
       } catch (err) {
         container.textContent = err.message || '読み込みに失敗しました';
       }
     }
 
+    function reloadItems() {
+      const container = document.getElementById('items');
+      if (container._resultNodes) {
+        container._resultNodes.forEach(({ parseRow, parsePre, renderSpan }) => {
+          parsePre.textContent = '';
+          renderSpan.textContent = '';
+          parseRow.classList.remove('visible');
+        });
+        parseAllItems(container._resultNodes);
+      }
+    }
+
     async function parseAllItems(resultNodes) {
-      for (const { item, parseResult, renderResult } of resultNodes) {
+      const scenarioName = getScenario();
+      for (const { item, parseRow, parsePre, renderSpan } of resultNodes) {
         try {
           const res = await fetch('/parse', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: item.text, data: item.data, scenario_name: "VOICEVOX/ずんだもん/ノーマル/P" }),
+            body: JSON.stringify({ text: item.text, data: item.data, scenario_name: scenarioName }),
           });
 
           if (res.ok) {
             const json = await res.json();
-            parseResult.textContent = json.parsed || JSON.stringify(json, null, 2);
-            parseResult.style.display = 'block';
-            renderResult.textContent = json.render_result;
+            parsePre.textContent = json.parsed || JSON.stringify(json, null, 2);
+            renderSpan.textContent = json.render_result ?? '';
           } else {
-            parseResult.textContent = 'パーズに失敗しました';
-            parseResult.style.display = 'block';
+            parsePre.textContent = 'パーズに失敗しました';
+            renderSpan.textContent = '';
           }
         } catch (err) {
-          parseResult.textContent = `エラー: ${err.message}`;
-          parseResult.style.display = 'block';
+          parsePre.textContent = `エラー: ${err.message}`;
+          renderSpan.textContent = '';
         }
-        // ちょっと待ってから次へ（サーバー負荷軽減）
+        parseRow.classList.add('visible');
         await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
 
-    async function playText(item, button) {
-      const player = document.getElementById('player');
+    async function playText(item, button, audio) {
       button.disabled = true;
       const original = button.textContent;
       button.textContent = '読み込み中...';
@@ -108,7 +186,7 @@
         const res = await fetch('/tts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: item.text, data: item.data, scenario_name: "VOICEVOX/ずんだもん/ノーマル/P" }),
+          body: JSON.stringify({ text: item.text, data: item.data, scenario_name: getScenario() }),
         });
 
         if (!res.ok) {
@@ -118,13 +196,11 @@
 
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
-        player.src = url;
-        player.style.display = 'block';
-        await player.play();
+        audio.src = url;
+        audio.style.display = 'block';
+        await audio.play();
 
-        player.onended = () => {
-          URL.revokeObjectURL(url);
-        };
+        audio.onended = () => URL.revokeObjectURL(url);
       } catch (err) {
         alert(err.message || '再生に失敗しました');
       } finally {
@@ -133,7 +209,7 @@
       }
     }
 
-    loadSample();
+    loadScenarios().then(() => loadSample());
   </script>
 </body>
 </html>

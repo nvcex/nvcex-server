@@ -5,7 +5,7 @@ use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use url::Url;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct VoicevoxClient {
     client: Client,
     base_url: Url,

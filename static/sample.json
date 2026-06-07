@@ -9,10 +9,6 @@
     "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
   },
   {
-    "text": "信号を右方向です (ギンザ の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
     "text": "信号を右方向です",
     "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
@@ -28,7 +24,6 @@
     "text": "右側 2 車線を使用して 浜町中ノ橋 で右方向です",
     "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
   },
-
   {
     "text": "信号で右側 2 車線を使用して右方向です",
     "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
@@ -42,52 +37,16 @@
     "data": "Ek4SLgoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChIKCXR1cm5fc2lkZSIFUklHSFQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
   },
   {
-    "text": "信号を右方向です (新橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (日本橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "左方向です",
-    "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
-  },
-  {
     "text": "信号を左方向です",
     "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
-  },
-  {
-    "text": "信号を右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
   {
     "text": "信号を左方向です (日本橋 の表示)",
     "data": "EmASQAoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqHBoaCgtwYXRoZmluZGVyNBILcGZfdHVybnN0ZXA="
   },
   {
-    "text": "信号を右方向です (台場 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
     "text": "斜め左方向に曲がります",
     "data": "Ek0SLQoYCg50dXJuX3NoYXJwbmVzcyIGU0xJR0hUChEKCXR1cm5fc2lkZSIETEVGVCocGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcA=="
-  },
-  {
-    "text": "信号を右方向です (芝浦 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号で右側 2 車線を使用して右方向です",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
-  },
-  {
-    "text": "信号を右方向です (祝田橋 の表示)",
-    "data": "EmESQQoRCg10cmFmZmljX2xpZ2h0GAEKGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKhwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVw"
   },
 
   {
@@ -98,6 +57,7 @@
     "text": "斜め左方向に曲がり 月島 方面のランプにはいります",
     "data": "EqEBEn8KGAoOdHVybl9zaGFycG5lc3MiBlNMSUdIVAoRCgl0dXJuX3NpZGUiBExFRlQKUAoSc2lnbl9pbmRpcmVjdF9uYW1lggE5CjcKBnJvdXRlc4IBLAoqeigKHi9GRUFUVVJFX0lELzB4YzM5ZjFjMTUwYzg3YmI0YxIG5pyI5bO2Kh4aHAoLcGF0aGZpbmRlcjQSDXBmX29ucmFtcHN0ZXA="
   },
+
   {
     "text": "右から 2 番目の車線を使用して右側を進みます",
     "data": "EjoSFAoSCglrZWVwX3NpZGUiBVJJR0hUKiIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVw"
@@ -113,10 +73,6 @@
   },
   {
     "text": "月島警察署前 で U ターンします",
-    "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
-  },
-  {
-    "text": "新宿中央公園北 で U ターンします (新宿 の表示)",
     "data": "EiESACodGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXA="
   },
   
@@ -143,33 +99,16 @@
   },
 
   {
-    "text": "そのまま1.5キロ進みます",
-    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "そのまま 2 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
     "text": "そのまま 800 m 進みます",
     "data": "EngSTgoTCghkaXN0YW5jZTEAAAAAAACJQAo3Cg1kaXN0YW5jZV91bml0WiYKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEgtVTklUX01FVEVSUyomGiQKC3BhdGhmaW5kZXI0EhVjb250aW51ZV9mb3JfZGlzdGFuY2U="
   },
   {
-    "text": "そのまま 6 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAYQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "そのまま1.5キロ進みます",
-    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-
-  {
     "text": "そのまま 1 キロ進みます",
     "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
-    "text": "そのまま 3 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAIQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+    "text": "そのまま1.5キロ進みます",
+    "data": "EqsBEoABChMKCGRpc3RhbmNlMQAAAAAAAPg/CjsKDWRpc3RhbmNlX3VuaXRaKgoXbmxwX2dlbmVyYXRpb24uVW5pdFR5cGUSD1VOSVRfS0lMT01FVEVSUwosChZkaXN0YW5jZV9vdmVycmlkZV90eXBlIhIxX0RPVF81X0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
     "text": "そのまま 2 キロ進みます",
@@ -178,18 +117,14 @@
   {
     "text": "そのまま 3 キロ進みます",
     "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAIQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
-  },
-  {
-    "text": "そのまま 1 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAADwPwo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
     "text": "そのまま 5 キロ進みます",
     "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAUQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
   {
-    "text": "そのまま 2 キロ進みます",
-    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAAQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
+    "text": "そのまま 6 キロ進みます",
+    "data": "EnwSUgoTCghkaXN0YW5jZTEAAAAAAAAYQAo7Cg1kaXN0YW5jZV91bml0WioKF25scF9nZW5lcmF0aW9uLlVuaXRUeXBlEg9VTklUX0tJTE9NRVRFUlMqJhokCgtwYXRoZmluZGVyNBIVY29udGludWVfZm9yX2Rpc3RhbmNl"
   },
 
   {
@@ -536,10 +471,6 @@
     "data": "EpgCEuQBCkAKCmZpcnN0X3N0ZXCCATEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX21lcmdlc3RlcAoJCgRhcmdzggEACp8BCgtzZWNvbmRfc3RlcIIBjgEKJAoDa2V5ch0aGwoLcGF0aGZpbmRlcjQSDHBmX3V0dXJuc3RlcApmCgRhcmdzggFdClsKEWludGVyc2VjdGlvbl9uYW1lggFFCkMKBnJvdXRlc4IBOAo2ejQKHi9GRUFUVVJFX0lELzB4NDY2OTMzNGEzYWFiNDNjORIS5pyI5bO26K2m5a+f572y5YmNKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "左方向です、続いて 左方向です",
-    "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
     "text": "信号を左方向です (木場 の表示)、続いて U ターンします",
     "data": "EvgBEsQBCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCkEKC3NlY29uZF9zdGVwggExCiQKA2tleXIdGhsKC3BhdGhmaW5kZXI0EgxwZl91dHVybnN0ZXAKCQoEYXJnc4IBACovGi0KC3BhdGhmaW5kZXI0Eh5jb21iaW5lX21lcmdlZF9ndWlkYW5jZV9ldmVudHM="
   },
@@ -572,10 +503,6 @@
     "data": "Ev0BEskBClgKCmZpcnN0X3N0ZXCCAUkKKQoDa2V5ciIaIAoLcGF0aGZpbmRlcjQSEXBmX2tlZXBvcmZvcmtzdGVwChwKBGFyZ3OCARMKEQoJa2VlcF9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "左方向です、続いて 左方向です",
-    "data": "EpECEt0BCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKbQoLc2Vjb25kX3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
     "text": "信号を右方向です、続いて 右折する",
     "data": "EqcCEvMBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbgoLc2Vjb25kX3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
@@ -604,16 +531,8 @@
     "data": "EqQCEvABCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
-    "text": "信号で左車線を使用して左方向です、続いて 左方向です",
-    "data": "EqQCEvABCn8KCmZpcnN0X3N0ZXCCAXAKIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCkkKBGFyZ3OCAUAKEQoNdHJhZmZpY19saWdodBgBChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUCm0KC3NlY29uZF9zdGVwggFdCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcAo2CgRhcmdzggEtChgKDnR1cm5fc2hhcnBuZXNzIgZOT1JNQUwKEQoJdHVybl9zaWRlIgRMRUZUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
-  },
-  {
     "text": "左方向です、続いて 目的地は右側です。",
     "data": "Eo4CEtoBCmwKCmZpcnN0X3N0ZXCCAV0KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjYKBGFyZ3OCAS0KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoRCgl0dXJuX3NpZGUiBExFRlQKagoLc2Vjb25kX3N0ZXCCAVoKMgoDa2V5cisaKQoLcGF0aGZpbmRlcjQSGnBmX2Rlc3RpbmF0aW9uc3RlcF9wcmVwYXJlCiQKBGFyZ3OCARsKGQoQZGVzdGluYXRpb25fc2lkZSIFUklHSFQqLxotCgtwYXRoZmluZGVyNBIeY29tYmluZV9tZXJnZWRfZ3VpZGFuY2VfZXZlbnRz"
-  },
-  {
-    "text": "信号を右方向です、続いて 右折する",
-    "data": "EqcCEvMBCoABCgpmaXJzdF9zdGVwggFxCiMKA2tleXIcGhoKC3BhdGhmaW5kZXI0EgtwZl90dXJuc3RlcApKCgRhcmdzggFBChEKDXRyYWZmaWNfbGlnaHQYAQoYCg50dXJuX3NoYXJwbmVzcyIGTk9STUFMChIKCXR1cm5fc2lkZSIFUklHSFQKbgoLc2Vjb25kX3N0ZXCCAV4KIwoDa2V5chwaGgoLcGF0aGZpbmRlcjQSC3BmX3R1cm5zdGVwCjcKBGFyZ3OCAS4KGAoOdHVybl9zaGFycG5lc3MiBk5PUk1BTAoSCgl0dXJuX3NpZGUiBVJJR0hUKi8aLQoLcGF0aGZpbmRlcjQSHmNvbWJpbmVfbWVyZ2VkX2d1aWRhbmNlX2V2ZW50cw=="
   },
   {
     "text": "信号を左方向です、続いて 左方向です",
