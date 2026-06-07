@@ -117,10 +117,7 @@ async fn handle_parse_request(
         }
     };
 
-    let input = crate::scenarios::Input {
-        text: &payload.text,
-        guidance: Some(&message),
-    };
+    let input = crate::scenarios::Input::new(&payload.text, Some(&message), &payload.data);
 
     let speech_text = scenario.render(input);
 
@@ -166,10 +163,7 @@ async fn handle_tts_request(
         }
     };
 
-    let input = crate::scenarios::Input {
-        text: &payload.text,
-        guidance: Some(&message),
-    };
+    let input = crate::scenarios::Input::new(&payload.text, Some(&message), &payload.data);
 
     let speech_text = scenario.render(input);
 

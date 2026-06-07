@@ -2,7 +2,7 @@
 
 pub mod voicevox;
 
-pub use voicevox::{Speaker, VoicevoxClient};
+pub use voicevox::{Speaker, SpeakerStyle, VoicevoxClient};
 
 use async_recursion::async_recursion;
 use sha2::{Sha256, Digest};
@@ -11,16 +11,32 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use hound::{SampleFormat, WavReader, WavSpec, WavWriter};
 
-#[derive(Clone, Debug)]
+
+#[derive(Debug)]
 pub struct StaticVoice {
     scenario_name: String,
     name: String
 }
 
-#[derive(Clone, Debug)]
+impl StaticVoice {
+    pub fn new(scenario_name: impl Into<String>, name: impl Into<String>) -> Self {
+        Self { scenario_name: scenario_name.into(), name: name.into() }
+    }
+}
+
+#[derive(Debug)]
 pub enum Voice {
-    VOICEVOX(u32),
+    VOICEVOX(Speaker, SpeakerStyle),
     Static(StaticVoice),
+}
+
+impl Voice {
+    pub fn name(&self) -> String {
+        match self {
+            Voice::VOICEVOX(speaker, style) => format!("VOICEVOX {} ({})", speaker.name, style.name),
+            Voice::Static(v) => format!("{} ({})", v.name, v.scenario_name),
+        }
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -70,8 +86,8 @@ impl StaticVoiceRepository {
     pub async fn get(&self, voice: &StaticVoice, text: &str) -> Result<bytes::Bytes, VoiceError> {
         let hash = format!("{:x}", Sha256::digest(text.as_bytes()));
         let path = self.root
-            .join(voice.scenario_name.clone())
-            .join(voice.name.clone())
+            .join(&voice.scenario_name)
+            .join(&voice.name)
             .join(format!("{}.wav", hash));
         tokio::fs::read(&path).await
             .map(bytes::Bytes::from)
@@ -88,22 +104,15 @@ pub struct VoiceProviders {
 impl VoiceProviders {
     pub async fn static_text(&self, text: &str, voice: &Voice) -> Result<bytes::Bytes, VoiceError> {
         match voice {
-            &Voice::VOICEVOX(voice_id) => {
-                self.try_voicevox(text, voice_id).await
-            }
-            &Voice::Static(ref voice) => {
-                self.static_voices.get(voice, text).await
-            }
-            _ => Err(VoiceError::Unsupported)
+            Voice::VOICEVOX(_, style) => self.try_voicevox(text, style.id).await,
+            Voice::Static(v) => self.static_voices.get(v, text).await,
         }
     }
 
     pub async fn dynamic_text(&self, text: &str, voice: &Voice) -> Result<bytes::Bytes, VoiceError> {
         match voice {
-            &Voice::VOICEVOX(voice_id) => {
-                self.try_voicevox(text, voice_id).await
-            }
-            _ => Err(VoiceError::Unsupported)
+            Voice::VOICEVOX(_, style) => self.try_voicevox(text, style.id).await,
+            Voice::Static(_) => Err(VoiceError::Unsupported),
         }
     }
 

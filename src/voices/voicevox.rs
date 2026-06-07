@@ -11,7 +11,7 @@ pub struct VoicevoxClient {
     base_url: Url,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Speaker {
     pub name: String,
     pub speaker_uuid: String,
@@ -20,7 +20,7 @@ pub struct Speaker {
     pub supported_features: SupportedFeatures,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SpeakerStyle {
     pub name: String,
     pub id: u32,
@@ -28,7 +28,7 @@ pub struct SpeakerStyle {
     pub style_type: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SupportedFeatures {
     pub permitted_synthesis_morphing: String,
 }
