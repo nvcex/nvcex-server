@@ -102,21 +102,15 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
             Ok(format!("{}{}{}出口を出ます。", lane, sign, e_name).replace("インターチェンジの出口", "出口"))
         }
         Guidance::KeepOrForkStep(keep, opt_lane) => {
+            let lane = render_opt_lane(opt_lane, "を使用して");
             let keep = match keep {
                 KeepSide::Left => "左側を",
                 KeepSide::Right => "右側を",
             };
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を使用して、", lane))
-                .unwrap_or("".to_string());
             Ok(format!("{}{}進みます。", lane, keep))
         }
         Guidance::MergeStep(opt_lane) => {
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を使用して", lane))
-                .unwrap_or("".to_string());
+            let lane = render_opt_lane(opt_lane, "を進み");
             Ok(format!("{}合流します。", lane))
         }
         Guidance::DestinationStepPrepare(opt_side) => {
@@ -128,14 +122,10 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
             Ok(s)
         }
         Guidance::InterchangeStep(opt_lane, i_name, sign) => {
-            let lane = opt_lane
-                .map(render_lane)
-                .map(|lane| format!("{}を使用して", lane))
-                .unwrap_or("".to_string());
+            let lane = render_opt_lane(opt_lane, "を使用して");
             let i_name = i_name.name.clone();
-            let sd_name = sign.direct.as_deref().unwrap_or("");
-            let si_name = sign.indirect.as_deref().unwrap_or("");
-            Ok(format!("{}{}を{}{}出ます。", lane, i_name, sd_name, si_name))
+            let sign = render_sign(sign, "");
+            Ok(format!("{}{}で{}へ進みます。", lane, i_name, sign))
         }
         Guidance::DestinationStepAct => {
             Ok("目的地に到着しました".to_string())
@@ -152,7 +142,7 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
         Guidance::CombineMergedGuidanceEvents(first, second ) => {
             let f = default_render_guidance(first)?;
             let s = default_render_guidance(second)?;
-            Ok(format!("{}つづいて、{}", f, s))
+            Ok(format!("{}続いて、{}", f, s))
         }
     }
 }
