@@ -4,17 +4,17 @@ use std::str;
 #[derive(Debug)]
 pub enum Guidance {
     StraightStep(Option<LaneGuidance>),
-    TurnStep(Turn, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<StopSign>),
-    UTurnStep(Option<IntersectionName>),
-    OnRampStep(Option<Turn>, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<SignDirectName>, Option<SignIndirectName>),
-    OffRampStep(Option<LaneGuidance>, Option<ExitName>, Option<SignIndirectName>),
+    TurnStep(Turn, Option<LaneGuidance>, Intersection),
+    UTurnStep(Intersection),
+    OnRampStep(Option<Turn>, Option<LaneGuidance>, Intersection, SignName),
+    OffRampStep(Option<LaneGuidance>, Option<ExitName>, SignName),
     KeepOrForkStep(KeepSide, Option<LaneGuidance>),
     MergeStep(Option<LaneGuidance>),
-    InterchangeStep(Option<LaneGuidance>, InterchangeName, Option<SignDirectName>, Option<SignIndirectName>),
+    InterchangeStep(Option<LaneGuidance>, InterchangeName, SignName),
     DestinationStepPrepare(Option<DestinationSide>),
     DestinationStepAct,
-    ContinueForDistance(f64, DistanceUnit, Option<DistanceOverride>),
-    PrepareDistanceMessage(f64, DistanceUnit, Box<Guidance>),
+    ContinueForDistance(Distance),
+    PrepareDistanceMessage(Distance, Box<Guidance>),
     CombineMergedGuidanceEvents(Box<Guidance>, Box<Guidance>),    
 }
 
@@ -25,10 +25,11 @@ pub enum DistanceUnit {
     Mile,
 }
 
-#[derive(Debug)]
-pub struct DistanceOverride {
-    #[allow(dead_code)]
-    pub value: String
+#[derive(Debug, Clone)]
+pub struct Distance {
+    pub value: f64,
+    pub unit: DistanceUnit,
+    pub distance_override: Option<String>,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -84,8 +85,10 @@ pub struct StopSign {
 }
 
 #[derive(Debug)]
-pub struct IntersectionName {
-    pub name: String
+pub struct Intersection {
+    pub name: Option<String>,
+    pub traffic_light: Option<TrafficLight>,
+    pub stop_sign: Option<StopSign>,
 }
 
 #[derive(Debug)]
@@ -99,13 +102,9 @@ pub struct ExitName {
 }
 
 #[derive(Debug)]
-pub struct SignDirectName {
-    pub name: String
-}
-
-#[derive(Debug)]
-pub struct SignIndirectName {
-    pub name: String
+pub struct SignName {
+    pub direct: Option<String>,
+    pub indirect: Option<String>,
 }
 
 #[derive(Debug)]
@@ -127,7 +126,7 @@ struct NLGData {
 enum Value {
     Distance(f64),
     DistanceUnit(DistanceUnit),
-    DistanceOverride(DistanceOverride),
+    DistanceOverride(String),
     TurnSharpness(TurnSharpness),
     TurnSide(TurnSide),
     KeepSide(KeepSide),
@@ -142,10 +141,10 @@ enum Value {
     Args(Vec<Value>),
     FirstStep(Guidance),
     SecondStep(Guidance),
-    SignDirectName(SignDirectName),
-    SignIndirectName(SignIndirectName),
+    SignDirectName(String),
+    SignIndirectName(String),
     Routes(Routes),
-    IntersectionName(IntersectionName),
+    IntersectionName(String),
     InterchangeName(InterchangeName),
     NLGData(NLGData),
 }
@@ -264,7 +263,7 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                     }
                 }
                 if let (Some(sharpness), Some(side)) = (sharpness, side) {
-                    Ok(Guidance::TurnStep(Turn { sharpness, side }, lane, intersection_name, traffic_light, stop_sign))
+                    Ok(Guidance::TurnStep(Turn { sharpness, side }, lane, Intersection { name: intersection_name, traffic_light, stop_sign }))
                 } else {
                     Err("missing sharpness or side field in pf_turnstep".to_string())
                 }
@@ -277,7 +276,7 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                         arg => return Err(format!("unknown args for pf_uturnstep {:?}", arg))
                     }
                 }
-                Ok(Guidance::UTurnStep(intersection_name))
+                Ok(Guidance::UTurnStep(Intersection { name: intersection_name, traffic_light: None, stop_sign: None }))
             }
             "pf_onrampstep" => {
                 let mut lane = None;
@@ -304,21 +303,23 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                     (None, None) => None,
                     _ => return Err("mismatched sharpness/side in pf_onrampstep".to_string()),
                 };
-                Ok(Guidance::OnRampStep(turn, lane, intersection_name, traffic_light, sign_direct_name, sign_indirect_name))
+                Ok(Guidance::OnRampStep(turn, lane, Intersection { name: intersection_name, traffic_light, stop_sign: None }, SignName { direct: sign_direct_name, indirect: sign_indirect_name }))
             }
             "pf_offrampstep" => {
                 let mut lane = None;
                 let mut exit = None;
-                let mut sign_name = None;
+                let mut sign_direct = None;
+                let mut sign_indirect = None;
                 for arg in args {
                     match arg {
                         Value::LaneGuidance(v) => lane = Some(v),
                         Value::ExitName(v) => exit = Some(v),
-                        Value::SignIndirectName(v) => sign_name = Some(v),
+                        Value::SignDirectName(v) => sign_direct = Some(v),
+                        Value::SignIndirectName(v) => sign_indirect = Some(v),
                         arg => return Err(format!("unknown args for pf_offrampstep {:?}", arg))
                     }
                 }
-                Ok(Guidance::OffRampStep(lane, exit, sign_name))
+                Ok(Guidance::OffRampStep(lane, exit, SignName { direct: sign_direct, indirect: sign_indirect }))
             }
             "pf_keeporforkstep" => {
                 let mut lane = None;
@@ -361,7 +362,7 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                     }
                 }
                 if let Some(name) = name {
-                    Ok(Guidance::InterchangeStep(lane, name, sign_direct_name, sign_indirect_name))
+                    Ok(Guidance::InterchangeStep(lane, name, SignName { direct: sign_direct_name, indirect: sign_indirect_name }))
                 } else {
                     Err("Missing field in pf_interchangestep".to_string())
                 }
@@ -392,8 +393,8 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                         arg => return Err(format!("unknown args for continue_for_distance {:?}", arg))
                     }
                 }
-                if let (Some(distance), Some(distance_unit)) = (distance, distance_unit) {
-                    Ok(Guidance::ContinueForDistance(distance, distance_unit, distance_override))
+                if let (Some(value), Some(unit)) = (distance, distance_unit) {
+                    Ok(Guidance::ContinueForDistance(Distance { value, unit, distance_override }))
                 } else {
                     Err("Missing field in continue_for_distance".to_string())
                 }
@@ -401,17 +402,19 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
             "prepare_distance_message" => {
                 let mut distance = None;
                 let mut distance_unit = None;
+                let mut distance_override = None;
                 let mut maneuver = None;
                 for arg in args {
                     match arg {
                         Value::Distance(v) => distance = Some(v),
                         Value::DistanceUnit(v) => distance_unit = Some(v),
+                        Value::DistanceOverride(v) => distance_override = Some(v),
                         Value::Maneuver(v) => maneuver = Some(v),
                         arg => return Err(format!("unknown args for prepare_distance_message {:?}", arg))
                     }
                 }
-                if let (Some(distance), Some(distance_unit), Some(maneuver)) = (distance, distance_unit, maneuver) {
-                    Ok(Guidance::PrepareDistanceMessage(distance, distance_unit, Box::new(maneuver)))
+                if let (Some(value), Some(unit), Some(maneuver)) = (distance, distance_unit, maneuver) {
+                    Ok(Guidance::PrepareDistanceMessage(Distance { value, unit, distance_override }, Box::new(maneuver)))
                 } else {
                     Err("Missing field in prepare_distance_message".to_string())
                 }
@@ -465,7 +468,7 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     _ => Err(format!("Unexpected value for field 'distance_unit': {}", enum_value.value))
                 }
             }
-            ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(DistanceOverride { value: symbol })),
+            ("distance_override_type", PF4RawValue::SymbolValue(symbol)) => Ok(Value::DistanceOverride(symbol)),
             ("turn_sharpness", PF4RawValue::SymbolValue(symbol)) => {
                 match symbol.as_str() {
                     "SLIGHT" => Ok(Value::TurnSharpness(TurnSharpness::Slight)),
@@ -572,7 +575,7 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                 }
                 if let Some(routes) = routes {
                     let name = routes.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
-                    Ok(Value::SignDirectName(SignDirectName { name }))
+                    Ok(Value::SignDirectName(name))
                 } else {
                     Err("Missing values in sign_direct_name".to_string())
                 }
@@ -590,7 +593,7 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                 }
                 if let Some(routes) = routes {
                     let name = routes.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
-                    Ok(Value::SignIndirectName(SignIndirectName { name }))
+                    Ok(Value::SignIndirectName(name))
                 } else {
                     Err("Missing values in sign_indirect_name".to_string())
                 }
@@ -619,7 +622,7 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                 }
                 if let Some(routes) = routes {
                     let name = routes.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
-                    Ok(Value::IntersectionName(IntersectionName { name }))
+                    Ok(Value::IntersectionName(name))
                 } else {
                     Err("Missing values in intersection_name".to_string())
                 }
