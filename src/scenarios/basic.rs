@@ -1,4 +1,4 @@
-use crate::pathfinder4::{DestinationSide, Guidance, IntersectionName, KeepSide, LaneGuidance, StopSign, TrafficLight, TurnSharpness, TurnSide};
+use crate::pathfinder4::{DestinationSide, Guidance, KeepSide, LaneGuidance, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide};
 
 pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
     fn render_lane(lane: LaneGuidance) -> String {
@@ -13,8 +13,8 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
         }.to_string()        
     }
 
-    fn render_intersection_name(iname: &IntersectionName) -> String {
-        iname.routes.names[0].text.clone()
+    fn render_intersection_name(iname: &crate::pathfinder4::IntersectionName) -> String {
+        iname.name.clone()
     }
     
     match g {
@@ -25,7 +25,7 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
                 .unwrap_or("".to_string());
             Ok(format!("{}直進します。", lane))
         }
-        Guidance::TurnStep(sharpness, side, opt_lane, opt_iname, opt_tlight, opt_stop) => {
+        Guidance::TurnStep(Turn { sharpness, side }, opt_lane, opt_iname, opt_tlight, opt_stop) => {
             let stop = match opt_stop {
                 Some(StopSign { index: -1 }) => "一時停止の標識で、",
                 Some(StopSign { index: _ }) => "ずっと先の一時停止の標識で、",
@@ -63,7 +63,7 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
                 .unwrap_or("".to_string());
             Ok(format!("{}Uターンします。", i_name))
         }
-        Guidance::OnRampStep(sharpness, side, opt_lane, opt_iname, opt_tlight, sd_name, si_name) => {
+        Guidance::OnRampStep(opt_turn, opt_lane, opt_iname, opt_tlight, sd_name, si_name) => {
             let tlight = match opt_tlight {
                 Some(TrafficLight { index: -1 }) => "信号で、",
                 Some(TrafficLight { index: _ }) => "ずっと先の信号で、",
@@ -73,33 +73,20 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
                 .map(render_lane)
                 .map(|lane| format!("{}を使用して、", lane))
                 .unwrap_or("".to_string());
-            let side = {
-                if let (Some(sharpness), Some(side)) = (sharpness, side) {
-                    match (sharpness, side) {
-                        (TurnSharpness::Normal, TurnSide::Left) => "左折し",
-                        (TurnSharpness::Normal, TurnSide::Right) => "右折し",
-                        (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向へ進み",
-                        (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向へ進み",
-                        (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向へ進み",
-                        (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向へ進み",
-                    }.to_string()
-                } else {
-                    "".to_string()
-                }
-            };
+            let side = opt_turn.map(|Turn { sharpness, side }| match (sharpness, side) {
+                (TurnSharpness::Normal, TurnSide::Left) => "左折し",
+                (TurnSharpness::Normal, TurnSide::Right) => "右折し",
+                (TurnSharpness::Slight, TurnSide::Left) => "斜め左方向へ進み",
+                (TurnSharpness::Slight, TurnSide::Right) => "斜め右方向へ進み",
+                (TurnSharpness::Sharp, TurnSide::Left) => "左手前方向へ進み",
+                (TurnSharpness::Sharp, TurnSide::Right) => "右手前方向へ進み",
+            }).unwrap_or("").to_string();
             let iname = opt_iname
                 .as_ref()
-                .map(|name| name.routes.names[0].text.clone())
-                .map(|name| format!("{}を", name))
+                .map(|name| format!("{}を", name.name))
                 .unwrap_or("".to_string());
-            let sd_name = sd_name
-                .as_ref()
-                .map(|name| name.routes.names[0].text.clone())
-                .unwrap_or("".to_string());
-            let si_name = si_name
-                .as_ref()
-                .map(|name| name.routes.names[0].text.clone())
-                .unwrap_or("".to_string());
+            let sd_name = sd_name.as_ref().map(|name| name.name.clone()).unwrap_or("".to_string());
+            let si_name = si_name.as_ref().map(|name| name.name.clone()).unwrap_or("".to_string());
             Ok(format!("{}{}{}{}{}{}入ります。", tlight, lane, side, iname, sd_name, si_name))
         }
         Guidance::OffRampStep(opt_lane, e_name, si_name) => {
@@ -107,16 +94,8 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
                 .map(render_lane)
                 .map(|lane| format!("{}を使用して、", lane))
                 .unwrap_or("".to_string());
-            let e_name = e_name
-                .as_ref()
-                .map(|name| name.exits.names[0].text.clone())
-                .map(|name| format!("{}を", name))
-                .unwrap_or("".to_string());
-            let si_name = si_name
-                .as_ref()
-                .map(|name| name.routes.names[0].text.clone())
-                .map(|name| format!("{}を", name))
-                .unwrap_or("".to_string());
+            let e_name = e_name.as_ref().map(|name| format!("{}を", name.name)).unwrap_or("".to_string());
+            let si_name = si_name.as_ref().map(|name| format!("{}を", name.name)).unwrap_or("".to_string());
             Ok(format!("{}{}{}を出ます。", lane, e_name, si_name))
         }
         Guidance::KeepOrForkStep(keep, opt_lane) => {
@@ -150,15 +129,9 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
                 .map(render_lane)
                 .map(|lane| format!("{}を使用して", lane))
                 .unwrap_or("".to_string());
-            let i_name = i_name.exits.names[0].text.clone();
-            let sd_name = sd_name
-                .as_ref()
-                .map(|name| name.routes.names[0].text.clone())
-                .unwrap_or("".to_string());
-            let si_name = si_name
-                .as_ref()
-                .map(|name| name.routes.names[0].text.clone())
-                .unwrap_or("".to_string());
+            let i_name = i_name.name.clone();
+            let sd_name = sd_name.as_ref().map(|name| name.name.clone()).unwrap_or("".to_string());
+            let si_name = si_name.as_ref().map(|name| name.name.clone()).unwrap_or("".to_string());
             Ok(format!("{}{}を{}{}出ます。", lane, i_name, sd_name, si_name))
         }
         Guidance::DestinationStepAct => {

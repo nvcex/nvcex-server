@@ -4,9 +4,9 @@ use std::str;
 #[derive(Debug)]
 pub enum Guidance {
     StraightStep(Option<LaneGuidance>),
-    TurnStep(TurnSharpness, TurnSide, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<StopSign>),
+    TurnStep(Turn, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<StopSign>),
     UTurnStep(Option<IntersectionName>),
-    OnRampStep(Option<TurnSharpness>, Option<TurnSide>, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<SignDirectName>, Option<SignIndirectName>),
+    OnRampStep(Option<Turn>, Option<LaneGuidance>, Option<IntersectionName>, Option<TrafficLight>, Option<SignDirectName>, Option<SignIndirectName>),
     OffRampStep(Option<LaneGuidance>, Option<ExitName>, Option<SignIndirectName>),
     KeepOrForkStep(KeepSide, Option<LaneGuidance>),
     MergeStep(Option<LaneGuidance>),
@@ -45,6 +45,12 @@ pub enum TurnSide {
 }
 
 #[derive(Debug, Clone, Copy)]
+pub struct Turn {
+    pub sharpness: TurnSharpness,
+    pub side: TurnSide,
+}
+
+#[derive(Debug, Clone, Copy)]
 pub enum KeepSide {
     Left,
     Right,
@@ -79,42 +85,42 @@ pub struct StopSign {
 
 #[derive(Debug)]
 pub struct IntersectionName {
-    pub routes: Routes
+    pub name: String
 }
 
 #[derive(Debug)]
 pub struct InterchangeName {
-    pub exits: Exits
+    pub name: String
 }
 
 #[derive(Debug)]
 pub struct ExitName {
-    pub exits: Exits
-}
-
-#[derive(Debug)]
-pub struct Exits {
-    pub names: Vec<NLGData>
+    pub name: String
 }
 
 #[derive(Debug)]
 pub struct SignDirectName {
-    pub routes: Routes
+    pub name: String
 }
 
 #[derive(Debug)]
 pub struct SignIndirectName {
-    pub routes: Routes
+    pub name: String
 }
 
 #[derive(Debug)]
-pub struct Routes {
-    pub names: Vec<NLGData>
+struct Exits {
+    names: Vec<NLGData>
 }
 
 #[derive(Debug)]
-pub struct NLGData {
-    pub text: String
+struct Routes {
+    names: Vec<NLGData>
+}
+
+#[derive(Debug)]
+struct NLGData {
+    text: String
 }
 
 #[derive(Debug)]
@@ -258,7 +264,7 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                     }
                 }
                 if let (Some(sharpness), Some(side)) = (sharpness, side) {
-                    Ok(Guidance::TurnStep(sharpness, side, lane, intersection_name, traffic_light, stop_sign))
+                    Ok(Guidance::TurnStep(Turn { sharpness, side }, lane, intersection_name, traffic_light, stop_sign))
                 } else {
                     Err("missing sharpness or side field in pf_turnstep".to_string())
                 }
@@ -293,7 +299,12 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                         arg => return Err(format!("unknown args for pf_onrampstep {:?}", arg))
                     }
                 }
-                Ok(Guidance::OnRampStep(sharpness, side, lane, intersection_name, traffic_light, sign_direct_name, sign_indirect_name))
+                let turn = match (sharpness, side) {
+                    (Some(sharpness), Some(side)) => Some(Turn { sharpness, side }),
+                    (None, None) => None,
+                    _ => return Err("mismatched sharpness/side in pf_onrampstep".to_string()),
+                };
+                Ok(Guidance::OnRampStep(turn, lane, intersection_name, traffic_light, sign_direct_name, sign_indirect_name))
             }
             "pf_offrampstep" => {
                 let mut lane = None;
@@ -510,7 +521,8 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     }
                 }
                 if let Some(exits) = exits {
-                    Ok(Value::ExitName(ExitName { exits }))
+                    let name = exits.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
+                    Ok(Value::ExitName(ExitName { name }))
                 } else {
                     Err("Missing values in exit_name".to_string())
                 }
@@ -559,7 +571,8 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     }
                 }
                 if let Some(routes) = routes {
-                    Ok(Value::SignDirectName(SignDirectName { routes }))
+                    let name = routes.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
+                    Ok(Value::SignDirectName(SignDirectName { name }))
                 } else {
                     Err("Missing values in sign_direct_name".to_string())
                 }
@@ -576,7 +589,8 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     }
                 }
                 if let Some(routes) = routes {
-                    Ok(Value::SignIndirectName(SignIndirectName { routes }))
+                    let name = routes.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
+                    Ok(Value::SignIndirectName(SignIndirectName { name }))
                 } else {
                     Err("Missing values in sign_indirect_name".to_string())
                 }
@@ -604,7 +618,8 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     }
                 }
                 if let Some(routes) = routes {
-                    Ok(Value::IntersectionName(IntersectionName { routes }))
+                    let name = routes.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
+                    Ok(Value::IntersectionName(IntersectionName { name }))
                 } else {
                     Err("Missing values in intersection_name".to_string())
                 }
@@ -621,7 +636,8 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     }
                 }
                 if let Some(exits) = exits {
-                    Ok(Value::InterchangeName(InterchangeName { exits }))
+                    let name = exits.names.iter().map(|n| n.text.as_str()).collect::<Vec<_>>().join("・");
+                    Ok(Value::InterchangeName(InterchangeName { name }))
                 } else {
                     Err("Missing values in interchange_name".to_string())
                 }
