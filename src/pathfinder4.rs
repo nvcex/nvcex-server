@@ -20,6 +20,7 @@ pub enum Guidance {
 
 impl Guidance {
     // テスト用に用いるガイダンスの例たち
+    #[allow(dead_code)]
     pub fn all_variants() -> Vec<Guidance> {
         use itertools::iproduct;
 
