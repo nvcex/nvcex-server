@@ -4,7 +4,7 @@ mod 六花とつむぎのスタンプラリー;
 
 use std::collections::HashMap;
 use std::sync::Arc;
-use crate::{scenarios::{basic::default_render_guidance, 六花とつむぎのスタンプラリー::六花とつむぎのスタンプラリーScenario}, voices::{SpeechText, Voice}};
+use crate::{canned_message::{Canned, default_canned_message}, scenarios::{basic::default_render_guidance, 六花とつむぎのスタンプラリー::六花とつむぎのスタンプラリーScenario}, voices::{SpeechText, Voice}};
 
 pub struct Input<'a> {
     pub(crate) text: &'a String,
@@ -24,6 +24,7 @@ impl<'a> Input<'a> {
 pub trait Scenario {
     fn name(&self) -> String;
     fn render(&self, input: Input) -> SpeechText;
+    fn render_canned_message(&self, c: Canned) -> SpeechText;
 }
 
 pub type SharedScenario = Arc<dyn Scenario + Send + Sync>;
@@ -44,6 +45,10 @@ impl Scenario for VoicevoxScenario {
             input.text.clone()
         };
         SpeechText::DynamicText(text, self.voice.clone())
+    }
+
+    fn render_canned_message(&self, c: Canned) -> SpeechText {
+        SpeechText::DynamicText(default_canned_message(c), self.voice.clone())
     }
 
     fn name(&self) -> String {

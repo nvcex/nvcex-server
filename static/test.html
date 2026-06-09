@@ -31,6 +31,7 @@
     <label for="scenario-select">シナリオ:</label>
     <select id="scenario-select"><option value="">読み込み中...</option></select>
     <button id="reload-btn" onclick="reloadItems()">再パーズ</button>
+    <button id="download-btn" onclick="downloadCannedMessages()">缶詰DL</button>
   </div>
   <div id="items">Loading...</div>
 
@@ -206,6 +207,34 @@
       } finally {
         button.disabled = false;
         button.textContent = original;
+      }
+    }
+
+    async function downloadCannedMessages() {
+      const btn = document.getElementById('download-btn');
+      const scenario = getScenario();
+      if (!scenario) return;
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = '生成中...';
+      try {
+        const res = await fetch(`/canned_messages/${encodeURIComponent(scenario)}`);
+        if (!res.ok) {
+          const payload = await res.json().catch(() => ({}));
+          throw new Error(payload.error || 'ダウンロードに失敗しました');
+        }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${scenario}.zip`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
       }
     }
 

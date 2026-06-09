@@ -1,7 +1,7 @@
 use std::{sync::Arc, vec};
 use rand::{distr::{Distribution, weighted::WeightedIndex}, rngs::StdRng};
 
-use crate::{pathfinder4::{DestinationSide, Distance, DistanceUnit, Guidance, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide}, scenarios::Scenario, voices::{SpeechText::{self, Seq, StaticText}, StaticVoice, Voice}};
+use crate::{canned_message::default_canned_message, pathfinder4::{DestinationSide, Distance, DistanceUnit, Guidance, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide}, scenarios::Scenario, voices::{SpeechText::{self, Seq, StaticText}, StaticVoice, Voice}};
 
 const SCENARIO: &str = "六花とつむぎのスタンプラリー";
 
@@ -30,7 +30,10 @@ impl Scenario for 六花とつむぎのスタンプラリーScenario {
             .map(|g| self.render_guidance(g, &mut rng))
             .unwrap_or(SpeechText::DynamicText(input.text.clone(), self.つむぎ.clone()))
     }
-
+    
+    fn render_canned_message(&self, c: crate::canned_message::Canned) -> SpeechText {
+        SpeechText::DynamicText(default_canned_message(c), self.つむぎ.clone())
+    }
 }
 
 fn contains_dynamic(g: &Guidance) -> bool {

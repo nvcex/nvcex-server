@@ -6,9 +6,10 @@ use std::sync::Arc;
 use tokio::net::TcpListener;
 use base64::prelude::*;
 mod pathfinder4;
+mod canned_message;
 mod scenarios;
 mod voices;
-use crate::{pathfinder4::parse, scenarios::{SharedScenario, build_scenarios}, voices::{VoicevoxClient, VoiceProviders, StaticVoiceRepository, format_speech_text}};
+use crate::{canned_message::Canned, pathfinder4::parse, scenarios::{SharedScenario, build_scenarios}, voices::{VoicevoxClient, VoiceProviders, StaticVoiceRepository, format_speech_text}};
 use axum::extract::State;
 
 #[derive(Clone)]
@@ -52,6 +53,7 @@ async fn main() {
         .route("/parse", post(handle_parse_request))
         .route("/tts", post(handle_tts_request))
         .route("/scenarios", get(handle_scenarios))
+        .route("/canned_messages/:scenario_name", get(handle_canned_messages))
         .with_state(state.clone());
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
@@ -182,6 +184,36 @@ async fn handle_scenarios(State(state): State<Arc<AppState>>) -> Json<Vec<String
     let mut names = state.scenarios.keys().cloned().collect::<Vec<_>>();
     names.sort();
     Json(names)
+}
+
+async fn handle_canned_messages(
+    State(state): State<Arc<AppState>>,
+    axum::extract::Path(scenario_name): axum::extract::Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let scenario = match state.scenarios.get(&scenario_name) {
+        Some(s) => s,
+        None => return Err((
+            StatusCode::BAD_REQUEST,
+            Json(json_error(&format!("unknown scenario: {}", scenario_name))),
+        )),
+    };
+
+    let mut map = std::collections::HashMap::new();
+    for &c in Canned::ALL {
+        let speech_text = scenario.render_canned_message(c);
+        match crate::voices::text_to_speech(speech_text, &state.providers).await {
+            Ok(wav) => { map.insert(c, bytes::Bytes::from(wav)); }
+            Err(err) => tracing::warn!(?err, filename = c.filename(), "skipping canned message"),
+        }
+    }
+
+    let zip = crate::canned_message::build_canned_message(map)
+        .map_err(|err| {
+            tracing::error!(?err, "failed to build canned message zip");
+            (StatusCode::INTERNAL_SERVER_ERROR, Json(json_error("failed to build zip")))
+        })?;
+
+    Ok((StatusCode::OK, [("Content-Type", "application/zip")], zip))
 }
 
 fn json_error(message: &str) -> serde_json::Value {

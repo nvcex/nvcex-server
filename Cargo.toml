@@ -22,3 +22,4 @@ async-recursion = "1"
 sha2 = "0.10"
 rubato = "0.16"
 rand = "0.10.1"
+zip = { version = "2", features = ["deflate"] }
