@@ -18,6 +18,39 @@ pub enum Guidance {
     CombineMergedGuidanceEvents(Box<Guidance>, Box<Guidance>),    
 }
 
+impl Guidance {
+    // テスト用に用いるガイダンスの例たち
+    pub fn all_variants() -> Vec<Guidance> {
+        use itertools::iproduct;
+
+        let turns: Vec<_> = iproduct!(TurnSharpness::ALL, TurnSide::ALL)
+            .map(|(&sharpness, &side)| Turn { sharpness, side })
+            .collect();
+
+        let lane_opts: Vec<Option<LaneGuidance>> = [None]
+            .into_iter()
+            .chain(LaneGuidance::ALL.iter().copied().map(Some))
+            .collect();
+
+        let intersections: Vec<Intersection> =
+            [None, Some(TrafficLight { index: -1 }), Some(TrafficLight { index: 1 })]
+                .into_iter()
+                .map(|tl| Intersection { name: None, traffic_light: tl, stop_sign: None })
+            .chain([Some(StopSign { index: -1 }), Some(StopSign { index: 1 })]
+                .into_iter()
+                .map(|ss| Intersection { name: None, stop_sign: ss, traffic_light: None }))
+            .chain(std::iter::once(
+                Intersection { name: Some("交差点".to_string()), traffic_light: None, stop_sign: None }
+            ))
+            .collect();
+
+        let turn_steps: Vec<_> = iproduct!(turns.iter(), lane_opts.iter(), intersections.iter())
+            .map(|(turn, lane, i)| Guidance::TurnStep(*turn, *lane, i.clone()))
+            .collect();
+        turn_steps
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub enum DistanceUnit {
     Meter,
@@ -39,11 +72,17 @@ pub enum TurnSharpness {
     Normal,
     Sharp,
 }
+impl TurnSharpness {
+    pub const ALL: &'static [TurnSharpness] = &[TurnSharpness::Slight, TurnSharpness::Normal, TurnSharpness::Sharp];
+}
 
 #[derive(Debug, Clone, Copy)]
 pub enum TurnSide {
     Left,
     Right,
+}
+impl TurnSide {
+    pub const ALL: &'static [TurnSide] = &[TurnSide::Left, TurnSide::Right];
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -57,11 +96,17 @@ pub enum KeepSide {
     Left,
     Right,
 }
+impl KeepSide {
+    pub const ALL: &'static [KeepSide] = &[KeepSide::Left, KeepSide::Right];
+}
 
 #[derive(Debug, Clone, Copy)]
 pub enum DestinationSide {
     Left,
     Right,
+}
+impl DestinationSide {
+    pub const ALL: &'static [DestinationSide] = &[DestinationSide::Left, DestinationSide::Right];
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -72,20 +117,27 @@ pub enum LaneGuidance {
     RightLane,
     Right2Lanes,
     SecondFromRight,
-    AnyLane
+    AnyLane,
+}
+impl LaneGuidance {
+    pub const ALL: &'static [LaneGuidance] = &[
+        LaneGuidance::LeftLane, LaneGuidance::Left2Lanes, LaneGuidance::MiddleLane,
+        LaneGuidance::RightLane, LaneGuidance::Right2Lanes, LaneGuidance::SecondFromRight,
+        LaneGuidance::AnyLane,
+    ];
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TrafficLight {
     pub index: i64
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StopSign {
     pub index: i64
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Intersection {
     pub name: Option<String>,
     pub traffic_light: Option<TrafficLight>,

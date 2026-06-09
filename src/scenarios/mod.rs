@@ -25,6 +25,7 @@ pub trait Scenario {
     fn name(&self) -> String;
     fn render(&self, input: Input) -> SpeechText;
     fn render_canned_message(&self, c: Canned) -> SpeechText;
+    fn static_text_catalog(&self) -> Vec<SpeechText> { vec![] }
 }
 
 pub type SharedScenario = Arc<dyn Scenario + Send + Sync>;

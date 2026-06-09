@@ -30,9 +30,123 @@ impl Scenario for 六花とつむぎのスタンプラリーScenario {
             .map(|g| self.render_guidance(g, &mut rng))
             .unwrap_or(SpeechText::DynamicText(input.text.clone(), self.つむぎ.clone()))
     }
-    
+
     fn render_canned_message(&self, c: crate::canned_message::Canned) -> SpeechText {
         SpeechText::DynamicText(default_canned_message(c), self.つむぎ.clone())
+    }
+
+    fn static_text_catalog(&self) -> Vec<SpeechText> {
+        let 六花 = |s: &str| StaticText(s.to_string(), self.六花.clone());
+        let ぴた声六花 = |s: &str| StaticText(s.to_string(), self.ぴた声六花.clone());
+        let 六花とつむぎ = |s: &str| StaticText(s.to_string(), self.六花とつむぎ.clone());
+        vec![
+            // ぴた声六花 — StraightStep
+            ぴた声六花("KRTN0827_まっすぐ進んで下さい.wav"),
+            ぴた声六花("KRTN0828_この先まっすぐです.wav"),
+            ぴた声六花("KRTN0829_直進してください.wav"),
+            ぴた声六花("KRTN0934_まっすぐ進んで.wav"),
+            // ぴた声六花 — TurnStep
+            ぴた声六花("KRTN0839_左に曲がります.wav"),
+            ぴた声六花("KRTN0940_左に曲がって.wav"),
+            ぴた声六花("KRTN0832_次、左にまがります.wav"),
+            ぴた声六花("KRTN0838_右に曲がります.wav"),
+            ぴた声六花("KRTN0939_右に曲がって.wav"),
+            ぴた声六花("KRTN0831_次、右にまがります.wav"),
+
+            // 六花とつむぎ — CombineMergedGuidanceEvents の「続いて」
+            六花とつむぎ("続いて、0"),
+            六花とつむぎ("続いて、1"),
+            六花とつむぎ("続いて、2"),
+            六花とつむぎ("続いて、3"),
+
+            // 六花 — StraightStep レーン（postfix "を"）
+            六花("左車線を"),
+            六花("左側2車線を"),
+            六花("右車線を"),
+            六花("右側2車線を"),
+            六花("真ん中の車線を"),
+            六花("右から2番目の車線を"),
+            六花("任意の車線を"),
+
+            // 六花 — レーン（postfix "を使用して"、Turn/Ramp/Keep/Merge 系）
+            六花("左車線を使用して"),
+            六花("左側2車線を使用して"),
+            六花("右車線を使用して"),
+            六花("右側2車線を使用して"),
+            六花("真ん中の車線を使用して"),
+            六花("右から2番目の車線を使用して"),
+            六花("任意の車線を使用して"),
+
+            // 六花 — 交差点（contains_dynamic=false のとき信号/標識のみ）
+            六花("信号で"),
+            六花("ずっと先の信号で"),
+            六花("一時停止の標識で"),
+            六花("ずっと先の一時停止の標識で"),
+
+            // 六花 — TurnStep ターン方向（postfix "です"）
+            六花("左方向です"),
+            六花("右方向です"),
+            六花("斜め左方向です"),
+            六花("斜め右方向です"),
+            六花("左手前方向です"),
+            六花("右手前方向です"),
+
+            // 六花 — OnRampStep ターン方向（postfix "に進み"）
+            六花("左方向に進み"),
+            六花("右方向に進み"),
+            六花("斜め左方向に進み"),
+            六花("斜め右方向に進み"),
+            六花("左手前方向に進み"),
+            六花("右手前方向に進み"),
+
+            // 六花 — 固定フレーズ
+            六花("Uターンします。"),
+            六花("ランプに進みます。"),
+            六花("出口を出ます。"),
+            六花("分岐を左方向です。"),
+            六花("分岐を右方向です。"),
+            六花("合流します。"),
+            六花("目的地は左側です。"),
+            六花("目的地は右側です。"),
+            六花("まもなく目的地です。"),
+            六花("目的地に到着しました"),
+
+            // 六花 — CombineMergedGuidanceEvents（六花同士）の「続いて」
+            六花("続いて、0"),
+            六花("続いて、1"),
+
+            // 六花 — ContinueForDistance（固定距離のみ）
+            六花("およそ100メートル道なりです。"),
+            六花("およそ150メートル道なりです。"),
+            六花("およそ200メートル道なりです。"),
+            六花("およそ300メートル道なりです。"),
+            六花("およそ400メートル道なりです。"),
+            六花("およそ500メートル道なりです。"),
+            六花("およそ600メートル道なりです。"),
+            六花("およそ700メートル道なりです。"),
+            六花("およそ800メートル道なりです。"),
+            六花("およそ900メートル道なりです。"),
+            六花("およそ1キロ道なりです。"),
+            六花("およそ1.5キロ道なりです。"),
+            六花("およそ2キロ道なりです。"),
+            六花("およそ3キロ道なりです。"),
+
+            // 六花 — PrepareDistanceMessage の距離プレフィックス
+            六花("およそ100メートル先、"),
+            六花("およそ150メートル先、"),
+            六花("およそ200メートル先、"),
+            六花("およそ300メートル先、"),
+            六花("およそ400メートル先、"),
+            六花("およそ500メートル先、"),
+            六花("およそ600メートル先、"),
+            六花("およそ700メートル先、"),
+            六花("およそ800メートル先、"),
+            六花("およそ900メートル先、"),
+            六花("およそ1キロ先、"),
+            六花("およそ1.5キロ先、"),
+            六花("およそ2キロ先、"),
+            六花("およそ3キロ先、"),
+        ]
     }
 }
 
@@ -459,6 +573,71 @@ impl 六花とつむぎのスタンプラリーScenario {
             }
             Guidance::CombineMergedGuidanceEvents(_first, _second ) => {
                 unreachable!()
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::voices::{Speaker, SpeakerStyle};
+    use crate::pathfinder4::Guidance;
+    use crate::scenarios::Scenario;
+    use crate::voices::SpeechText;
+    use std::collections::HashSet;
+
+    fn make_scenario() -> 六花とつむぎのスタンプラリーScenario {
+        let つむぎ = Arc::new(Voice::VOICEVOX(
+            Speaker {
+                name: "つむぎ".to_string(),
+                speaker_uuid: "dummy".to_string(),
+                styles: vec![],
+                version: "0".to_string(),
+                supported_features: crate::voices::voicevox::SupportedFeatures {
+                    permitted_synthesis_morphing: "ALL".to_string(),
+                },
+            },
+            SpeakerStyle { id: 8, name: "ノーマル".to_string(), style_type: "talk".to_string() },
+        ));
+        六花とつむぎのスタンプラリーScenario::new(つむぎ)
+    }
+
+    fn collect_static_texts(text: &SpeechText) -> Vec<(String, String)> {
+        match text {
+            SpeechText::StaticText(t, voice) => match voice.as_ref() {
+                Voice::Static(_) => vec![(t.clone(), voice.name())],
+                _ => vec![],
+            },
+            SpeechText::DynamicText(_, _) => vec![],
+            SpeechText::Seq(children) => children.iter()
+                .flat_map(collect_static_texts)
+                .collect(),
+        }
+    }
+
+    #[test]
+    fn catalog_covers_all_rendered_static_texts() {
+        let scenario = make_scenario();
+
+        let catalog: HashSet<(String, String)> = scenario
+            .static_text_catalog()
+            .iter()
+            .flat_map(collect_static_texts)
+            .collect();
+
+        for guidance in Guidance::all_variants() {
+            for seed in 0u64..100 {
+                use rand::{SeedableRng, rngs::StdRng};
+                let mut rng = StdRng::seed_from_u64(seed);
+                let result = scenario.render_guidance(&guidance, &mut rng);
+                for (text, voice_name) in collect_static_texts(&result) {
+                    assert!(
+                        catalog.contains(&(text.clone(), voice_name.clone())),
+                        "カタログ未登録: {:?} [{}]",
+                        text, voice_name
+                    );
+                }
             }
         }
     }
