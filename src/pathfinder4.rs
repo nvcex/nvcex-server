@@ -29,6 +29,7 @@ pub enum DistanceUnit {
 pub struct Distance {
     pub value: f64,
     pub unit: DistanceUnit,
+    #[allow(dead_code)]
     pub distance_override: Option<String>,
 }
 
