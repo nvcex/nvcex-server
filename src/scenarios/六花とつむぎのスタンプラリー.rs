@@ -291,7 +291,7 @@ impl 六花とつむぎのスタンプラリーScenario {
                     }
                     // 途中で交代する場合の「続いて」は2人で読む
                     (true, false) => {
-                        let then = match choose(&[1, 1, 1, 1], rng) {
+                        let then = match choose(&[6, 6, 6, 1], rng) {
                             0 => "続いて、0",
                             1 => "続いて、1",
                             2 => "続いて、2",
@@ -304,7 +304,7 @@ impl 六花とつむぎのスタンプラリーScenario {
                         ])
                     }
                     (false, true) => {
-                        let then = match choose(&[1, 1, 1, 1], rng) {
+                        let then = match choose(&[6, 6, 6, 1], rng) {
                             0 => "続いて、0",
                             1 => "続いて、1",
                             2 => "続いて、2",
@@ -413,7 +413,7 @@ impl 六花とつむぎのスタンプラリーScenario {
             }
             Guidance::ContinueForDistance(dist) => {
                 let d = render_distance(dist);
-                let s = format!("およそ{}道なりです。", d);
+                let s = format!("およそ{}、みちなりです。", d);
                 StaticText(s, self.つむぎ.clone())
             }
             Guidance::PrepareDistanceMessage(dist, guidance) => {
