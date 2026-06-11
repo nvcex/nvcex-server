@@ -41,17 +41,17 @@ impl Scenario for 六花とつむぎのスタンプラリーScenario {
         let 六花とつむぎ = |s: &str| StaticText(s.to_string(), self.六花とつむぎ.clone());
         vec![
             // ぴた声六花 — StraightStep
-            ぴた声六花("KRTN0827_まっすぐ進んで下さい.wav"),
-            ぴた声六花("KRTN0828_この先まっすぐです.wav"),
-            ぴた声六花("KRTN0829_直進してください.wav"),
-            ぴた声六花("KRTN0934_まっすぐ進んで.wav"),
+            ぴた声六花("KRTN0827_まっすぐ進んで下さい"),
+            ぴた声六花("KRTN0828_この先まっすぐです"),
+            ぴた声六花("KRTN0829_直進してください"),
+            ぴた声六花("KRTN0934_まっすぐ進んで"),
             // ぴた声六花 — TurnStep
-            ぴた声六花("KRTN0839_左に曲がります.wav"),
-            ぴた声六花("KRTN0940_左に曲がって.wav"),
-            ぴた声六花("KRTN0832_次、左にまがります.wav"),
-            ぴた声六花("KRTN0838_右に曲がります.wav"),
-            ぴた声六花("KRTN0939_右に曲がって.wav"),
-            ぴた声六花("KRTN0831_次、右にまがります.wav"),
+            ぴた声六花("KRTN0839_左に曲がります"),
+            ぴた声六花("KRTN0940_左に曲がって"),
+            ぴた声六花("KRTN0832_次、左にまがります"),
+            ぴた声六花("KRTN0838_右に曲がります"),
+            ぴた声六花("KRTN0939_右に曲がって"),
+            ぴた声六花("KRTN0831_次、右にまがります"),
 
             // 六花とつむぎ — CombineMergedGuidanceEvents の「続いて」
             六花とつむぎ("続いて、0"),
@@ -441,10 +441,10 @@ impl 六花とつむぎのスタンプラリーScenario {
         match g {
             Guidance::StraightStep(opt_lane) => {
                 let v = match choose(&[1, 1, 1, 1], rng) {
-                    0 => ぴた声六花("KRTN0827_まっすぐ進んで下さい.wav"),
-                    1 => ぴた声六花("KRTN0828_この先まっすぐです.wav"),
-                    2 => ぴた声六花("KRTN0829_直進してください.wav"),
-                    _ => ぴた声六花("KRTN0934_まっすぐ進んで.wav"),
+                    0 => ぴた声六花("KRTN0827_まっすぐ進んで下さい"),
+                    1 => ぴた声六花("KRTN0828_この先まっすぐです"),
+                    2 => ぴた声六花("KRTN0829_直進してください"),
+                    _ => ぴた声六花("KRTN0934_まっすぐ進んで"),
                 };
                 if let Some(lane) = opt_lane {
                     // {lane}を直進します。
@@ -467,15 +467,15 @@ impl 六花とつむぎのスタンプラリーScenario {
                 let turn = render_turn(turn, "です");
                 let turn = match turn.as_str() {
                     "左方向です" => match choose(&[1, 1, 1], rng) {
-                        0 => ぴた声六花("KRTN0839_左に曲がります.wav"),
-                        1 => ぴた声六花("KRTN0940_左に曲がって.wav"),
-                        2 if seq.is_empty() => ぴた声六花("KRTN0832_次、左にまがります.wav"),
+                        0 => ぴた声六花("KRTN0839_左に曲がります"),
+                        1 => ぴた声六花("KRTN0940_左に曲がって"),
+                        2 if seq.is_empty() => ぴた声六花("KRTN0832_次、左にまがります"),
                         _ => StaticText(turn, self.六花.clone()),
                     }
                     "右方向です" => match choose(&[1, 1, 1], rng) {
-                        0 => ぴた声六花("KRTN0838_右に曲がります.wav"),
-                        1 => ぴた声六花("KRTN0939_右に曲がって.wav"),
-                        2 if seq.is_empty() => ぴた声六花("KRTN0831_次、右にまがります.wav"),
+                        0 => ぴた声六花("KRTN0838_右に曲がります"),
+                        1 => ぴた声六花("KRTN0939_右に曲がって"),
+                        2 if seq.is_empty() => ぴた声六花("KRTN0831_次、右にまがります"),
                         _ => StaticText(turn, self.六花.clone()),
                     }
                     _ => StaticText(turn, self.六花.clone())
@@ -614,6 +614,42 @@ mod tests {
                 .flat_map(collect_static_texts)
                 .collect(),
         }
+    }
+
+    fn collect_static_voice_refs(text: &SpeechText) -> Vec<(String, Arc<Voice>)> {
+        match text {
+            SpeechText::StaticText(t, voice) => match voice.as_ref() {
+                Voice::Static(_) => vec![(t.clone(), voice.clone())],
+                _ => vec![],
+            },
+            SpeechText::DynamicText(_, _) => vec![],
+            SpeechText::Seq(children) => children.iter()
+                .flat_map(collect_static_voice_refs)
+                .collect(),
+        }
+    }
+
+    #[test]
+    fn all_static_files_exist() {
+        let scenario = make_scenario();
+        let repo = crate::voices::StaticVoiceRepository::new("./static_voices");
+
+        let mut missing = Vec::new();
+        for speech_text in scenario.static_text_catalog() {
+            for (text, voice) in collect_static_voice_refs(&speech_text) {
+                if let Voice::Static(sv) = voice.as_ref() {
+                    let path = repo.file_path(sv, &text);
+                    if !path.exists() {
+                        missing.push(path);
+                    }
+                }
+            }
+        }
+
+        assert!(missing.is_empty(), "missing static voice files:\n{}", missing.iter()
+            .map(|p| format!("  {}", p.display()))
+            .collect::<Vec<_>>()
+            .join("\n"));
     }
 
     #[test]

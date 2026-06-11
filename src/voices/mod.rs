@@ -5,7 +5,7 @@ pub mod voicevox;
 pub use voicevox::{Speaker, SpeakerStyle, VoicevoxClient};
 
 use async_recursion::async_recursion;
-use sha2::{Sha256, Digest};
+use sha2::Sha256;
 use std::io::Cursor;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -98,12 +98,15 @@ impl StaticVoiceRepository {
         Self { root: root.into() }
     }
 
-    pub async fn get(&self, voice: &StaticVoice, text: &str) -> Result<bytes::Bytes, VoiceError> {
-        let hash = format!("{:x}", Sha256::digest(text.as_bytes()));
-        let path = self.root
+    pub fn file_path(&self, voice: &StaticVoice, text: &str) -> PathBuf {
+        self.root
             .join(&voice.scenario_name)
             .join(&voice.name)
-            .join(format!("{}.wav", hash));
+            .join(format!("{}.wav", text))
+    }
+
+    pub async fn get(&self, voice: &StaticVoice, text: &str) -> Result<bytes::Bytes, VoiceError> {
+        let path = self.file_path(voice, text);
         tokio::fs::read(&path).await
             .map(bytes::Bytes::from)
             .map_err(|_| VoiceError::NotFound)

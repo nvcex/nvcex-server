@@ -11,6 +11,8 @@ mod scenarios;
 mod voices;
 use crate::{canned_message::Canned, pathfinder4::parse, scenarios::{SharedScenario, build_scenarios}, voices::{VoicevoxClient, VoiceProviders, StaticVoiceRepository, format_speech_text}};
 use axum::extract::State;
+use tower_http::trace::{DefaultMakeSpan, DefaultOnFailure, DefaultOnResponse, TraceLayer};
+use tracing::Level;
 
 #[derive(Clone)]
 struct AppState {
@@ -54,7 +56,13 @@ async fn main() {
         .route("/tts", post(handle_tts_request))
         .route("/scenarios", get(handle_scenarios))
         .route("/canned_messages/:scenario_name", get(handle_canned_messages))
-        .with_state(state.clone());
+        .with_state(state.clone())
+        .layer(
+            TraceLayer::new_for_http()
+                .make_span_with(DefaultMakeSpan::new().level(Level::INFO))
+                .on_response(DefaultOnResponse::new().level(Level::INFO))
+                .on_failure(DefaultOnFailure::new().level(Level::ERROR))
+        );
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
     tracing_subscriber::fmt().init();
@@ -135,6 +143,7 @@ async fn handle_tts_request(
     State(state): State<Arc<AppState>>,
     Json(payload): Json<TtsRequest>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    println!("payload: {:?}", payload);
     if payload.text.trim().is_empty() {
         return Err((StatusCode::BAD_REQUEST, Json(json_error("text must not be empty"))));
     }
