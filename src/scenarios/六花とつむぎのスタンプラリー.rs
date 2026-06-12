@@ -312,6 +312,19 @@ impl 六花とつむぎのスタンプラリーScenario {
                 ])
             }
             Guidance::CombineMergedGuidanceEvents(first, second) => {
+                if let Guidance::DepartStep(_) = first.as_ref() {
+                    let then = match choose(&[6, 6, 6, 1], rng) {
+                        0 => "続いて、0",
+                        1 => "続いて、1",
+                        2 => "続いて、2",
+                        _ => "続いて、3",
+                    };
+                    return SpeechText::Seq(vec![
+                        self.render_guidance(first, rng),
+                        StaticText(then.to_string(), self.六花とつむぎ.clone()),
+                        self.render_guidance(second, rng)
+                    ])
+                }
                 // A。続いて、Bの場合は前半後半でわけてもいい
                 let aつむぎ = contains_dynamic(first) || choose(&[2, 1], rng) == 1;
                 let bつむぎ = contains_dynamic(second) || choose(&[2, 1], rng) == 1;
