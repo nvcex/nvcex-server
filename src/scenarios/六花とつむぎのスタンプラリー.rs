@@ -1,7 +1,7 @@
 use std::{sync::Arc, vec};
 use rand::{distr::{Distribution, weighted::WeightedIndex}, rngs::StdRng};
 
-use crate::{canned_message::default_canned_message, pathfinder4::{DestinationSide, Distance, DistanceUnit, Guidance, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide}, scenarios::Scenario, voices::{SpeechText::{self, Seq, StaticText}, StaticVoice, Voice}};
+use crate::{canned_message::default_canned_message, pathfinder4::{DestinationSide, Distance, DistanceUnit, Guidance, Heading, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide}, scenarios::Scenario, voices::{SpeechText::{self, Seq, StaticText}, StaticVoice, Voice}};
 
 const SCENARIO: &str = "六花とつむぎのスタンプラリー";
 
@@ -52,6 +52,16 @@ impl Scenario for 六花とつむぎのスタンプラリーScenario {
             ぴた声六花("KRTN0838_右に曲がります"),
             ぴた声六花("KRTN0939_右に曲がって"),
             ぴた声六花("KRTN0831_次、右にまがります"),
+
+            六花とつむぎ("案内開始"),
+            六花とつむぎ("北に進みます。"),
+            六花とつむぎ("北東に進みます。"),
+            六花とつむぎ("東に進みます。"),
+            六花とつむぎ("南東に進みます。"),
+            六花とつむぎ("南に進みます。"),
+            六花とつむぎ("南西に進みます。"),
+            六花とつむぎ("西に進みます。"),
+            六花とつむぎ("北西に進みます。"),
 
             // 六花とつむぎ — CombineMergedGuidanceEvents の「続いて」
             六花とつむぎ("続いて、0"),
@@ -177,6 +187,7 @@ fn contains_dynamic(g: &Guidance) -> bool {
         }
     }
     match g {
+        Guidance::DepartStep(_) => false,
         Guidance::StraightStep(_) => false,
         Guidance::TurnStep(_, _, i) => intersection(i),
         Guidance::UTurnStep(i) => intersection(i),
@@ -191,6 +202,19 @@ fn contains_dynamic(g: &Guidance) -> bool {
         Guidance::PrepareDistanceMessage(d, g) => distance(d) || contains_dynamic(g),
         Guidance::CombineMergedGuidanceEvents(first, second) => contains_dynamic(first) || contains_dynamic(second)
     }
+}
+
+fn render_heading(heading: Heading) -> String {
+    match heading {
+        Heading::North => "北",
+        Heading::NorthEast => "北東",
+        Heading::East => "東",
+        Heading::SouthEast => "南東",
+        Heading::South => "南",
+        Heading::SouthWest => "南西",
+        Heading::West => "西",
+        Heading::NorthWest => "北西",
+    }.to_string()
 }
 
 fn render_lane(lane: &LaneGuidance, postfix: &str) -> String {
@@ -280,6 +304,13 @@ impl 六花とつむぎのスタンプラリーScenario {
     fn render_guidance(&self, g: &Guidance, rng: &mut StdRng) -> SpeechText {
         // まず誰がしゃべるか決める
         match g {
+            Guidance::DepartStep(heading) => {
+                let h = render_heading(*heading);
+                Seq(vec![
+                    StaticText("案内開始".to_string(), self.六花とつむぎ.clone()),
+                    StaticText(format!("{}に進みます。", h), self.六花とつむぎ.clone()),
+                ])
+            }
             Guidance::CombineMergedGuidanceEvents(first, second) => {
                 // A。続いて、Bの場合は前半後半でわけてもいい
                 let aつむぎ = contains_dynamic(first) || choose(&[2, 1], rng) == 1;
@@ -345,6 +376,9 @@ impl 六花とつむぎのスタンプラリーScenario {
 
     fn render_つむぎ_guidance(&self, g: &Guidance, rng: &mut StdRng) -> SpeechText {
         match g {
+            Guidance::DepartStep(heading) => {
+                unreachable!()
+            }
             Guidance::StraightStep(opt_lane) => {
                 let s = format!("{}直進します。", render_opt_lane(opt_lane, "を"));
                 StaticText(s, self.つむぎ.clone())
@@ -439,6 +473,9 @@ impl 六花とつむぎのスタンプラリーScenario {
     fn render_六花_guidance(&self, g: &Guidance, rng: &mut StdRng) -> SpeechText {
         let ぴた声六花 = |s: &str| StaticText(s.to_string(), self.ぴた声六花.clone());
         match g {
+            Guidance::DepartStep(heading) => {
+                unreachable!()
+            }
             Guidance::StraightStep(opt_lane) => {
                 let v = match choose(&[1, 1, 1, 1], rng) {
                     0 => ぴた声六花("KRTN0827_まっすぐ進んで下さい"),

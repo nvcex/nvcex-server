@@ -1,4 +1,4 @@
-use crate::pathfinder4::{DestinationSide, DistanceUnit, Guidance, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide};
+use crate::pathfinder4::{DestinationSide, DistanceUnit, Guidance, Heading, Intersection, KeepSide, LaneGuidance, SignName, StopSign, TrafficLight, Turn, TurnSharpness, TurnSide};
 
 fn render_distance_unit(unit: DistanceUnit) -> &'static str {
     match unit {
@@ -9,6 +9,19 @@ fn render_distance_unit(unit: DistanceUnit) -> &'static str {
 }
 
 pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
+    fn render_heading(heading: Heading) -> String {
+        match heading {
+            Heading::North => "北",
+            Heading::NorthEast => "北東",
+            Heading::East => "東",
+            Heading::SouthEast => "南東",
+            Heading::South => "南",
+            Heading::SouthWest => "南西",
+            Heading::West => "西",
+            Heading::NorthWest => "北西",
+        }.to_string()
+    }
+
     fn render_lane(lane: LaneGuidance) -> String {
         match lane {
             LaneGuidance::LeftLane => "左車線",
@@ -73,6 +86,10 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
     }
 
     match g {
+        Guidance::DepartStep(heading) => {
+            let h = render_heading(*heading);
+            Ok(format!("{}に進みます。", h))
+        }
         Guidance::StraightStep(opt_lane) => {
             Ok(format!("{}直進します。", render_opt_lane(opt_lane, "を")))
         }

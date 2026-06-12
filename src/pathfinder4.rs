@@ -1,8 +1,11 @@
 use protobuf_core::{AsRefExtProtobuf, Field, FieldValue};
 use std::str;
 
+use crate::pathfinder4::Guidance::DepartStep;
+
 #[derive(Debug)]
 pub enum Guidance {
+    DepartStep(Heading),
     StraightStep(Option<LaneGuidance>),
     TurnStep(Turn, Option<LaneGuidance>, Intersection),
     UTurnStep(Intersection),
@@ -23,6 +26,13 @@ impl Guidance {
     #[allow(dead_code)]
     pub fn all_variants() -> Vec<Guidance> {
         use itertools::iproduct;
+
+        let mut all = Vec::new();
+
+        let depart_steps = Heading::ALL.iter()
+            .map(|heading| Guidance::DepartStep(*heading));
+
+        all.extend(depart_steps);
 
         let turns: Vec<_> = iproduct!(TurnSharpness::ALL, TurnSide::ALL)
             .map(|(&sharpness, &side)| Turn { sharpness, side })
@@ -45,11 +55,39 @@ impl Guidance {
             ))
             .collect();
 
-        let turn_steps: Vec<_> = iproduct!(turns.iter(), lane_opts.iter(), intersections.iter())
-            .map(|(turn, lane, i)| Guidance::TurnStep(*turn, *lane, i.clone()))
-            .collect();
-        turn_steps
+        let turn_steps= iproduct!(turns.iter(), lane_opts.iter(), intersections.iter())
+            .map(|(turn, lane, i)| Guidance::TurnStep(*turn, *lane, i.clone()));
+
+        all.extend(turn_steps);
+
+        all
     }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum Heading {
+    North,
+    NorthEast,
+    East,
+    SouthEast,
+    South,
+    SouthWest,
+    West,
+    NorthWest
+}
+
+impl Heading {
+    pub const ALL: &'static [Heading] = &[
+        Heading::North,
+        Heading::NorthEast,
+        Heading::East,
+        Heading::SouthEast,
+        Heading::South,
+        Heading::SouthEast,
+        Heading::SouthWest,
+        Heading::West,
+        Heading::NorthWest
+    ];
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -200,6 +238,7 @@ enum Value {
     Routes(Routes),
     IntersectionName(String),
     InterchangeName(InterchangeName),
+    Heading(Heading),
     NLGData(NLGData),
 }
 
@@ -288,6 +327,20 @@ fn parse_guidance(bytes: &[u8]) -> Result<Guidance, String> {
 fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> {
     if command.type_name == "pathfinder4" {
         match command.value.as_str() {
+            "pf_departstep" => {
+                let mut heading = None;
+                for arg in args {
+                    match arg {
+                        Value::Heading(v) => heading = Some(v),
+                        arg => return Err(format!("unknown args for pf_departstep {:?}", arg))
+                    }
+                }
+                if let Some(heading) = heading {
+                    Ok(Guidance::DepartStep(heading))
+                } else {
+                    Err("missing sharpness or side field in pf_departstep".to_string())
+                }
+            }
             "pf_straightstep" => {
                 let mut lane = None;
                 for arg in args {
@@ -699,6 +752,19 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
                     Err("Missing values in interchange_name".to_string())
                 }
             }
+            ("heading", PF4RawValue::SymbolValue(symbol)) => {
+                match symbol.as_str() {
+                    "NORTH" => Ok(Value::Heading(Heading::North)),
+                    "NORTHEAST" => Ok(Value::Heading(Heading::NorthEast)),
+                    "EAST" => Ok(Value::Heading(Heading::East)),
+                    "SOUTHEAST" => Ok(Value::Heading(Heading::SouthEast)),
+                    "SOUTH" => Ok(Value::Heading(Heading::South)),
+                    "SOUTHWEST" => Ok(Value::Heading(Heading::SouthWest)),
+                    "WEST" => Ok(Value::Heading(Heading::West)),
+                    "NORTHWEST" => Ok(Value::Heading(Heading::NorthWest)),
+                    _ => Err(format!("Unexpected value for field 'heading': {}", symbol))
+                }
+            }
             (_, value) => {
                 Err(format!("Unknown key-value pair: {} = {:?}", key, value))
             }
@@ -1005,6 +1071,13 @@ mod tests {
         concat!(
             "EisSAConGiUKC3BhdGhmaW5kZXI0EhZw",
             "Zl9kZXN0aW5hdGlvbnN0ZXBfYWN0"),
+        concat!(
+            "EjgSFgoUCgdoZWFkaW5nIglTT1VUSFdF",
+            "U1QqHhocCgtwYXRoZmluZGVyNBINcGZf",
+            "ZGVwYXJ0c3RlcA=="),
+        concat!(
+            "EisSCgoICgRib2F0GAEqHRobCgtwYXRo",
+            "ZmluZGVyNBIMcGZfZmVycnlzdGVw")
     ];
 
     fn parse_and_warn(s64: &str) {
