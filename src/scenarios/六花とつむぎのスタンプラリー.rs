@@ -116,6 +116,7 @@ impl Scenario for 六花とつむぎのスタンプラリーScenario {
             六花("分岐を左方向です。"),
             六花("分岐を右方向です。"),
             六花("合流します。"),
+            六花("フェリーに乗ります。"),
             六花("目的地は左側です。"),
             六花("目的地は右側です。"),
             六花("まもなく目的地です。"),
@@ -196,6 +197,7 @@ fn contains_dynamic(g: &Guidance) -> bool {
         Guidance::KeepOrForkStep(_, _) => false,
         Guidance::MergeStep(_) => false,
         Guidance::InterchangeStep(_, _, _) => true,
+        Guidance::FerryStep(_) => false,
         Guidance::DestinationStepPrepare(_) => false,
         Guidance::DestinationStepAct => false,
         Guidance::ContinueForDistance(d) => distance(d),
@@ -310,6 +312,9 @@ impl 六花とつむぎのスタンプラリーScenario {
                     StaticText("案内開始".to_string(), self.六花とつむぎ.clone()),
                     StaticText(format!("{}に進みます。", h), self.六花とつむぎ.clone()),
                 ])
+            }
+            Guidance::FerryStep(_) => {
+                StaticText("フェリーに乗ります。".to_string(), self.六花とつむぎ.clone())
             }
             Guidance::CombineMergedGuidanceEvents(first, second) => {
                 if let Guidance::DepartStep(_) = first.as_ref() {
@@ -454,6 +459,9 @@ impl 六花とつむぎのスタンプラリーScenario {
                 let s = format!("{}{}で{}へ進みます。", lane, i_name, sign);
                 StaticText(s, self.つむぎ.clone())
             }
+            Guidance::FerryStep(_) => {
+                StaticText("フェリーに乗ります。".to_string(), self.つむぎ.clone())
+            }
             Guidance::DestinationStepAct => {
                 let s = "目的地に到着しました".to_string();
                 StaticText(s, self.つむぎ.clone())
@@ -592,6 +600,9 @@ impl 六花とつむぎのスタンプラリーScenario {
                 let merge = StaticText("合流します。".to_string(), self.六花.clone());
                 seq.push(merge);
                 Seq(seq)
+            }
+            Guidance::FerryStep(_) => {
+                StaticText("フェリーに乗ります。".to_string(), self.六花.clone())
             }
             Guidance::DestinationStepPrepare(opt_side) => {
                 let s = match opt_side {

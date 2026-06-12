@@ -14,6 +14,7 @@ pub enum Guidance {
     KeepOrForkStep(KeepSide, Option<LaneGuidance>),
     MergeStep(Option<LaneGuidance>),
     InterchangeStep(Option<LaneGuidance>, InterchangeName, SignName),
+    FerryStep(Boat),
     DestinationStepPrepare(Option<DestinationSide>),
     DestinationStepAct,
     ContinueForDistance(Distance),
@@ -177,6 +178,11 @@ pub struct StopSign {
 }
 
 #[derive(Debug, Clone)]
+pub struct Boat {
+    pub index: i64
+}
+
+#[derive(Debug, Clone)]
 pub struct Intersection {
     pub name: Option<String>,
     pub traffic_light: Option<TrafficLight>,
@@ -226,6 +232,7 @@ enum Value {
     LaneGuidance(LaneGuidance),
     TrafficLight(TrafficLight),
     StopSign(StopSign),
+    Boat(Boat),
     ExitName(ExitName),
     Exits(Exits),
     Maneuver(Guidance),
@@ -474,6 +481,20 @@ fn map_guidance(command: PF4Enum, args: Vec<Value>) -> Result<Guidance, String> 
                     Err("Missing field in pf_interchangestep".to_string())
                 }
             }
+            "pf_ferrystep" => {
+                let mut boat = None;
+                for arg in args {
+                    match arg {
+                        Value::Boat(v) => boat = Some(v),
+                        arg => return Err(format!("unknown args for pf_ferrystep {:?}", arg))
+                    }
+                }
+                if let Some(boat) = boat {
+                    Ok(Guidance::FerryStep(boat))
+                } else {
+                    Err("Missing field in pf_ferrystep".to_string())
+                }
+            }
             "pf_destinationstep_prepare" => {
                 let mut side = None;
                 for arg in args {
@@ -619,6 +640,7 @@ fn map_value(key: Option<String>, value: PF4RawValue) -> Result<Value, String> {
             }
             ("traffic_light", PF4RawValue::IntValue(index)) => Ok(Value::TrafficLight(TrafficLight { index })),
             ("stop_sign", PF4RawValue::IntValue(index)) => Ok(Value::StopSign(StopSign { index })),
+            ("boat", PF4RawValue::IntValue(index)) => Ok(Value::Boat(Boat { index })),
             ("exit_name", PF4RawValue::KeyValueArray(values)) => {
                 let mut exits = None;
                 for value in values {

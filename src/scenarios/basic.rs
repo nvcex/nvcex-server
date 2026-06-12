@@ -144,6 +144,9 @@ pub fn default_render_guidance(g: &Guidance) -> Result<String, String> {
             let sign = render_sign(sign, "");
             Ok(format!("{}{}で{}へ進みます。", lane, i_name, sign))
         }
+        Guidance::FerryStep(_) => {
+            Ok("フェリーに乗ります。".to_string())
+        }
         Guidance::DestinationStepAct => {
             Ok("目的地に到着しました".to_string())
         }
